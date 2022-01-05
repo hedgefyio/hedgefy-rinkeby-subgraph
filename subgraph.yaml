@@ -1,0 +1,50 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: HFEvent
+    network: rinkeby
+    source:
+      address: "0xB1410873aD6172052E86531fca4C5b0D637AF21B"
+      abi: HFEvent
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - HFClaimEvent
+        - HFCoinBurned
+        - HFCoinMinted
+        - HFNFTMinted
+        - InvestAdded
+        - InvestReimbursed
+        - InvestorEarned
+        - InvestsClaimed
+        - PremiumReimbursed
+        - TicketStatusUpdate
+      abis:
+        - name: HFEvent
+          file: ./abis/HFEvent.json
+      eventHandlers:
+        - event: HFClaimEvent(indexed address,indexed uint256,indexed uint256,uint8,uint8,bool,uint256,uint8,uint8,uint256,uint256)
+          handler: handleHFClaimEvent
+        - event: HFCoinBurned(indexed address,indexed uint256,uint256)
+          handler: handleHFCoinBurned
+        - event: HFCoinMinted(indexed address,indexed uint256,uint256)
+          handler: handleHFCoinMinted
+        - event: HFNFTMinted(indexed address,indexed uint256,string)
+          handler: handleHFNFTMinted
+        - event: InvestAdded(indexed address,indexed uint256,int256,int256,string,uint8,uint256)
+          handler: handleInvestAdded
+        - event: InvestReimbursed(indexed address,indexed uint256,int256,int256,string,uint256)
+          handler: handleInvestReimbursed
+        - event: InvestorEarned(indexed address,indexed uint256,int256,int256,int256,int256,string,uint8)
+          handler: handleInvestorEarned
+        - event: InvestsClaimed(indexed address,indexed uint256,int256,string)
+          handler: handleInvestsClaimed
+        - event: PremiumReimbursed(indexed address,indexed uint256,int256,int256,string)
+          handler: handlePremiumReimbursed
+        - event: TicketStatusUpdate(indexed address,indexed uint256,int256,int256,string,uint8,uint8,int64,uint256,uint256,uint256)
+          handler: handleTicketStatusUpdate
+      file: ./src/mapping.ts
