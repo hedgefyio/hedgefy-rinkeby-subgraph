@@ -1,4 +1,6 @@
 specVersion: 0.0.2
+description: Eventlogs for Hedgefy
+repository: https://github.com/hedgefyio/hedgefy-rinkeby-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
