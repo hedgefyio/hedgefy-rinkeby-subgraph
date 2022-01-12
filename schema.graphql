@@ -15,80 +15,80 @@ type Investment @entity {
   investorAddress: String!
   investorAmount: Int!
   earning: Int
-  ticketName: String
+  ticketName: String!
   tookPremium: Boolean
   reimbursedInvest: Boolean
   expiredInvestAmount: Int
-  investDate: Int
+  investDate: Int!
 }
 
-type Premium @entity {
-  id: ID!
-  ticket: Ticket!
-  buyerAddress: String!
-  premiumAmount: Int!
-  ticketName: String
-  reimbursedPremium: Boolean
-}
+# type Premium @entity {
+#   id: ID!
+#   ticket: Ticket!
+#   buyerAddress: String!
+#   premiumAmount: Int!
+#   ticketName: String!
+#   reimbursedPremium: Boolean
+# }
 
-type Claim @entity {
-  id: ID!
-  round: Int
-  claimStatus: ClaimStatus
-  condition: ClaimCondition
-  isApproved: Boolean
-  lastDecisionDate: Int
-  oracleData: Int
-  roundStartDate: Int
-}
+# type Claim @entity {
+#   id: ID!
+#   round: Int
+#   claimStatus: ClaimStatus!
+#   condition: ClaimCondition!
+#   isApproved: Boolean
+#   lastDecisionDate: Int
+#   oracleData: Int
+#   roundStartDate: Int
+# }
 
-type ClaimCondition @entity {
-  id: ID!
-  claimType: String!
-  constraints: [String]
-  parameters: [String]
-}
+# type ClaimCondition @entity {
+#   id: ID!
+#   claimType: String!
+#   constraints: [String]!
+#   parameters: [String]!
+# }
 
-type JuryResult @entity {
-  id: ID!
-  Accept: Int
-  Reject: Int
-}
+# type JuryResult @entity {
+#   id: ID!
+#   Accept: Int
+#   Reject: Int
+# }
 
-type NFT @entity {
-  id: ID!
-  tokenId: Int!
-  tokenContract: String!
-  tokenType: NFTType
-}
+# type NFT @entity {
+#   id: ID!
+#   tokenId: Int!
+#   tokenContract: String!
+#   tokenType: NFTType
+# }
 
-enum TicketStatus {
-  Void
-  Open
-  Closed
-  Canceled
-  Expired
-  ClaimProcessing
-  Claimed
-}
+# enum TicketStatus {
+#   Void
+#   Open
+#   Closed
+#   Canceled
+#   Expired
+#   ClaimProcessing
+#   Claimed
+# }
 
-enum ClaimStatus {
-  NotStarted
-  ClaimInProcess
-  ClaimUnderReview
-  JuryProcessing
-  ClaimRewarded
-}
+# enum ClaimStatus {
+#   NotStarted
+#   ClaimInProcess
+#   ClaimUnderReview
+#   JuryProcessing
+#   ClaimRewarded
+# }
 
-enum JuryVote {
-  NoVote
-  Accept
-  Reject
-}
+# enum JuryVote {
+#   NoVote
+#   Accept
+#   Reject
+# }
 
-enum NFTType {
-  None
-  HFNFT
-  ERC721
-  ERC1155
-}
+# enum NFTType {
+#   None
+#   HFNFT
+#   ERC721
+#   ERC1155
+# }
