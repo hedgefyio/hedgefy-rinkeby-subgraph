@@ -3,6 +3,9 @@ description: Eventlogs for Hedgefy
 repository: https://github.com/hedgefyio/hedgefy-rinkeby-subgraph
 schema:
   file: ./schema.graphql
+features:
+  - ipfsOnEthereumContracts
+  - fullTextSearch
 dataSources:
   - kind: ethereum
     name: HFEvent
@@ -10,21 +13,14 @@ dataSources:
     source:
       address: "0xB1410873aD6172052E86531fca4C5b0D637AF21B"
       abi: HFEvent
+      startBlock: 9917673
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - HFClaimEvent
-        - HFCoinBurned
-        - HFCoinMinted
-        - HFNFTMinted
-        - InvestAdded
-        - InvestReimbursed
-        - InvestorEarned
-        - InvestsClaimed
-        - PremiumReimbursed
-        - TicketStatusUpdate
+        - Ticket
+        - Buyer
       abis:
         - name: HFEvent
           file: ./abis/HFEvent.json
