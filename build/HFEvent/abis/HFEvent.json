@@ -1,0 +1,891 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "claimId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "round",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum HFEnum.ClaimStatus",
+        "name": "claimStatus",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isApproved",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "oracleData",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "juryAccept",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "juryReject",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lastDecisionDate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "roundStartDate",
+        "type": "uint256"
+      }
+    ],
+    "name": "HFClaimEvent",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "HFCoinBurned",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "HFCoinMinted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "nftURI",
+        "type": "string"
+      }
+    ],
+    "name": "HFNFTMinted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "investor",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "investAmount",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "totalInvestments",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum HFEnum.TicketStatus",
+        "name": "ticketStatus",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "InvestAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "investor",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "reimburseAmount",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "totalInvestments",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "InvestReimbursed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "investor",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "investAmount",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "totalInvestments",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "premiumAmount",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "earning",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum HFEnum.TicketStatus",
+        "name": "ticketStatus",
+        "type": "uint8"
+      }
+    ],
+    "name": "InvestorEarned",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "buyer",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "totalInvestments",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      }
+    ],
+    "name": "InvestsClaimed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "buyer",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "reimburseAmount",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "totalPremium",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      }
+    ],
+    "name": "PremiumReimbursed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "premiumAmount",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "totalInvestments",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum HFEnum.TicketStatus",
+        "name": "previousStatus",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum HFEnum.TicketStatus",
+        "name": "ticketStatus",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "int64",
+        "name": "payoutRatio",
+        "type": "int64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "closingDate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "startDate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "endDate",
+        "type": "uint256"
+      }
+    ],
+    "name": "TicketStatusUpdate",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "claimId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint8",
+            "name": "round",
+            "type": "uint8"
+          },
+          {
+            "internalType": "enum HFEnum.ClaimStatus",
+            "name": "claimStatus",
+            "type": "uint8"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "claimType",
+                "type": "string"
+              },
+              {
+                "internalType": "string[]",
+                "name": "constraints",
+                "type": "string[]"
+              },
+              {
+                "internalType": "string[]",
+                "name": "parameters",
+                "type": "string[]"
+              }
+            ],
+            "internalType": "struct HFEntity.ClaimCondition",
+            "name": "condition",
+            "type": "tuple"
+          },
+          {
+            "internalType": "bool",
+            "name": "isApproved",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastDecisionDate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "oracleData",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "roundStartDate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct HFEntity.Claim",
+        "name": "claim",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "oracleData",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "juryAccept",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "juryReject",
+        "type": "uint8"
+      }
+    ],
+    "name": "EmitHFClaimEvent",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "EmitHFCoinBurned",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "EmitHFCoinMinted",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "nftURI",
+        "type": "string"
+      }
+    ],
+    "name": "EmitHFNFTMinted",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "investor",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "investAmount",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "totalInvestments",
+        "type": "int256"
+      },
+      {
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      },
+      {
+        "internalType": "enum HFEnum.TicketStatus",
+        "name": "ticketStatus",
+        "type": "uint8"
+      }
+    ],
+    "name": "EmitInvestAdded",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "investor",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "reimburseAmount",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "totalInvestments",
+        "type": "int256"
+      },
+      {
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      }
+    ],
+    "name": "EmitInvestReimbursed",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "investor",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "investAmount",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "earning",
+        "type": "int256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "ticketId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "premiumAmount",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalInvestments",
+            "type": "int256"
+          },
+          {
+            "internalType": "string",
+            "name": "ticketName",
+            "type": "string"
+          },
+          {
+            "internalType": "enum HFEnum.TicketStatus",
+            "name": "ticketStatus",
+            "type": "uint8"
+          },
+          {
+            "internalType": "int64",
+            "name": "payoutRatio",
+            "type": "int64"
+          },
+          {
+            "internalType": "uint256",
+            "name": "closingDate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startDate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "endDate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct HFEntity.Ticket",
+        "name": "ticket",
+        "type": "tuple"
+      }
+    ],
+    "name": "EmitInvestorEarned",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "buyer",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "totalInvestments",
+        "type": "int256"
+      },
+      {
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      }
+    ],
+    "name": "EmitInvestsClaimed",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "buyer",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "reimburseAmount",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "totalPremium",
+        "type": "int256"
+      },
+      {
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      }
+    ],
+    "name": "EmitPremiumReimbursed",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "enum HFEnum.TicketStatus",
+        "name": "previousStatus",
+        "type": "uint8"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "ticketId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "int256",
+            "name": "premiumAmount",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "totalInvestments",
+            "type": "int256"
+          },
+          {
+            "internalType": "string",
+            "name": "ticketName",
+            "type": "string"
+          },
+          {
+            "internalType": "enum HFEnum.TicketStatus",
+            "name": "ticketStatus",
+            "type": "uint8"
+          },
+          {
+            "internalType": "int64",
+            "name": "payoutRatio",
+            "type": "int64"
+          },
+          {
+            "internalType": "uint256",
+            "name": "closingDate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startDate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "endDate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct HFEntity.Ticket",
+        "name": "ticket",
+        "type": "tuple"
+      }
+    ],
+    "name": "EmitTicketStatusUpdate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

@@ -1,0 +1,38 @@
+type _Schema_
+  @fulltext(
+    name: "HedgefyTicketSearch"
+    language: en
+    algorithm: rank
+    include: [
+      {
+        entity: "Ticket"
+        fields: [{ name: "ticketName" }, { name: "ticketStatus" }]
+      }
+    ]
+  )
+
+"""
+Ticket detail information: HFEntity.sol
+"""
+type Ticket @entity {
+  id: ID!
+  buyer: Buyer!
+  ticketId: BigInt!
+  premiumAmount: BigInt!
+  totalInvestments: BigInt!
+  ticketName: String!
+  previousStatus: Int!
+  ticketStatus: Int!
+  payoutRatio: BigInt!
+  closingDate: BigInt!
+  startDate: BigInt!
+  endDate: BigInt!
+}
+
+"""
+Buer Information HFTicketRepository.sol
+"""
+type Buyer @entity {
+  id: ID!
+  tickets: [Ticket!]! @derivedFrom(field: "buyer")
+}
