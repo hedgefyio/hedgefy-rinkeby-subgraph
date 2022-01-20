@@ -1,16 +1,3 @@
-type _Schema_
-  @fulltext(
-    name: "HedgefyTicketSearch"
-    language: en
-    algorithm: rank
-    include: [
-      {
-        entity: "Ticket"
-        fields: [{ name: "ticketName" }, { name: "ticketStatus" }]
-      }
-    ]
-  )
-
 """
 Ticket detail information: HFEntity.sol
 """
