@@ -1,26 +1,54 @@
+type _Schema_
+  @fulltext(
+    name: "HedgefyTicketSearch"
+    language: en
+    algorithm: rank
+    include: [
+      {
+        entity: "Ticket"
+        fields: [{ name: "ticketName" }, { name: "ticketStatus" }]
+      }
+    ]
+  )
+
+"""
+Ticket detail information: HFEntity.sol
+"""
 type Ticket @entity {
   id: ID!
-  premiumAmount: Int!
-  totalInvestment: Int!
+  buyer: Buyer!
+  ticketId: BigInt!
+  premiumAmount: BigInt!
+  totalInvestments: BigInt!
   ticketName: String!
-  ticketStatus: TicketStatus!
-  closingDate: Int!
-  startDate: Int!
-  endDate: Int!
+  previousStatus: Int!
+  ticketStatus: Int!
+  payoutRatio: BigInt!
+  closingDate: BigInt!
+  startDate: BigInt!
+  endDate: BigInt!
 }
 
-type Investment @entity {
+"""
+Buer Information HFTicketRepository.sol
+"""
+type Buyer @entity {
   id: ID!
-  ticket: Ticket!
-  investorAddress: String!
-  investorAmount: Int!
-  earning: Int
-  ticketName: String!
-  tookPremium: Boolean
-  reimbursedInvest: Boolean
-  expiredInvestAmount: Int
-  investDate: Int!
+  tickets: [Ticket!]! @derivedFrom(field: "buyer")
 }
+
+# type Investment @entity {
+#   id: ID!
+#   ticket: Ticket!
+#   investorAddress: String!
+#   investorAmount: Int!
+#   earning: Int
+#   ticketName: String!
+#   tookPremium: Boolean
+#   reimbursedInvest: Boolean
+#   expiredInvestAmount: Int
+#   investDate: Int!
+# }
 
 # type Premium @entity {
 #   id: ID!
@@ -62,16 +90,6 @@ type Investment @entity {
 #   tokenType: NFTType
 # }
 
-# enum TicketStatus {
-#   Void
-#   Open
-#   Closed
-#   Canceled
-#   Expired
-#   ClaimProcessing
-#   Claimed
-# }
-
 # enum ClaimStatus {
 #   NotStarted
 #   ClaimInProcess
@@ -91,4 +109,17 @@ type Investment @entity {
 #   HFNFT
 #   ERC721
 #   ERC1155
+# }
+
+"""
+Ticket Status: HFEnum.sol
+"""
+# enum TicketStatus {
+#   Void
+#   Open
+#   Closed
+#   Canceled
+#   Expired
+#   ClaimProcessing
+#   Claimed
 # }
