@@ -1,17 +1,5 @@
 import { BigInt, JSONValue, json, ipfs } from "@graphprotocol/graph-ts";
-import {
-  HFEvent,
-  HFClaimEvent,
-  HFCoinBurned,
-  HFCoinMinted,
-  HFNFTMinted,
-  InvestAdded,
-  InvestReimbursed,
-  InvestorEarned,
-  InvestsClaimed,
-  PremiumReimbursed,
-  TicketStatusUpdate,
-} from "../generated/HFEvent/HFEvent";
+import { TicketStatusUpdate } from "../generated/HFEvent/HFEvent";
 import { Ticket, Buyer } from "../generated/schema";
 import { log } from "@graphprotocol/graph-ts";
 
@@ -20,6 +8,7 @@ export function handleTicketStatusUpdate(event: TicketStatusUpdate): void {
   let buyer = Buyer.load(buyerId);
   if (buyer == null) {
     buyer = new Buyer(buyerId);
+    buyer.save();
   }
   let ticketId = event.address
     .toHex()

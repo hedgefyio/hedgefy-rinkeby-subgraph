@@ -2,7 +2,7 @@ specVersion: 0.0.2
 description: Eventlogs for Hedgefy
 repository: https://github.com/hedgefyio/hedgefy-rinkeby-subgraph
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 features:
   - ipfsOnEthereumContracts
   - fullTextSearch
@@ -23,8 +23,9 @@ dataSources:
         - Buyer
       abis:
         - name: HFEvent
-          file: ./abis/HFEvent.json
+          file: HFEvent/abis/HFEvent.json
       eventHandlers:
-        - event: TicketStatusUpdate(indexed address,indexed uint256,int256,int256,string,uint8,uint8,int64,uint256,uint256,uint256)
+        - event: TicketStatusUpdate(indexed address,indexed
+            uint256,int256,int256,string,uint8,uint8,int64,uint256,uint256,uint256)
           handler: handleTicketStatusUpdate
-      file: ./src/mapping.ts
+      file: HFEvent/HFEvent.wasm
