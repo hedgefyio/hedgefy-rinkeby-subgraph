@@ -1,25 +1,116 @@
+type Buyer @entity {
+  id: ID!
+  premiums: [Premium] @derivedFrom(field: "buyer")
+  tickets: [Ticket!]! @derivedFrom(field: "buyer")
+}
+
+type Investor @entity {
+  id: ID!
+  investments: [Investment!]! @derivedFrom(field: "investor")
+}
+
 """
 Ticket detail information: HFEntity.sol
 """
 type Ticket @entity {
   id: ID!
-  buyer: Buyer!
   ticketId: BigInt!
+  bidProcessType: String!
+  claimAmount: BigInt!
   premiumAmount: BigInt!
-  totalInvestments: BigInt!
+  authorizedAmount: BigInt!
+  marginRatio: BigInt!
   ticketName: String!
-  previousStatus: Int!
   ticketStatus: Int!
-  payoutRatio: BigInt!
+  dates: TicketDate!
+  selectedBidding: Investment
+}
+
+"""
+TicketDate detail information: HFEntity.sol
+"""
+type TicketDate @entity {
+  id: ID!
   closingDate: BigInt!
   startDate: BigInt!
   endDate: BigInt!
 }
 
 """
-Buer Information HFTicketRepository.sol
+Investment detail information: HFEntity.sol
 """
-type Buyer @entity {
+type Investment @entity {
   id: ID!
-  tickets: [Ticket!]! @derivedFrom(field: "buyer")
+  ticketId: BigInt!
+  ticket: Ticket!
+  investor: Investor!
+  askingAmount: BigInt!
+  earning: BigInt!
+  bidProcessType: String!
+  ticketName: String!
+  tookPremium: Boolean!
+  reimbursedInvest: Boolean!
+  removed: Boolean!
+  expiredInvestAmount: BigInt!
+  askingExpireDate: BigInt!
+  investDate: BigInt!
+}
+
+"""
+Premium detail information: HFEntity.sol
+"""
+type Premium @entity {
+  id: ID!
+  ticket: Ticket!
+  buyer: Buyer!
+  askingClaimAmount: BigInt!
+  askingPremiumAmount: BigInt!
+  bidProcessType: String!
+  ticketName: String!
+  reimbursedPremium: Boolean!
+}
+
+"""
+Claim detail information: HFEntity.sol
+"""
+type Claim @entity {
+  id: ID!
+  claimId: BigInt!
+  round: BigInt!
+  claimStatus: Int!
+  condition: ClaimCondition!
+  isApproved: Boolean!
+  lastDecisionDate: BigInt!
+  oracleData: BigInt!
+  roundStartDate: BigInt!
+}
+
+"""
+ClaimCondition detail information: HFEntity.sol
+"""
+type ClaimCondition @entity {
+  id: ID!
+  claimType: String!
+  claimConstraints: [String!]!
+  claimParameters: [String!]!
+  claims: [condition!]! @derivedFrom(field: "condition")
+}
+
+"""
+JuryResult detail information: HFEntity.sol
+"""
+type JuryResult @entity {
+  id: ID!
+  accept: Int!
+  reject: Int!
+}
+
+"""
+NFT detail information: HFEntity.sol
+"""
+type NFT @entity {
+  id: ID!
+  tokenId: BigInt!
+  tokenContract: String!
+  tokenType: Int!
 }
