@@ -11,6 +11,82 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
+export class User extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save User entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save User entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("User", id.toString(), this);
+    }
+  }
+
+  static load(id: string): User | null {
+    return changetype<User | null>(store.get("User", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get investments(): Array<string> {
+    let value = this.get("investments");
+    return value!.toStringArray();
+  }
+
+  set investments(value: Array<string>) {
+    this.set("investments", Value.fromStringArray(value));
+  }
+
+  get premiums(): Array<string> | null {
+    let value = this.get("premiums");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set premiums(value: Array<string> | null) {
+    if (!value) {
+      this.unset("premiums");
+    } else {
+      this.set("premiums", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get tickets(): Array<string> | null {
+    let value = this.get("tickets");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set tickets(value: Array<string> | null) {
+    if (!value) {
+      this.unset("tickets");
+    } else {
+      this.set("tickets", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+}
+
 export class Ticket extends Entity {
   constructor(id: string) {
     super();
@@ -18,13 +94,13 @@ export class Ticket extends Entity {
 
     this.set("buyer", Value.fromString(""));
     this.set("ticketId", Value.fromBigInt(BigInt.zero()));
+    this.set("bidProcessType", Value.fromString(""));
+    this.set("claimAmount", Value.fromBigInt(BigInt.zero()));
     this.set("premiumAmount", Value.fromBigInt(BigInt.zero()));
-    this.set("totalInvestments", Value.fromBigInt(BigInt.zero()));
+    this.set("authorizedAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("marginRatio", Value.fromBigInt(BigInt.zero()));
     this.set("ticketName", Value.fromString(""));
-    this.set("payoutRatio", Value.fromBigInt(BigInt.zero()));
-    this.set("closingDate", Value.fromBigInt(BigInt.zero()));
-    this.set("startDate", Value.fromBigInt(BigInt.zero()));
-    this.set("endDate", Value.fromBigInt(BigInt.zero()));
+    this.set("dates", Value.fromString(""));
   }
 
   save(): void {
@@ -71,6 +147,24 @@ export class Ticket extends Entity {
     this.set("ticketId", Value.fromBigInt(value));
   }
 
+  get bidProcessType(): string {
+    let value = this.get("bidProcessType");
+    return value!.toString();
+  }
+
+  set bidProcessType(value: string) {
+    this.set("bidProcessType", Value.fromString(value));
+  }
+
+  get claimAmount(): BigInt {
+    let value = this.get("claimAmount");
+    return value!.toBigInt();
+  }
+
+  set claimAmount(value: BigInt) {
+    this.set("claimAmount", Value.fromBigInt(value));
+  }
+
   get premiumAmount(): BigInt {
     let value = this.get("premiumAmount");
     return value!.toBigInt();
@@ -80,13 +174,22 @@ export class Ticket extends Entity {
     this.set("premiumAmount", Value.fromBigInt(value));
   }
 
-  get totalInvestments(): BigInt {
-    let value = this.get("totalInvestments");
+  get authorizedAmount(): BigInt {
+    let value = this.get("authorizedAmount");
     return value!.toBigInt();
   }
 
-  set totalInvestments(value: BigInt) {
-    this.set("totalInvestments", Value.fromBigInt(value));
+  set authorizedAmount(value: BigInt) {
+    this.set("authorizedAmount", Value.fromBigInt(value));
+  }
+
+  get marginRatio(): BigInt {
+    let value = this.get("marginRatio");
+    return value!.toBigInt();
+  }
+
+  set marginRatio(value: BigInt) {
+    this.set("marginRatio", Value.fromBigInt(value));
   }
 
   get ticketName(): string {
@@ -98,15 +201,6 @@ export class Ticket extends Entity {
     this.set("ticketName", Value.fromString(value));
   }
 
-  get previousStatus(): i32 {
-    let value = this.get("previousStatus");
-    return value!.toI32();
-  }
-
-  set previousStatus(value: i32) {
-    this.set("previousStatus", Value.fromI32(value));
-  }
-
   get ticketStatus(): i32 {
     let value = this.get("ticketStatus");
     return value!.toI32();
@@ -116,13 +210,67 @@ export class Ticket extends Entity {
     this.set("ticketStatus", Value.fromI32(value));
   }
 
-  get payoutRatio(): BigInt {
-    let value = this.get("payoutRatio");
-    return value!.toBigInt();
+  get dates(): string {
+    let value = this.get("dates");
+    return value!.toString();
   }
 
-  set payoutRatio(value: BigInt) {
-    this.set("payoutRatio", Value.fromBigInt(value));
+  set dates(value: string) {
+    this.set("dates", Value.fromString(value));
+  }
+
+  get selectedBidding(): string | null {
+    let value = this.get("selectedBidding");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set selectedBidding(value: string | null) {
+    if (!value) {
+      this.unset("selectedBidding");
+    } else {
+      this.set("selectedBidding", Value.fromString(<string>value));
+    }
+  }
+}
+
+export class TicketDate extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("closingDate", Value.fromBigInt(BigInt.zero()));
+    this.set("startDate", Value.fromBigInt(BigInt.zero()));
+    this.set("endDate", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save TicketDate entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save TicketDate entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("TicketDate", id.toString(), this);
+    }
+  }
+
+  static load(id: string): TicketDate | null {
+    return changetype<TicketDate | null>(store.get("TicketDate", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get closingDate(): BigInt {
@@ -153,27 +301,38 @@ export class Ticket extends Entity {
   }
 }
 
-export class Buyer extends Entity {
+export class Investment extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
+
+    this.set("ticketId", Value.fromBigInt(BigInt.zero()));
+    this.set("ticket", Value.fromString(""));
+    this.set("investor", Value.fromString(""));
+    this.set("askingAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("earning", Value.fromBigInt(BigInt.zero()));
+    this.set("bidProcessType", Value.fromString(""));
+    this.set("ticketName", Value.fromString(""));
+    this.set("expiredInvestAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("askingExpireDate", Value.fromBigInt(BigInt.zero()));
+    this.set("investDate", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Buyer entity without an ID");
+    assert(id != null, "Cannot save Investment entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        "Cannot save Buyer entity with non-string ID. " +
+        "Cannot save Investment entity with non-string ID. " +
           'Considering using .toHex() to convert the "id" to a string.'
       );
-      store.set("Buyer", id.toString(), this);
+      store.set("Investment", id.toString(), this);
     }
   }
 
-  static load(id: string): Buyer | null {
-    return changetype<Buyer | null>(store.get("Buyer", id));
+  static load(id: string): Investment | null {
+    return changetype<Investment | null>(store.get("Investment", id));
   }
 
   get id(): string {
@@ -185,12 +344,522 @@ export class Buyer extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get tickets(): Array<string> {
-    let value = this.get("tickets");
+  get ticketId(): BigInt {
+    let value = this.get("ticketId");
+    return value!.toBigInt();
+  }
+
+  set ticketId(value: BigInt) {
+    this.set("ticketId", Value.fromBigInt(value));
+  }
+
+  get ticket(): string {
+    let value = this.get("ticket");
+    return value!.toString();
+  }
+
+  set ticket(value: string) {
+    this.set("ticket", Value.fromString(value));
+  }
+
+  get investor(): string {
+    let value = this.get("investor");
+    return value!.toString();
+  }
+
+  set investor(value: string) {
+    this.set("investor", Value.fromString(value));
+  }
+
+  get askingAmount(): BigInt {
+    let value = this.get("askingAmount");
+    return value!.toBigInt();
+  }
+
+  set askingAmount(value: BigInt) {
+    this.set("askingAmount", Value.fromBigInt(value));
+  }
+
+  get earning(): BigInt {
+    let value = this.get("earning");
+    return value!.toBigInt();
+  }
+
+  set earning(value: BigInt) {
+    this.set("earning", Value.fromBigInt(value));
+  }
+
+  get bidProcessType(): string {
+    let value = this.get("bidProcessType");
+    return value!.toString();
+  }
+
+  set bidProcessType(value: string) {
+    this.set("bidProcessType", Value.fromString(value));
+  }
+
+  get ticketName(): string {
+    let value = this.get("ticketName");
+    return value!.toString();
+  }
+
+  set ticketName(value: string) {
+    this.set("ticketName", Value.fromString(value));
+  }
+
+  get tookPremium(): boolean {
+    let value = this.get("tookPremium");
+    return value!.toBoolean();
+  }
+
+  set tookPremium(value: boolean) {
+    this.set("tookPremium", Value.fromBoolean(value));
+  }
+
+  get reimbursedInvest(): boolean {
+    let value = this.get("reimbursedInvest");
+    return value!.toBoolean();
+  }
+
+  set reimbursedInvest(value: boolean) {
+    this.set("reimbursedInvest", Value.fromBoolean(value));
+  }
+
+  get removed(): boolean {
+    let value = this.get("removed");
+    return value!.toBoolean();
+  }
+
+  set removed(value: boolean) {
+    this.set("removed", Value.fromBoolean(value));
+  }
+
+  get expiredInvestAmount(): BigInt {
+    let value = this.get("expiredInvestAmount");
+    return value!.toBigInt();
+  }
+
+  set expiredInvestAmount(value: BigInt) {
+    this.set("expiredInvestAmount", Value.fromBigInt(value));
+  }
+
+  get askingExpireDate(): BigInt {
+    let value = this.get("askingExpireDate");
+    return value!.toBigInt();
+  }
+
+  set askingExpireDate(value: BigInt) {
+    this.set("askingExpireDate", Value.fromBigInt(value));
+  }
+
+  get investDate(): BigInt {
+    let value = this.get("investDate");
+    return value!.toBigInt();
+  }
+
+  set investDate(value: BigInt) {
+    this.set("investDate", Value.fromBigInt(value));
+  }
+}
+
+export class Premium extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("ticket", Value.fromString(""));
+    this.set("buyer", Value.fromString(""));
+    this.set("askingClaimAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("askingPremiumAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("bidProcessType", Value.fromString(""));
+    this.set("ticketName", Value.fromString(""));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Premium entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Premium entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Premium", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Premium | null {
+    return changetype<Premium | null>(store.get("Premium", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get ticket(): string {
+    let value = this.get("ticket");
+    return value!.toString();
+  }
+
+  set ticket(value: string) {
+    this.set("ticket", Value.fromString(value));
+  }
+
+  get buyer(): string {
+    let value = this.get("buyer");
+    return value!.toString();
+  }
+
+  set buyer(value: string) {
+    this.set("buyer", Value.fromString(value));
+  }
+
+  get askingClaimAmount(): BigInt {
+    let value = this.get("askingClaimAmount");
+    return value!.toBigInt();
+  }
+
+  set askingClaimAmount(value: BigInt) {
+    this.set("askingClaimAmount", Value.fromBigInt(value));
+  }
+
+  get askingPremiumAmount(): BigInt {
+    let value = this.get("askingPremiumAmount");
+    return value!.toBigInt();
+  }
+
+  set askingPremiumAmount(value: BigInt) {
+    this.set("askingPremiumAmount", Value.fromBigInt(value));
+  }
+
+  get bidProcessType(): string {
+    let value = this.get("bidProcessType");
+    return value!.toString();
+  }
+
+  set bidProcessType(value: string) {
+    this.set("bidProcessType", Value.fromString(value));
+  }
+
+  get ticketName(): string {
+    let value = this.get("ticketName");
+    return value!.toString();
+  }
+
+  set ticketName(value: string) {
+    this.set("ticketName", Value.fromString(value));
+  }
+
+  get reimbursedPremium(): boolean {
+    let value = this.get("reimbursedPremium");
+    return value!.toBoolean();
+  }
+
+  set reimbursedPremium(value: boolean) {
+    this.set("reimbursedPremium", Value.fromBoolean(value));
+  }
+}
+
+export class Claim extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("claimId", Value.fromBigInt(BigInt.zero()));
+    this.set("round", Value.fromBigInt(BigInt.zero()));
+    this.set("condition", Value.fromString(""));
+    this.set("lastDecisionDate", Value.fromBigInt(BigInt.zero()));
+    this.set("oracleData", Value.fromBigInt(BigInt.zero()));
+    this.set("roundStartDate", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Claim entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Claim entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Claim", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Claim | null {
+    return changetype<Claim | null>(store.get("Claim", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get claimId(): BigInt {
+    let value = this.get("claimId");
+    return value!.toBigInt();
+  }
+
+  set claimId(value: BigInt) {
+    this.set("claimId", Value.fromBigInt(value));
+  }
+
+  get round(): BigInt {
+    let value = this.get("round");
+    return value!.toBigInt();
+  }
+
+  set round(value: BigInt) {
+    this.set("round", Value.fromBigInt(value));
+  }
+
+  get claimStatus(): i32 {
+    let value = this.get("claimStatus");
+    return value!.toI32();
+  }
+
+  set claimStatus(value: i32) {
+    this.set("claimStatus", Value.fromI32(value));
+  }
+
+  get condition(): string {
+    let value = this.get("condition");
+    return value!.toString();
+  }
+
+  set condition(value: string) {
+    this.set("condition", Value.fromString(value));
+  }
+
+  get isApproved(): boolean {
+    let value = this.get("isApproved");
+    return value!.toBoolean();
+  }
+
+  set isApproved(value: boolean) {
+    this.set("isApproved", Value.fromBoolean(value));
+  }
+
+  get lastDecisionDate(): BigInt {
+    let value = this.get("lastDecisionDate");
+    return value!.toBigInt();
+  }
+
+  set lastDecisionDate(value: BigInt) {
+    this.set("lastDecisionDate", Value.fromBigInt(value));
+  }
+
+  get oracleData(): BigInt {
+    let value = this.get("oracleData");
+    return value!.toBigInt();
+  }
+
+  set oracleData(value: BigInt) {
+    this.set("oracleData", Value.fromBigInt(value));
+  }
+
+  get roundStartDate(): BigInt {
+    let value = this.get("roundStartDate");
+    return value!.toBigInt();
+  }
+
+  set roundStartDate(value: BigInt) {
+    this.set("roundStartDate", Value.fromBigInt(value));
+  }
+}
+
+export class ClaimCondition extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("claimType", Value.fromString(""));
+    this.set("claimConstraints", Value.fromStringArray(new Array(0)));
+    this.set("claimParameters", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save ClaimCondition entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save ClaimCondition entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("ClaimCondition", id.toString(), this);
+    }
+  }
+
+  static load(id: string): ClaimCondition | null {
+    return changetype<ClaimCondition | null>(store.get("ClaimCondition", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get claimType(): string {
+    let value = this.get("claimType");
+    return value!.toString();
+  }
+
+  set claimType(value: string) {
+    this.set("claimType", Value.fromString(value));
+  }
+
+  get claimConstraints(): Array<string> {
+    let value = this.get("claimConstraints");
     return value!.toStringArray();
   }
 
-  set tickets(value: Array<string>) {
-    this.set("tickets", Value.fromStringArray(value));
+  set claimConstraints(value: Array<string>) {
+    this.set("claimConstraints", Value.fromStringArray(value));
+  }
+
+  get claimParameters(): Array<string> {
+    let value = this.get("claimParameters");
+    return value!.toStringArray();
+  }
+
+  set claimParameters(value: Array<string>) {
+    this.set("claimParameters", Value.fromStringArray(value));
+  }
+
+  get claims(): Array<string> {
+    let value = this.get("claims");
+    return value!.toStringArray();
+  }
+
+  set claims(value: Array<string>) {
+    this.set("claims", Value.fromStringArray(value));
+  }
+}
+
+export class JuryResult extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save JuryResult entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save JuryResult entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("JuryResult", id.toString(), this);
+    }
+  }
+
+  static load(id: string): JuryResult | null {
+    return changetype<JuryResult | null>(store.get("JuryResult", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get accept(): i32 {
+    let value = this.get("accept");
+    return value!.toI32();
+  }
+
+  set accept(value: i32) {
+    this.set("accept", Value.fromI32(value));
+  }
+
+  get reject(): i32 {
+    let value = this.get("reject");
+    return value!.toI32();
+  }
+
+  set reject(value: i32) {
+    this.set("reject", Value.fromI32(value));
+  }
+}
+
+export class NFT extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("tokenId", Value.fromBigInt(BigInt.zero()));
+    this.set("tokenContract", Value.fromString(""));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save NFT entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save NFT entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("NFT", id.toString(), this);
+    }
+  }
+
+  static load(id: string): NFT | null {
+    return changetype<NFT | null>(store.get("NFT", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get tokenId(): BigInt {
+    let value = this.get("tokenId");
+    return value!.toBigInt();
+  }
+
+  set tokenId(value: BigInt) {
+    this.set("tokenId", Value.fromBigInt(value));
+  }
+
+  get tokenContract(): string {
+    let value = this.get("tokenContract");
+    return value!.toString();
+  }
+
+  set tokenContract(value: string) {
+    this.set("tokenContract", Value.fromString(value));
+  }
+
+  get tokenType(): i32 {
+    let value = this.get("tokenType");
+    return value!.toI32();
+  }
+
+  set tokenType(value: i32) {
+    this.set("tokenType", Value.fromI32(value));
   }
 }
