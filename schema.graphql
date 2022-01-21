@@ -1,12 +1,8 @@
-type Buyer @entity {
-  id: ID!
-  premiums: [Premium] @derivedFrom(field: "buyer")
-  tickets: [Ticket!]! @derivedFrom(field: "buyer")
-}
-
-type Investor @entity {
+type User @entity {
   id: ID!
   investments: [Investment!]! @derivedFrom(field: "investor")
+  premiums: [Premium!] @derivedFrom(field: "buyer")
+  tickets: [Ticket!] @derivedFrom(field: "buyer")
 }
 
 """
@@ -14,6 +10,7 @@ Ticket detail information: HFEntity.sol
 """
 type Ticket @entity {
   id: ID!
+  buyer: User!
   ticketId: BigInt!
   bidProcessType: String!
   claimAmount: BigInt!
@@ -43,7 +40,7 @@ type Investment @entity {
   id: ID!
   ticketId: BigInt!
   ticket: Ticket!
-  investor: Investor!
+  investor: User!
   askingAmount: BigInt!
   earning: BigInt!
   bidProcessType: String!
@@ -62,7 +59,7 @@ Premium detail information: HFEntity.sol
 type Premium @entity {
   id: ID!
   ticket: Ticket!
-  buyer: Buyer!
+  buyer: User!
   askingClaimAmount: BigInt!
   askingPremiumAmount: BigInt!
   bidProcessType: String!
@@ -93,7 +90,7 @@ type ClaimCondition @entity {
   claimType: String!
   claimConstraints: [String!]!
   claimParameters: [String!]!
-  claims: [condition!]! @derivedFrom(field: "condition")
+  claims: [Claim!]! @derivedFrom(field: "condition")
 }
 
 """

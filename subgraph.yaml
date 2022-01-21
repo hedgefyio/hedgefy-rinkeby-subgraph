@@ -13,7 +13,6 @@ dataSources:
     source:
       address: "0xB1410873aD6172052E86531fca4C5b0D637AF21B"
       abi: HFEvent
-      startBlock: 9917673
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
