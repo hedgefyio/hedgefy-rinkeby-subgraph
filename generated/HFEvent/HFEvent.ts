@@ -10,16 +10,234 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class HFClaimEvent extends ethereum.Event {
-  get params(): HFClaimEvent__Params {
-    return new HFClaimEvent__Params(this);
+export class BiddingAdded extends ethereum.Event {
+  get params(): BiddingAdded__Params {
+    return new BiddingAdded__Params(this);
   }
 }
 
-export class HFClaimEvent__Params {
-  _event: HFClaimEvent;
+export class BiddingAdded__Params {
+  _event: BiddingAdded;
 
-  constructor(event: HFClaimEvent) {
+  constructor(event: BiddingAdded) {
+    this._event = event;
+  }
+
+  get investor(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this._event.parameters[2].value.toString();
+  }
+
+  get askingAmount(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get ticketName(): string {
+    return this._event.parameters[4].value.toString();
+  }
+
+  get ticketStatus(): i32 {
+    return this._event.parameters[5].value.toI32();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
+}
+
+export class BiddingRemoved extends ethereum.Event {
+  get params(): BiddingRemoved__Params {
+    return new BiddingRemoved__Params(this);
+  }
+}
+
+export class BiddingRemoved__Params {
+  _event: BiddingRemoved;
+
+  constructor(event: BiddingRemoved) {
+    this._event = event;
+  }
+
+  get investor(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this._event.parameters[2].value.toString();
+  }
+}
+
+export class BiddingSelected extends ethereum.Event {
+  get params(): BiddingSelected__Params {
+    return new BiddingSelected__Params(this);
+  }
+}
+
+export class BiddingSelected__Params {
+  _event: BiddingSelected;
+
+  constructor(event: BiddingSelected) {
+    this._event = event;
+  }
+
+  get investor(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this._event.parameters[2].value.toString();
+  }
+
+  get askingAmount(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get claimAmount(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get premiumAmount(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+
+  get ticketName(): string {
+    return this._event.parameters[6].value.toString();
+  }
+
+  get ticketStatus(): i32 {
+    return this._event.parameters[7].value.toI32();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[8].value.toBigInt();
+  }
+}
+
+export class BiddingUpdated extends ethereum.Event {
+  get params(): BiddingUpdated__Params {
+    return new BiddingUpdated__Params(this);
+  }
+}
+
+export class BiddingUpdated__Params {
+  _event: BiddingUpdated;
+
+  constructor(event: BiddingUpdated) {
+    this._event = event;
+  }
+
+  get investor(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this._event.parameters[2].value.toString();
+  }
+
+  get askingAmount(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get ticketName(): string {
+    return this._event.parameters[4].value.toString();
+  }
+
+  get ticketStatus(): i32 {
+    return this._event.parameters[5].value.toI32();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
+}
+
+export class HFClaimCreated extends ethereum.Event {
+  get params(): HFClaimCreated__Params {
+    return new HFClaimCreated__Params(this);
+  }
+}
+
+export class HFClaimCreated__Params {
+  _event: HFClaimCreated;
+
+  constructor(event: HFClaimCreated) {
+    this._event = event;
+  }
+
+  get user(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get claimId(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get round(): i32 {
+    return this._event.parameters[3].value.toI32();
+  }
+
+  get claimStatus(): i32 {
+    return this._event.parameters[4].value.toI32();
+  }
+
+  get isApproved(): boolean {
+    return this._event.parameters[5].value.toBoolean();
+  }
+
+  get oracleData(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
+
+  get juryAccept(): i32 {
+    return this._event.parameters[7].value.toI32();
+  }
+
+  get juryReject(): i32 {
+    return this._event.parameters[8].value.toI32();
+  }
+
+  get lastDecisionDate(): BigInt {
+    return this._event.parameters[9].value.toBigInt();
+  }
+
+  get roundStartDate(): BigInt {
+    return this._event.parameters[10].value.toBigInt();
+  }
+}
+
+export class HFClaimUpdated extends ethereum.Event {
+  get params(): HFClaimUpdated__Params {
+    return new HFClaimUpdated__Params(this);
+  }
+}
+
+export class HFClaimUpdated__Params {
+  _event: HFClaimUpdated;
+
+  constructor(event: HFClaimUpdated) {
     this._event = event;
   }
 
@@ -120,74 +338,6 @@ export class HFCoinMinted__Params {
   }
 }
 
-export class HFNFTMinted extends ethereum.Event {
-  get params(): HFNFTMinted__Params {
-    return new HFNFTMinted__Params(this);
-  }
-}
-
-export class HFNFTMinted__Params {
-  _event: HFNFTMinted;
-
-  constructor(event: HFNFTMinted) {
-    this._event = event;
-  }
-
-  get user(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get tokenId(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get nftURI(): string {
-    return this._event.parameters[2].value.toString();
-  }
-}
-
-export class InvestAdded extends ethereum.Event {
-  get params(): InvestAdded__Params {
-    return new InvestAdded__Params(this);
-  }
-}
-
-export class InvestAdded__Params {
-  _event: InvestAdded;
-
-  constructor(event: InvestAdded) {
-    this._event = event;
-  }
-
-  get investor(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get ticketId(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get investAmount(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get totalInvestments(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
-  }
-
-  get ticketName(): string {
-    return this._event.parameters[4].value.toString();
-  }
-
-  get ticketStatus(): i32 {
-    return this._event.parameters[5].value.toI32();
-  }
-
-  get eventTimestamp(): BigInt {
-    return this._event.parameters[6].value.toBigInt();
-  }
-}
-
 export class InvestReimbursed extends ethereum.Event {
   get params(): InvestReimbursed__Params {
     return new InvestReimbursed__Params(this);
@@ -251,7 +401,7 @@ export class InvestorEarned__Params {
     return this._event.parameters[2].value.toBigInt();
   }
 
-  get totalInvestments(): BigInt {
+  get claimAmount(): BigInt {
     return this._event.parameters[3].value.toBigInt();
   }
 
@@ -302,6 +452,166 @@ export class InvestsClaimed__Params {
   }
 }
 
+export class NFTAdded extends ethereum.Event {
+  get params(): NFTAdded__Params {
+    return new NFTAdded__Params(this);
+  }
+}
+
+export class NFTAdded__Params {
+  _event: NFTAdded;
+
+  constructor(event: NFTAdded) {
+    this._event = event;
+  }
+
+  get ticketId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get tokenId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+}
+
+export class NFTBurned extends ethereum.Event {
+  get params(): NFTBurned__Params {
+    return new NFTBurned__Params(this);
+  }
+}
+
+export class NFTBurned__Params {
+  _event: NFTBurned;
+
+  constructor(event: NFTBurned) {
+    this._event = event;
+  }
+
+  get tokenId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+}
+
+export class NFTCreated extends ethereum.Event {
+  get params(): NFTCreated__Params {
+    return new NFTCreated__Params(this);
+  }
+}
+
+export class NFTCreated__Params {
+  _event: NFTCreated;
+
+  constructor(event: NFTCreated) {
+    this._event = event;
+  }
+
+  get tokenId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get tokenContract(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get tokenTyp(): i32 {
+    return this._event.parameters[2].value.toI32();
+  }
+}
+
+export class NFTMinted extends ethereum.Event {
+  get params(): NFTMinted__Params {
+    return new NFTMinted__Params(this);
+  }
+}
+
+export class NFTMinted__Params {
+  _event: NFTMinted;
+
+  constructor(event: NFTMinted) {
+    this._event = event;
+  }
+
+  get user(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get tokenId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get nftURI(): string {
+    return this._event.parameters[2].value.toString();
+  }
+}
+
+export class NFTTransferred extends ethereum.Event {
+  get params(): NFTTransferred__Params {
+    return new NFTTransferred__Params(this);
+  }
+}
+
+export class NFTTransferred__Params {
+  _event: NFTTransferred;
+
+  constructor(event: NFTTransferred) {
+    this._event = event;
+  }
+
+  get from(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get to(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get tokenId(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+}
+
+export class PremiumCreated extends ethereum.Event {
+  get params(): PremiumCreated__Params {
+    return new PremiumCreated__Params(this);
+  }
+}
+
+export class PremiumCreated__Params {
+  _event: PremiumCreated;
+
+  constructor(event: PremiumCreated) {
+    this._event = event;
+  }
+
+  get buyer(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get askingClaimAmount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get askingPremiumAmount(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this._event.parameters[4].value.toString();
+  }
+
+  get ticketName(): string {
+    return this._event.parameters[5].value.toString();
+  }
+
+  get reimbursedPremium(): boolean {
+    return this._event.parameters[6].value.toBoolean();
+  }
+}
+
 export class PremiumReimbursed extends ethereum.Event {
   get params(): PremiumReimbursed__Params {
     return new PremiumReimbursed__Params(this);
@@ -336,6 +646,76 @@ export class PremiumReimbursed__Params {
   }
 }
 
+export class TicketCreated extends ethereum.Event {
+  get params(): TicketCreated__Params {
+    return new TicketCreated__Params(this);
+  }
+}
+
+export class TicketCreated__Params {
+  _event: TicketCreated;
+
+  constructor(event: TicketCreated) {
+    this._event = event;
+  }
+
+  get user(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this._event.parameters[2].value.toString();
+  }
+
+  get claimAmount(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get premiumAmount(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get authorizedAmount(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+
+  get marginRatio(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
+
+  get ticketName(): string {
+    return this._event.parameters[7].value.toString();
+  }
+
+  get ticketStatus(): i32 {
+    return this._event.parameters[8].value.toI32();
+  }
+
+  get dates(): TicketCreatedDatesStruct {
+    return changetype<TicketCreatedDatesStruct>(
+      this._event.parameters[9].value.toTuple()
+    );
+  }
+}
+
+export class TicketCreatedDatesStruct extends ethereum.Tuple {
+  get closingDate(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get startDate(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get endDate(): BigInt {
+    return this[2].toBigInt();
+  }
+}
+
 export class TicketStatusUpdate extends ethereum.Event {
   get params(): TicketStatusUpdate__Params {
     return new TicketStatusUpdate__Params(this);
@@ -357,40 +737,112 @@ export class TicketStatusUpdate__Params {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get premiumAmount(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+  get bidProcessType(): string {
+    return this._event.parameters[2].value.toString();
   }
 
-  get totalInvestments(): BigInt {
+  get claimAmount(): BigInt {
     return this._event.parameters[3].value.toBigInt();
   }
 
+  get premiumAmount(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get authorizedAmount(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+
+  get marginRatio(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
+
   get ticketName(): string {
-    return this._event.parameters[4].value.toString();
+    return this._event.parameters[7].value.toString();
   }
 
   get previousStatus(): i32 {
-    return this._event.parameters[5].value.toI32();
+    return this._event.parameters[8].value.toI32();
   }
 
   get ticketStatus(): i32 {
-    return this._event.parameters[6].value.toI32();
+    return this._event.parameters[9].value.toI32();
   }
 
-  get payoutRatio(): BigInt {
-    return this._event.parameters[7].value.toBigInt();
+  get dates(): TicketStatusUpdateDatesStruct {
+    return changetype<TicketStatusUpdateDatesStruct>(
+      this._event.parameters[10].value.toTuple()
+    );
   }
 
+  get selectedBidding(): TicketStatusUpdateSelectedBiddingStruct {
+    return changetype<TicketStatusUpdateSelectedBiddingStruct>(
+      this._event.parameters[11].value.toTuple()
+    );
+  }
+}
+
+export class TicketStatusUpdateDatesStruct extends ethereum.Tuple {
   get closingDate(): BigInt {
-    return this._event.parameters[8].value.toBigInt();
+    return this[0].toBigInt();
   }
 
   get startDate(): BigInt {
-    return this._event.parameters[9].value.toBigInt();
+    return this[1].toBigInt();
   }
 
   get endDate(): BigInt {
-    return this._event.parameters[10].value.toBigInt();
+    return this[2].toBigInt();
+  }
+}
+
+export class TicketStatusUpdateSelectedBiddingStruct extends ethereum.Tuple {
+  get ticketId(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get investorAddress(): Address {
+    return this[1].toAddress();
+  }
+
+  get askingAmount(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get earning(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this[4].toString();
+  }
+
+  get ticketName(): string {
+    return this[5].toString();
+  }
+
+  get tookPremium(): boolean {
+    return this[6].toBoolean();
+  }
+
+  get reimbursedInvest(): boolean {
+    return this[7].toBoolean();
+  }
+
+  get removed(): boolean {
+    return this[8].toBoolean();
+  }
+
+  get expiredInvestAmount(): BigInt {
+    return this[9].toBigInt();
+  }
+
+  get askingExpireDate(): BigInt {
+    return this[10].toBigInt();
+  }
+
+  get investDate(): BigInt {
+    return this[11].toBigInt();
   }
 }
 
@@ -400,20 +852,216 @@ export class HFEvent extends ethereum.SmartContract {
   }
 }
 
-export class EmitHFClaimEventCall extends ethereum.Call {
-  get inputs(): EmitHFClaimEventCall__Inputs {
-    return new EmitHFClaimEventCall__Inputs(this);
+export class EmitBiddingAddedCall extends ethereum.Call {
+  get inputs(): EmitBiddingAddedCall__Inputs {
+    return new EmitBiddingAddedCall__Inputs(this);
   }
 
-  get outputs(): EmitHFClaimEventCall__Outputs {
-    return new EmitHFClaimEventCall__Outputs(this);
+  get outputs(): EmitBiddingAddedCall__Outputs {
+    return new EmitBiddingAddedCall__Outputs(this);
   }
 }
 
-export class EmitHFClaimEventCall__Inputs {
-  _call: EmitHFClaimEventCall;
+export class EmitBiddingAddedCall__Inputs {
+  _call: EmitBiddingAddedCall;
 
-  constructor(call: EmitHFClaimEventCall) {
+  constructor(call: EmitBiddingAddedCall) {
+    this._call = call;
+  }
+
+  get investor(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+
+  get askingAmount(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
+  }
+
+  get ticketName(): string {
+    return this._call.inputValues[4].value.toString();
+  }
+
+  get ticketStatus(): i32 {
+    return this._call.inputValues[5].value.toI32();
+  }
+}
+
+export class EmitBiddingAddedCall__Outputs {
+  _call: EmitBiddingAddedCall;
+
+  constructor(call: EmitBiddingAddedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitBiddingRemovedCall extends ethereum.Call {
+  get inputs(): EmitBiddingRemovedCall__Inputs {
+    return new EmitBiddingRemovedCall__Inputs(this);
+  }
+
+  get outputs(): EmitBiddingRemovedCall__Outputs {
+    return new EmitBiddingRemovedCall__Outputs(this);
+  }
+}
+
+export class EmitBiddingRemovedCall__Inputs {
+  _call: EmitBiddingRemovedCall;
+
+  constructor(call: EmitBiddingRemovedCall) {
+    this._call = call;
+  }
+
+  get investor(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+}
+
+export class EmitBiddingRemovedCall__Outputs {
+  _call: EmitBiddingRemovedCall;
+
+  constructor(call: EmitBiddingRemovedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitBiddingSelectedCall extends ethereum.Call {
+  get inputs(): EmitBiddingSelectedCall__Inputs {
+    return new EmitBiddingSelectedCall__Inputs(this);
+  }
+
+  get outputs(): EmitBiddingSelectedCall__Outputs {
+    return new EmitBiddingSelectedCall__Outputs(this);
+  }
+}
+
+export class EmitBiddingSelectedCall__Inputs {
+  _call: EmitBiddingSelectedCall;
+
+  constructor(call: EmitBiddingSelectedCall) {
+    this._call = call;
+  }
+
+  get investor(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+
+  get askingAmount(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
+  }
+
+  get claimAmount(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
+  }
+
+  get premiumAmount(): BigInt {
+    return this._call.inputValues[5].value.toBigInt();
+  }
+
+  get ticketName(): string {
+    return this._call.inputValues[6].value.toString();
+  }
+
+  get ticketStatus(): i32 {
+    return this._call.inputValues[7].value.toI32();
+  }
+}
+
+export class EmitBiddingSelectedCall__Outputs {
+  _call: EmitBiddingSelectedCall;
+
+  constructor(call: EmitBiddingSelectedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitBiddingUpdatedCall extends ethereum.Call {
+  get inputs(): EmitBiddingUpdatedCall__Inputs {
+    return new EmitBiddingUpdatedCall__Inputs(this);
+  }
+
+  get outputs(): EmitBiddingUpdatedCall__Outputs {
+    return new EmitBiddingUpdatedCall__Outputs(this);
+  }
+}
+
+export class EmitBiddingUpdatedCall__Inputs {
+  _call: EmitBiddingUpdatedCall;
+
+  constructor(call: EmitBiddingUpdatedCall) {
+    this._call = call;
+  }
+
+  get investor(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+
+  get askingAmount(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
+  }
+
+  get ticketName(): string {
+    return this._call.inputValues[4].value.toString();
+  }
+
+  get ticketStatus(): i32 {
+    return this._call.inputValues[5].value.toI32();
+  }
+}
+
+export class EmitBiddingUpdatedCall__Outputs {
+  _call: EmitBiddingUpdatedCall;
+
+  constructor(call: EmitBiddingUpdatedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitHFClaimCreatedCall extends ethereum.Call {
+  get inputs(): EmitHFClaimCreatedCall__Inputs {
+    return new EmitHFClaimCreatedCall__Inputs(this);
+  }
+
+  get outputs(): EmitHFClaimCreatedCall__Outputs {
+    return new EmitHFClaimCreatedCall__Outputs(this);
+  }
+}
+
+export class EmitHFClaimCreatedCall__Inputs {
+  _call: EmitHFClaimCreatedCall;
+
+  constructor(call: EmitHFClaimCreatedCall) {
     this._call = call;
   }
 
@@ -425,8 +1073,8 @@ export class EmitHFClaimEventCall__Inputs {
     return this._call.inputValues[1].value.toBigInt();
   }
 
-  get claim(): EmitHFClaimEventCallClaimStruct {
-    return changetype<EmitHFClaimEventCallClaimStruct>(
+  get claim(): EmitHFClaimCreatedCallClaimStruct {
+    return changetype<EmitHFClaimCreatedCallClaimStruct>(
       this._call.inputValues[2].value.toTuple()
     );
   }
@@ -444,15 +1092,15 @@ export class EmitHFClaimEventCall__Inputs {
   }
 }
 
-export class EmitHFClaimEventCall__Outputs {
-  _call: EmitHFClaimEventCall;
+export class EmitHFClaimCreatedCall__Outputs {
+  _call: EmitHFClaimCreatedCall;
 
-  constructor(call: EmitHFClaimEventCall) {
+  constructor(call: EmitHFClaimCreatedCall) {
     this._call = call;
   }
 }
 
-export class EmitHFClaimEventCallClaimStruct extends ethereum.Tuple {
+export class EmitHFClaimCreatedCallClaimStruct extends ethereum.Tuple {
   get claimId(): BigInt {
     return this[0].toBigInt();
   }
@@ -465,8 +1113,8 @@ export class EmitHFClaimEventCallClaimStruct extends ethereum.Tuple {
     return this[2].toI32();
   }
 
-  get condition(): EmitHFClaimEventCallClaimConditionStruct {
-    return changetype<EmitHFClaimEventCallClaimConditionStruct>(
+  get condition(): EmitHFClaimCreatedCallClaimConditionStruct {
+    return changetype<EmitHFClaimCreatedCallClaimConditionStruct>(
       this[3].toTuple()
     );
   }
@@ -488,7 +1136,109 @@ export class EmitHFClaimEventCallClaimStruct extends ethereum.Tuple {
   }
 }
 
-export class EmitHFClaimEventCallClaimConditionStruct extends ethereum.Tuple {
+export class EmitHFClaimCreatedCallClaimConditionStruct extends ethereum.Tuple {
+  get claimType(): string {
+    return this[0].toString();
+  }
+
+  get constraints(): Array<string> {
+    return this[1].toStringArray();
+  }
+
+  get parameters(): Array<string> {
+    return this[2].toStringArray();
+  }
+}
+
+export class EmitHFClaimUpdatedCall extends ethereum.Call {
+  get inputs(): EmitHFClaimUpdatedCall__Inputs {
+    return new EmitHFClaimUpdatedCall__Inputs(this);
+  }
+
+  get outputs(): EmitHFClaimUpdatedCall__Outputs {
+    return new EmitHFClaimUpdatedCall__Outputs(this);
+  }
+}
+
+export class EmitHFClaimUpdatedCall__Inputs {
+  _call: EmitHFClaimUpdatedCall;
+
+  constructor(call: EmitHFClaimUpdatedCall) {
+    this._call = call;
+  }
+
+  get user(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get claim(): EmitHFClaimUpdatedCallClaimStruct {
+    return changetype<EmitHFClaimUpdatedCallClaimStruct>(
+      this._call.inputValues[2].value.toTuple()
+    );
+  }
+
+  get oracleData(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
+  }
+
+  get juryAccept(): i32 {
+    return this._call.inputValues[4].value.toI32();
+  }
+
+  get juryReject(): i32 {
+    return this._call.inputValues[5].value.toI32();
+  }
+}
+
+export class EmitHFClaimUpdatedCall__Outputs {
+  _call: EmitHFClaimUpdatedCall;
+
+  constructor(call: EmitHFClaimUpdatedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitHFClaimUpdatedCallClaimStruct extends ethereum.Tuple {
+  get claimId(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get round(): i32 {
+    return this[1].toI32();
+  }
+
+  get claimStatus(): i32 {
+    return this[2].toI32();
+  }
+
+  get condition(): EmitHFClaimUpdatedCallClaimConditionStruct {
+    return changetype<EmitHFClaimUpdatedCallClaimConditionStruct>(
+      this[3].toTuple()
+    );
+  }
+
+  get isApproved(): boolean {
+    return this[4].toBoolean();
+  }
+
+  get lastDecisionDate(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get oracleData(): BigInt {
+    return this[6].toBigInt();
+  }
+
+  get roundStartDate(): BigInt {
+    return this[7].toBigInt();
+  }
+}
+
+export class EmitHFClaimUpdatedCallClaimConditionStruct extends ethereum.Tuple {
   get claimType(): string {
     return this[0].toString();
   }
@@ -578,94 +1328,6 @@ export class EmitHFCoinMintedCall__Outputs {
   }
 }
 
-export class EmitHFNFTMintedCall extends ethereum.Call {
-  get inputs(): EmitHFNFTMintedCall__Inputs {
-    return new EmitHFNFTMintedCall__Inputs(this);
-  }
-
-  get outputs(): EmitHFNFTMintedCall__Outputs {
-    return new EmitHFNFTMintedCall__Outputs(this);
-  }
-}
-
-export class EmitHFNFTMintedCall__Inputs {
-  _call: EmitHFNFTMintedCall;
-
-  constructor(call: EmitHFNFTMintedCall) {
-    this._call = call;
-  }
-
-  get user(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get ticketId(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
-  get nftURI(): string {
-    return this._call.inputValues[2].value.toString();
-  }
-}
-
-export class EmitHFNFTMintedCall__Outputs {
-  _call: EmitHFNFTMintedCall;
-
-  constructor(call: EmitHFNFTMintedCall) {
-    this._call = call;
-  }
-}
-
-export class EmitInvestAddedCall extends ethereum.Call {
-  get inputs(): EmitInvestAddedCall__Inputs {
-    return new EmitInvestAddedCall__Inputs(this);
-  }
-
-  get outputs(): EmitInvestAddedCall__Outputs {
-    return new EmitInvestAddedCall__Outputs(this);
-  }
-}
-
-export class EmitInvestAddedCall__Inputs {
-  _call: EmitInvestAddedCall;
-
-  constructor(call: EmitInvestAddedCall) {
-    this._call = call;
-  }
-
-  get investor(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get ticketId(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
-  get investAmount(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-
-  get totalInvestments(): BigInt {
-    return this._call.inputValues[3].value.toBigInt();
-  }
-
-  get ticketName(): string {
-    return this._call.inputValues[4].value.toString();
-  }
-
-  get ticketStatus(): i32 {
-    return this._call.inputValues[5].value.toI32();
-  }
-}
-
-export class EmitInvestAddedCall__Outputs {
-  _call: EmitInvestAddedCall;
-
-  constructor(call: EmitInvestAddedCall) {
-    this._call = call;
-  }
-}
-
 export class EmitInvestReimbursedCall extends ethereum.Call {
   get inputs(): EmitInvestReimbursedCall__Inputs {
     return new EmitInvestReimbursedCall__Inputs(this);
@@ -737,17 +1399,13 @@ export class EmitInvestorEarnedCall__Inputs {
     return this._call.inputValues[1].value.toBigInt();
   }
 
-  get investAmount(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-
   get earning(): BigInt {
-    return this._call.inputValues[3].value.toBigInt();
+    return this._call.inputValues[2].value.toBigInt();
   }
 
   get ticket(): EmitInvestorEarnedCallTicketStruct {
     return changetype<EmitInvestorEarnedCallTicketStruct>(
-      this._call.inputValues[4].value.toTuple()
+      this._call.inputValues[3].value.toTuple()
     );
   }
 }
@@ -765,36 +1423,108 @@ export class EmitInvestorEarnedCallTicketStruct extends ethereum.Tuple {
     return this[0].toBigInt();
   }
 
-  get premiumAmount(): BigInt {
-    return this[1].toBigInt();
+  get bidProcessType(): string {
+    return this[1].toString();
   }
 
-  get totalInvestments(): BigInt {
+  get claimAmount(): BigInt {
     return this[2].toBigInt();
   }
 
-  get ticketName(): string {
-    return this[3].toString();
+  get premiumAmount(): BigInt {
+    return this[3].toBigInt();
   }
 
-  get ticketStatus(): i32 {
-    return this[4].toI32();
+  get authorizedAmount(): BigInt {
+    return this[4].toBigInt();
   }
 
-  get payoutRatio(): BigInt {
+  get marginRatio(): BigInt {
     return this[5].toBigInt();
   }
 
+  get ticketName(): string {
+    return this[6].toString();
+  }
+
+  get ticketStatus(): i32 {
+    return this[7].toI32();
+  }
+
+  get dates(): EmitInvestorEarnedCallTicketDatesStruct {
+    return changetype<EmitInvestorEarnedCallTicketDatesStruct>(
+      this[8].toTuple()
+    );
+  }
+
+  get selectedBidding(): EmitInvestorEarnedCallTicketSelectedBiddingStruct {
+    return changetype<EmitInvestorEarnedCallTicketSelectedBiddingStruct>(
+      this[9].toTuple()
+    );
+  }
+}
+
+export class EmitInvestorEarnedCallTicketDatesStruct extends ethereum.Tuple {
   get closingDate(): BigInt {
-    return this[6].toBigInt();
+    return this[0].toBigInt();
   }
 
   get startDate(): BigInt {
-    return this[7].toBigInt();
+    return this[1].toBigInt();
   }
 
   get endDate(): BigInt {
-    return this[8].toBigInt();
+    return this[2].toBigInt();
+  }
+}
+
+export class EmitInvestorEarnedCallTicketSelectedBiddingStruct extends ethereum.Tuple {
+  get ticketId(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get investorAddress(): Address {
+    return this[1].toAddress();
+  }
+
+  get askingAmount(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get earning(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this[4].toString();
+  }
+
+  get ticketName(): string {
+    return this[5].toString();
+  }
+
+  get tookPremium(): boolean {
+    return this[6].toBoolean();
+  }
+
+  get reimbursedInvest(): boolean {
+    return this[7].toBoolean();
+  }
+
+  get removed(): boolean {
+    return this[8].toBoolean();
+  }
+
+  get expiredInvestAmount(): BigInt {
+    return this[9].toBigInt();
+  }
+
+  get askingExpireDate(): BigInt {
+    return this[10].toBigInt();
+  }
+
+  get investDate(): BigInt {
+    return this[11].toBigInt();
   }
 }
 
@@ -837,6 +1567,262 @@ export class EmitInvestsClaimedCall__Outputs {
 
   constructor(call: EmitInvestsClaimedCall) {
     this._call = call;
+  }
+}
+
+export class EmitNFTAddedCall extends ethereum.Call {
+  get inputs(): EmitNFTAddedCall__Inputs {
+    return new EmitNFTAddedCall__Inputs(this);
+  }
+
+  get outputs(): EmitNFTAddedCall__Outputs {
+    return new EmitNFTAddedCall__Outputs(this);
+  }
+}
+
+export class EmitNFTAddedCall__Inputs {
+  _call: EmitNFTAddedCall;
+
+  constructor(call: EmitNFTAddedCall) {
+    this._call = call;
+  }
+
+  get ticketId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get tokenId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+}
+
+export class EmitNFTAddedCall__Outputs {
+  _call: EmitNFTAddedCall;
+
+  constructor(call: EmitNFTAddedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitNFTBurnedCall extends ethereum.Call {
+  get inputs(): EmitNFTBurnedCall__Inputs {
+    return new EmitNFTBurnedCall__Inputs(this);
+  }
+
+  get outputs(): EmitNFTBurnedCall__Outputs {
+    return new EmitNFTBurnedCall__Outputs(this);
+  }
+}
+
+export class EmitNFTBurnedCall__Inputs {
+  _call: EmitNFTBurnedCall;
+
+  constructor(call: EmitNFTBurnedCall) {
+    this._call = call;
+  }
+
+  get tokenId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class EmitNFTBurnedCall__Outputs {
+  _call: EmitNFTBurnedCall;
+
+  constructor(call: EmitNFTBurnedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitNFTCreatedCall extends ethereum.Call {
+  get inputs(): EmitNFTCreatedCall__Inputs {
+    return new EmitNFTCreatedCall__Inputs(this);
+  }
+
+  get outputs(): EmitNFTCreatedCall__Outputs {
+    return new EmitNFTCreatedCall__Outputs(this);
+  }
+}
+
+export class EmitNFTCreatedCall__Inputs {
+  _call: EmitNFTCreatedCall;
+
+  constructor(call: EmitNFTCreatedCall) {
+    this._call = call;
+  }
+
+  get nft(): EmitNFTCreatedCallNftStruct {
+    return changetype<EmitNFTCreatedCallNftStruct>(
+      this._call.inputValues[0].value.toTuple()
+    );
+  }
+}
+
+export class EmitNFTCreatedCall__Outputs {
+  _call: EmitNFTCreatedCall;
+
+  constructor(call: EmitNFTCreatedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitNFTCreatedCallNftStruct extends ethereum.Tuple {
+  get tokenId(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get tokenContract(): Address {
+    return this[1].toAddress();
+  }
+
+  get tokenType(): i32 {
+    return this[2].toI32();
+  }
+}
+
+export class EmitNFTMintedCall extends ethereum.Call {
+  get inputs(): EmitNFTMintedCall__Inputs {
+    return new EmitNFTMintedCall__Inputs(this);
+  }
+
+  get outputs(): EmitNFTMintedCall__Outputs {
+    return new EmitNFTMintedCall__Outputs(this);
+  }
+}
+
+export class EmitNFTMintedCall__Inputs {
+  _call: EmitNFTMintedCall;
+
+  constructor(call: EmitNFTMintedCall) {
+    this._call = call;
+  }
+
+  get user(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get tokenId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get nftURI(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+}
+
+export class EmitNFTMintedCall__Outputs {
+  _call: EmitNFTMintedCall;
+
+  constructor(call: EmitNFTMintedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitNFTTransferredCall extends ethereum.Call {
+  get inputs(): EmitNFTTransferredCall__Inputs {
+    return new EmitNFTTransferredCall__Inputs(this);
+  }
+
+  get outputs(): EmitNFTTransferredCall__Outputs {
+    return new EmitNFTTransferredCall__Outputs(this);
+  }
+}
+
+export class EmitNFTTransferredCall__Inputs {
+  _call: EmitNFTTransferredCall;
+
+  constructor(call: EmitNFTTransferredCall) {
+    this._call = call;
+  }
+
+  get from(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get to(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get tokenId(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+}
+
+export class EmitNFTTransferredCall__Outputs {
+  _call: EmitNFTTransferredCall;
+
+  constructor(call: EmitNFTTransferredCall) {
+    this._call = call;
+  }
+}
+
+export class EmitPremiumCreatedCall extends ethereum.Call {
+  get inputs(): EmitPremiumCreatedCall__Inputs {
+    return new EmitPremiumCreatedCall__Inputs(this);
+  }
+
+  get outputs(): EmitPremiumCreatedCall__Outputs {
+    return new EmitPremiumCreatedCall__Outputs(this);
+  }
+}
+
+export class EmitPremiumCreatedCall__Inputs {
+  _call: EmitPremiumCreatedCall;
+
+  constructor(call: EmitPremiumCreatedCall) {
+    this._call = call;
+  }
+
+  get buyer(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get premium(): EmitPremiumCreatedCallPremiumStruct {
+    return changetype<EmitPremiumCreatedCallPremiumStruct>(
+      this._call.inputValues[2].value.toTuple()
+    );
+  }
+}
+
+export class EmitPremiumCreatedCall__Outputs {
+  _call: EmitPremiumCreatedCall;
+
+  constructor(call: EmitPremiumCreatedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitPremiumCreatedCallPremiumStruct extends ethereum.Tuple {
+  get ticketId(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get buyerAddress(): Address {
+    return this[1].toAddress();
+  }
+
+  get askingClaimAmount(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get askingPremiumAmount(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this[4].toString();
+  }
+
+  get ticketName(): string {
+    return this[5].toString();
+  }
+
+  get reimbursedPremium(): boolean {
+    return this[6].toBoolean();
   }
 }
 
@@ -883,6 +1869,156 @@ export class EmitPremiumReimbursedCall__Outputs {
 
   constructor(call: EmitPremiumReimbursedCall) {
     this._call = call;
+  }
+}
+
+export class EmitTicketCreatedCall extends ethereum.Call {
+  get inputs(): EmitTicketCreatedCall__Inputs {
+    return new EmitTicketCreatedCall__Inputs(this);
+  }
+
+  get outputs(): EmitTicketCreatedCall__Outputs {
+    return new EmitTicketCreatedCall__Outputs(this);
+  }
+}
+
+export class EmitTicketCreatedCall__Inputs {
+  _call: EmitTicketCreatedCall;
+
+  constructor(call: EmitTicketCreatedCall) {
+    this._call = call;
+  }
+
+  get user(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get ticket(): EmitTicketCreatedCallTicketStruct {
+    return changetype<EmitTicketCreatedCallTicketStruct>(
+      this._call.inputValues[2].value.toTuple()
+    );
+  }
+}
+
+export class EmitTicketCreatedCall__Outputs {
+  _call: EmitTicketCreatedCall;
+
+  constructor(call: EmitTicketCreatedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitTicketCreatedCallTicketStruct extends ethereum.Tuple {
+  get ticketId(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this[1].toString();
+  }
+
+  get claimAmount(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get premiumAmount(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get authorizedAmount(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get marginRatio(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get ticketName(): string {
+    return this[6].toString();
+  }
+
+  get ticketStatus(): i32 {
+    return this[7].toI32();
+  }
+
+  get dates(): EmitTicketCreatedCallTicketDatesStruct {
+    return changetype<EmitTicketCreatedCallTicketDatesStruct>(
+      this[8].toTuple()
+    );
+  }
+
+  get selectedBidding(): EmitTicketCreatedCallTicketSelectedBiddingStruct {
+    return changetype<EmitTicketCreatedCallTicketSelectedBiddingStruct>(
+      this[9].toTuple()
+    );
+  }
+}
+
+export class EmitTicketCreatedCallTicketDatesStruct extends ethereum.Tuple {
+  get closingDate(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get startDate(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get endDate(): BigInt {
+    return this[2].toBigInt();
+  }
+}
+
+export class EmitTicketCreatedCallTicketSelectedBiddingStruct extends ethereum.Tuple {
+  get ticketId(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get investorAddress(): Address {
+    return this[1].toAddress();
+  }
+
+  get askingAmount(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get earning(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this[4].toString();
+  }
+
+  get ticketName(): string {
+    return this[5].toString();
+  }
+
+  get tookPremium(): boolean {
+    return this[6].toBoolean();
+  }
+
+  get reimbursedInvest(): boolean {
+    return this[7].toBoolean();
+  }
+
+  get removed(): boolean {
+    return this[8].toBoolean();
+  }
+
+  get expiredInvestAmount(): BigInt {
+    return this[9].toBigInt();
+  }
+
+  get askingExpireDate(): BigInt {
+    return this[10].toBigInt();
+  }
+
+  get investDate(): BigInt {
+    return this[11].toBigInt();
   }
 }
 
@@ -935,35 +2071,107 @@ export class EmitTicketStatusUpdateCallTicketStruct extends ethereum.Tuple {
     return this[0].toBigInt();
   }
 
-  get premiumAmount(): BigInt {
-    return this[1].toBigInt();
+  get bidProcessType(): string {
+    return this[1].toString();
   }
 
-  get totalInvestments(): BigInt {
+  get claimAmount(): BigInt {
     return this[2].toBigInt();
   }
 
-  get ticketName(): string {
-    return this[3].toString();
+  get premiumAmount(): BigInt {
+    return this[3].toBigInt();
   }
 
-  get ticketStatus(): i32 {
-    return this[4].toI32();
+  get authorizedAmount(): BigInt {
+    return this[4].toBigInt();
   }
 
-  get payoutRatio(): BigInt {
+  get marginRatio(): BigInt {
     return this[5].toBigInt();
   }
 
+  get ticketName(): string {
+    return this[6].toString();
+  }
+
+  get ticketStatus(): i32 {
+    return this[7].toI32();
+  }
+
+  get dates(): EmitTicketStatusUpdateCallTicketDatesStruct {
+    return changetype<EmitTicketStatusUpdateCallTicketDatesStruct>(
+      this[8].toTuple()
+    );
+  }
+
+  get selectedBidding(): EmitTicketStatusUpdateCallTicketSelectedBiddingStruct {
+    return changetype<EmitTicketStatusUpdateCallTicketSelectedBiddingStruct>(
+      this[9].toTuple()
+    );
+  }
+}
+
+export class EmitTicketStatusUpdateCallTicketDatesStruct extends ethereum.Tuple {
   get closingDate(): BigInt {
-    return this[6].toBigInt();
+    return this[0].toBigInt();
   }
 
   get startDate(): BigInt {
-    return this[7].toBigInt();
+    return this[1].toBigInt();
   }
 
   get endDate(): BigInt {
-    return this[8].toBigInt();
+    return this[2].toBigInt();
+  }
+}
+
+export class EmitTicketStatusUpdateCallTicketSelectedBiddingStruct extends ethereum.Tuple {
+  get ticketId(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get investorAddress(): Address {
+    return this[1].toAddress();
+  }
+
+  get askingAmount(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get earning(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get bidProcessType(): string {
+    return this[4].toString();
+  }
+
+  get ticketName(): string {
+    return this[5].toString();
+  }
+
+  get tookPremium(): boolean {
+    return this[6].toBoolean();
+  }
+
+  get reimbursedInvest(): boolean {
+    return this[7].toBoolean();
+  }
+
+  get removed(): boolean {
+    return this[8].toBoolean();
+  }
+
+  get expiredInvestAmount(): BigInt {
+    return this[9].toBigInt();
+  }
+
+  get askingExpireDate(): BigInt {
+    return this[10].toBigInt();
+  }
+
+  get investDate(): BigInt {
+    return this[11].toBigInt();
   }
 }
