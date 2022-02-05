@@ -1,25 +1,142 @@
 """
+✅ - DONE
+❌ - NOT DONE
+
+✅ ❌ mapping(uint256 => address[]) TicketPremiumsKey;
+✅ ❌ mapping(uint256 => address[]) TicketInvestmentsKey;
+✅ ❌ mapping(address => uint256[]) BuyerTicketsKey;
+✅ ❌ mapping(address => uint256[]) InvestorTicketsKey;
+✅ ❌ mapping(uint256 => HFEntity.Ticket) TicketsMap;
+✅ ❌ mapping(uint256 => mapping(address => HFEntity.Premium)) TicketPremiumsMap;
+✅ ❌ mapping(uint256 => mapping(address => HFEntity.Investment)) TicketInvestmentsMap;
+✅ ❌ mapping(address => mapping(uint256 => bool)) InvestorTicketsExist;
+✅ ❌ mapping(address => mapping(uint256 => bool)) BuyerTicketsExist;
+
+✅ ❌ mapping(uint256 => uint256) TicketClaimKey;
+✅ ❌ mapping(uint256 => HFEntity.Claim) ClaimsMap;
+✅ ❌ mapping(uint256 => address) ClaimOwnerMap;
+✅ ❌ mapping(uint256 => address) ClaimOracleMap;
+
+✅ ❌ mapping(uint256 => HFEntity.NFT) TicketNFTMap;
+
+✅ ❌ mapping(bytes32 => IHFBidProcess) bidProcesses;
+
+✅ ❌ mapping(uint256=>bool) pendingRequests;
+
+✅ ❌ mapping(address => bool) tokenMap;
+
+✅ ❌ mapping(uint256 => HFOracleInterface) private ClaimOracleInstance;
+"""
+type User @entity {
+  id: ID!
+  investments: [Investment!]! @derivedFrom(field: "investor")
+  premiums: [Premium!] @derivedFrom(field: "buyer")
+  tickets: [Ticket!] @derivedFrom(field: "buyer")
+}
+
+"""
 Ticket detail information: HFEntity.sol
 """
 type Ticket @entity {
   id: ID!
-  buyer: Buyer!
+  buyer: User!
   ticketId: BigInt!
+  bidProcessType: String!
+  claimAmount: BigInt!
   premiumAmount: BigInt!
-  totalInvestments: BigInt!
+  authorizedAmount: BigInt!
+  marginRatio: BigInt!
   ticketName: String!
-  previousStatus: Int!
   ticketStatus: Int!
-  payoutRatio: BigInt!
+  dates: TicketDate!
+  selectedBidding: Investment
+}
+
+"""
+TicketDate detail information: HFEntity.sol
+"""
+type TicketDate @entity {
+  id: ID!
   closingDate: BigInt!
   startDate: BigInt!
   endDate: BigInt!
 }
 
 """
-Buer Information HFTicketRepository.sol
+Investment detail information: HFEntity.sol
 """
-type Buyer @entity {
+type Investment @entity {
   id: ID!
-  tickets: [Ticket!]! @derivedFrom(field: "buyer")
+  ticketId: BigInt!
+  ticket: Ticket!
+  investor: User!
+  askingAmount: BigInt!
+  earning: BigInt!
+  bidProcessType: String!
+  ticketName: String!
+  tookPremium: Boolean!
+  reimbursedInvest: Boolean!
+  removed: Boolean!
+  expiredInvestAmount: BigInt!
+  askingExpireDate: BigInt!
+  investDate: BigInt!
+}
+
+"""
+Premium detail information: HFEntity.sol
+"""
+type Premium @entity {
+  id: ID!
+  ticket: Ticket!
+  buyer: User!
+  askingClaimAmount: BigInt!
+  askingPremiumAmount: BigInt!
+  bidProcessType: String!
+  ticketName: String!
+  reimbursedPremium: Boolean!
+}
+
+"""
+Claim detail information: HFEntity.sol
+"""
+type Claim @entity {
+  id: ID!
+  claimId: BigInt!
+  round: BigInt!
+  claimStatus: Int!
+  condition: ClaimCondition!
+  isApproved: Boolean!
+  lastDecisionDate: BigInt!
+  oracleData: BigInt!
+  roundStartDate: BigInt!
+}
+
+"""
+ClaimCondition detail information: HFEntity.sol
+"""
+type ClaimCondition @entity {
+  id: ID!
+  claimType: String!
+  claimConstraints: [String!]!
+  claimParameters: [String!]!
+  claims: [Claim!]! @derivedFrom(field: "condition")
+}
+
+"""
+JuryResult detail information: HFEntity.sol
+"""
+type JuryResult @entity {
+  id: ID!
+  accept: Int!
+  reject: Int!
+}
+
+"""
+NFT detail information: HFEntity.sol
+"""
+type NFT @entity {
+  id: ID!
+  tokenId: BigInt!
+  tokenContract: String!
+  tokenType: Int!
 }
