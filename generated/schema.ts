@@ -307,8 +307,8 @@ export class TicketDate extends Entity {
     this.set("endDate", Value.fromBigInt(value));
   }
 
-  get tickets(): string | null {
-    let value = this.get("tickets");
+  get ticket(): string | null {
+    let value = this.get("ticket");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -316,11 +316,11 @@ export class TicketDate extends Entity {
     }
   }
 
-  set tickets(value: string | null) {
+  set ticket(value: string | null) {
     if (!value) {
-      this.unset("tickets");
+      this.unset("ticket");
     } else {
-      this.set("tickets", Value.fromString(<string>value));
+      this.set("ticket", Value.fromString(<string>value));
     }
   }
 }
