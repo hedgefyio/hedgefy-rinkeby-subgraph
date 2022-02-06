@@ -53,6 +53,7 @@ type TicketDate @entity {
   closingDate: BigInt!
   startDate: BigInt!
   endDate: BigInt!
+  tickets: [Ticket!] @derivedFrom(field: "dates")
 }
 
 """

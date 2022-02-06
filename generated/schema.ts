@@ -299,6 +299,23 @@ export class TicketDate extends Entity {
   set endDate(value: BigInt) {
     this.set("endDate", Value.fromBigInt(value));
   }
+
+  get tickets(): Array<string> | null {
+    let value = this.get("tickets");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set tickets(value: Array<string> | null) {
+    if (!value) {
+      this.unset("tickets");
+    } else {
+      this.set("tickets", Value.fromStringArray(<Array<string>>value));
+    }
+  }
 }
 
 export class Investment extends Entity {
