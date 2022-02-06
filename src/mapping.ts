@@ -56,18 +56,19 @@ export function handleTicketCreated(event: TicketCreated): void {
     buyer = new User(buyerId);
     buyer.save();
   }
+
   let ticketId = event.address
     .toHex()
     .concat("-")
     .concat(event.params.ticketId.toString());
-  let ticket = new Ticket(ticketId);
-  let ticketDate = new TicketDate(ticketId);
 
+  let ticketDate = new TicketDate(ticketId);
   ticketDate.closingDate = event.params.dates.closingDate;
   ticketDate.startDate = event.params.dates.startDate;
   ticketDate.endDate = event.params.dates.endDate;
   ticketDate.save;
 
+  let ticket = new Ticket(ticketId);
   ticket.buyer = buyer.id;
   ticket.ticketId = event.params.ticketId;
   ticket.bidProcessType = event.params.bidProcessType;
