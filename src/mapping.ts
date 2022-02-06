@@ -66,6 +66,7 @@ export function handleTicketCreated(event: TicketCreated): void {
   ticketDate.closingDate = event.params.dates.closingDate;
   ticketDate.startDate = event.params.dates.startDate;
   ticketDate.endDate = event.params.dates.endDate;
+  ticketDate.ticket = ticketId;
   ticketDate.save();
 
   let ticket = new Ticket(ticketId);
