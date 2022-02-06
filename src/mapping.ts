@@ -21,7 +21,13 @@ import {
   TicketCreated,
   TicketStatusUpdate,
 } from "../generated/HFEvent/HFEvent";
-import { Claim, Investment, Ticket, User } from "../generated/schema";
+import {
+  Claim,
+  Investment,
+  Ticket,
+  TicketDate,
+  User,
+} from "../generated/schema";
 import { log } from "@graphprotocol/graph-ts";
 
 export function handleBiddingAdded(event: BiddingAdded): void {}
@@ -55,9 +61,23 @@ export function handleTicketCreated(event: TicketCreated): void {
     .concat("-")
     .concat(event.params.ticketId.toString());
   let ticket = new Ticket(ticketId);
+  let ticketDate = new TicketDate(ticketId);
+
+  ticketDate.closingDate = event.params.dates.closingDate;
+  ticketDate.startDate = event.params.dates.startDate;
+  ticketDate.endDate = event.params.dates.endDate;
+  ticketDate.save;
+
   ticket.buyer = buyer.id;
   ticket.ticketId = event.params.ticketId;
-
+  ticket.bidProcessType = event.params.bidProcessType;
+  ticket.claimAmount = event.params.claimAmount;
+  ticket.premiumAmount = event.params.premiumAmount;
+  ticket.authorizedAmount = event.params.authorizedAmount;
+  ticket.marginRatio = event.params.marginRatio;
+  ticket.ticketName = event.params.ticketName;
+  ticket.ticketStatus = event.params.ticketStatus;
+  ticket.dates = ticketDate.id;
   ticket.save();
 }
 

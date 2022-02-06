@@ -1,7 +1,6 @@
 """
-✅ - DONE
-❌ - NOT DONE
-
+Work on the mappings later.
+✅ - DONE ❌ - NOT DONE
 ✅ ❌ mapping(uint256 => address[]) TicketPremiumsKey;
 ✅ ❌ mapping(uint256 => address[]) TicketInvestmentsKey;
 ✅ ❌ mapping(address => uint256[]) BuyerTicketsKey;
@@ -11,20 +10,14 @@
 ✅ ❌ mapping(uint256 => mapping(address => HFEntity.Investment)) TicketInvestmentsMap;
 ✅ ❌ mapping(address => mapping(uint256 => bool)) InvestorTicketsExist;
 ✅ ❌ mapping(address => mapping(uint256 => bool)) BuyerTicketsExist;
-
 ✅ ❌ mapping(uint256 => uint256) TicketClaimKey;
 ✅ ❌ mapping(uint256 => HFEntity.Claim) ClaimsMap;
 ✅ ❌ mapping(uint256 => address) ClaimOwnerMap;
 ✅ ❌ mapping(uint256 => address) ClaimOracleMap;
-
 ✅ ❌ mapping(uint256 => HFEntity.NFT) TicketNFTMap;
-
 ✅ ❌ mapping(bytes32 => IHFBidProcess) bidProcesses;
-
 ✅ ❌ mapping(uint256=>bool) pendingRequests;
-
 ✅ ❌ mapping(address => bool) tokenMap;
-
 ✅ ❌ mapping(uint256 => HFOracleInterface) private ClaimOracleInstance;
 """
 type User @entity {
