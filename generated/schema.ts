@@ -100,7 +100,6 @@ export class Ticket extends Entity {
     this.set("authorizedAmount", Value.fromBigInt(BigInt.zero()));
     this.set("marginRatio", Value.fromBigInt(BigInt.zero()));
     this.set("ticketName", Value.fromString(""));
-    this.set("dates", Value.fromString(""));
   }
 
   save(): void {
@@ -210,13 +209,21 @@ export class Ticket extends Entity {
     this.set("ticketStatus", Value.fromI32(value));
   }
 
-  get dates(): string {
+  get dates(): string | null {
     let value = this.get("dates");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set dates(value: string) {
-    this.set("dates", Value.fromString(value));
+  set dates(value: string | null) {
+    if (!value) {
+      this.unset("dates");
+    } else {
+      this.set("dates", Value.fromString(<string>value));
+    }
   }
 
   get selectedBidding(): string | null {
@@ -300,20 +307,20 @@ export class TicketDate extends Entity {
     this.set("endDate", Value.fromBigInt(value));
   }
 
-  get tickets(): Array<string> | null {
+  get tickets(): string | null {
     let value = this.get("tickets");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toStringArray();
+      return value.toString();
     }
   }
 
-  set tickets(value: Array<string> | null) {
+  set tickets(value: string | null) {
     if (!value) {
       this.unset("tickets");
     } else {
-      this.set("tickets", Value.fromStringArray(<Array<string>>value));
+      this.set("tickets", Value.fromString(<string>value));
     }
   }
 }

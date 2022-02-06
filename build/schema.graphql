@@ -41,7 +41,7 @@ type Ticket @entity {
   marginRatio: BigInt!
   ticketName: String!
   ticketStatus: Int!
-  dates: TicketDate!
+  dates: TicketDate
   selectedBidding: Investment
 }
 
@@ -53,7 +53,7 @@ type TicketDate @entity {
   closingDate: BigInt!
   startDate: BigInt!
   endDate: BigInt!
-  tickets: [Ticket!] @derivedFrom(field: "dates")
+  tickets: Ticket
 }
 
 """
