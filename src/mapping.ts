@@ -24,6 +24,7 @@ import {
 import {
   Claim,
   Investment,
+  NFT,
   Ticket,
   TicketDate,
   User,
@@ -43,7 +44,18 @@ export function handleInvestorEarned(event: InvestorEarned): void {}
 export function handleInvestsClaimed(event: InvestsClaimed): void {}
 export function handleNFTAdded(event: NFTAdded): void {}
 export function handleNFTBurned(event: NFTBurned): void {}
-export function handleNFTCreated(event: NFTCreated): void {}
+export function handleNFTCreated(event: NFTCreated): void {
+  let nftId = event.address
+  .toHex()
+  .concat("-")
+  .concat(event.params.tokenId.toString());
+
+  let nft = new NFT(nftId);
+  nft.tokenContract = event.params.tokenContract.toHex();
+  nft.tokenId = event.params.tokenId;
+  nft.tokenType = event.params.tokenTyp;
+  nft.save();
+}
 export function handleNFTMinted(event: NFTMinted): void {}
 export function handleNFTTransferred(event: NFTTransferred): void {}
 export function handlePremiumCreated(event: PremiumCreated): void {}
