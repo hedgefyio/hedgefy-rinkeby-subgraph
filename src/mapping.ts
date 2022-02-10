@@ -23,56 +23,164 @@ import {
 } from "../generated/HFEvent/HFEvent";
 import {
   Claim,
+  ClaimCondition,
   Investment,
   NFT,
+  Premium,
   Ticket,
   TicketDate,
   User,
 } from "../generated/schema";
-import { log } from "@graphprotocol/graph-ts";
 
-export function handleBiddingAdded(event: BiddingAdded): void {}
-export function handleBiddingRemoved(event: BiddingRemoved): void {}
-export function handleBiddingSelected(event: BiddingSelected): void {}
-export function handleBiddingUpdated(event: BiddingUpdated): void {}
-export function handleHFClaimCreated(event: HFClaimCreated): void {}
-export function handleHFClaimUpdated(event: HFClaimUpdated): void {}
-export function handleHFCoinBurned(event: HFCoinBurned): void {}
-export function handleHFCoinMinted(event: HFCoinMinted): void {}
-export function handleInvestReimbursed(event: InvestReimbursed): void {}
-export function handleInvestorEarned(event: InvestorEarned): void {}
-export function handleInvestsClaimed(event: InvestsClaimed): void {}
-export function handleNFTAdded(event: NFTAdded): void {}
-export function handleNFTBurned(event: NFTBurned): void {}
+export function handleBiddingAdded(event: BiddingAdded): void {
+  let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
+  let investor = User.load(event.params.investor.toHex())
+  let ticket = Ticket.load(ticketId)
+  if (!investor || !ticket) return
+
+  let investmentId = `${investor.id}-${event.params.ticketId.toString()}`
+  let investment = new Investment(investmentId)
+  investment.investor = investor.id
+  investment.ticketName = event.params.ticketName
+  investment.tookPremium = false
+  investment.askingAmount = event.params.askingAmount
+  investment.ticketName = event.params.ticketName;
+  investment.bidProcessType = event.params.bidProcessType
+  investment.reimbursedInvest = false
+  investment.removed = false
+  investment.ticket = ticket.id
+
+  investment.save()
+}
+export function handleBiddingRemoved(event: BiddingRemoved): void {
+  let investor = User.load(event.params.investor.toHex())
+  if (!investor) return;
+  let investmentId = `${investor.id}-${event.params.ticketId.toString()}`
+  let investment = Investment.load(investmentId)
+  if (!investment) return
+  investment.removed = true
+  investment.save()
+}
+export function handleBiddingSelected(event: BiddingSelected): void {
+  let investor = User.load(event.params.investor.toHex())
+  if (!investor) return;
+  let investmentId = `${investor.id}-${event.params.ticketId.toString()}`
+  let investment = Investment.load(investmentId)
+  if (!investment) return
+  investment.askingAmount = event.params.askingAmount
+  investment.bidProcessType = event.params.bidProcessType
+  investment.save()
+}
+export function handleBiddingUpdated(event: BiddingUpdated): void {
+  let investor = User.load(event.params.investor.toHex())
+  if (!investor) return;
+  let investmentId = `${investor.id}-${event.params.ticketId.toString()}`
+  let investment = Investment.load(investmentId)
+  if (!investment) return
+  investment.askingAmount = event.params.askingAmount
+  investment.bidProcessType = event.params.bidProcessType
+  investment.save()
+}
+export function handleHFClaimCreated(event: HFClaimCreated): void {
+  let claimId = event.logIndex.toString();
+  let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
+  let claim = new Claim(claimId);
+  let ticket = Ticket.load(ticketId);
+
+  if (!ticket) return;
+  if (ticket == null) {
+    ticket = new Ticket(ticketId);
+    ticket.save();
+  }
+
+  let claimCondition = new ClaimCondition(claimId);
+  claimCondition.save()
+
+  claim.ticket = ticket.id;
+  claim.round = new BigInt(event.params.round)
+  claim.isApproved = event.params.isApproved
+  claim.claimStatus = event.params.claimStatus
+  claim.roundStartDate = new BigInt(0)
+  claim.condition = claimCondition.id
+
+  claim.save()
+}
+export function handleHFClaimUpdated(event: HFClaimUpdated): void {
+  let claim = Claim.load(event.params.claimId.toHex())
+
+  if (!claim) return;
+  claim.roundStartDate = event.params.roundStartDate;
+  claim.isApproved = event.params.isApproved;
+  claim.lastDecisionDate = event.params.lastDecisionDate;
+  claim.oracleData = event.params.oracleData;
+  claim.round = new BigInt(event.params.round)
+  claim.claimStatus = event.params.claimStatus
+  claim.ticket = event.params.ticketId.toHex();
+
+  claim.save()
+}
+export function handleHFCoinBurned(event: HFCoinBurned): void { }
+export function handleHFCoinMinted(event: HFCoinMinted): void { }
+export function handleInvestReimbursed(event: InvestReimbursed): void { }
+export function handleInvestorEarned(event: InvestorEarned): void { }
+export function handleInvestsClaimed(event: InvestsClaimed): void { }
+export function handleNFTAdded(event: NFTAdded): void {
+  let nftId = event.params.tokenId.toString();
+  let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
+  let nft = NFT.load(nftId)
+  let ticket = Ticket.load(ticketId)
+  if (!ticket || !nft) return
+
+  ticket.nft = nft.id
+  ticket.save()
+}
+export function handleNFTBurned(event: NFTBurned): void { }
 export function handleNFTCreated(event: NFTCreated): void {
-  let nftId = event.address
-  .toHex()
-  .concat("-")
-  .concat(event.params.tokenId.toString());
-
-  let nft = new NFT(nftId);
+  let nft = new NFT(event.params.tokenId.toString());
   nft.tokenContract = event.params.tokenContract.toHex();
   nft.tokenId = event.params.tokenId;
   nft.tokenType = event.params.tokenTyp;
   nft.save();
 }
-export function handleNFTMinted(event: NFTMinted): void {}
-export function handleNFTTransferred(event: NFTTransferred): void {}
-export function handlePremiumCreated(event: PremiumCreated): void {}
-export function handlePremiumReimbursed(event: PremiumReimbursed): void {}
+export function handleNFTMinted(event: NFTMinted): void { }
+export function handleNFTTransferred(event: NFTTransferred): void { }
+export function handlePremiumCreated(event: PremiumCreated): void {
+  let buyer = User.load(event.params.buyer.toHex());
+  let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
+  let ticket = User.load(ticketId);
+  if (!buyer || !ticket) return;
+
+  let premium = new Premium(`${ticketId}-${buyer.id}`)
+  premium.buyer = buyer.id
+  premium.ticket = ticket.id
+  premium.ticketName = event.params.ticketName
+  premium.bidProcessType = event.params.bidProcessType
+  premium.reimbursedPremium = event.params.reimbursedPremium
+  premium.askingClaimAmount = event.params.askingClaimAmount
+  premium.askingPremiumAmount = event.params.askingPremiumAmount
+
+  premium.save()
+}
+export function handlePremiumReimbursed(event: PremiumReimbursed): void {
+  let buyer = User.load(event.params.buyer.toHex())
+  let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
+  let ticket = User.load(ticketId);
+  if (!buyer || !ticket) return;
+
+  let premium = new Premium(`${ticketId}-${buyer.id}`)
+  premium.reimbursedPremium = true
+
+  premium.save()
+}
 
 export function handleTicketCreated(event: TicketCreated): void {
-  let buyerId = event.params.user.toHex();
-  let buyer = User.load(buyerId);
+  let buyer = User.load(event.params.user.toHex());
   if (buyer == null) {
-    buyer = new User(buyerId);
+    buyer = new User(event.params.user.toHex());
     buyer.save();
   }
 
-  let ticketId = event.address
-    .toHex()
-    .concat("-")
-    .concat(event.params.ticketId.toString());
+  let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
 
   let ticketDate = new TicketDate(ticketId);
   ticketDate.closingDate = event.params.dates.closingDate;
@@ -96,14 +204,23 @@ export function handleTicketCreated(event: TicketCreated): void {
 }
 
 export function handleTicketStatusUpdate(event: TicketStatusUpdate): void {
-  let id = event.address
-    .toHex()
-    .concat("-")
-    .concat(event.params.ticketId.toHex());
+  let ticket = Ticket.load(`${event.address.toHex()}-${event.params.ticketId.toString()}`);
+  let ticketDate = TicketDate.load(event.params.ticketId.toString());
 
-  let ticket = Ticket.load(id);
+  if (ticketDate != null) {
+    ticketDate.closingDate = event.params.dates.closingDate;
+    ticketDate.startDate = event.params.dates.startDate;
+    ticketDate.endDate = event.params.dates.endDate;
+    ticketDate.save();
+  }
 
   if (ticket != null) {
+    ticket.bidProcessType = event.params.bidProcessType;
+    ticket.claimAmount = event.params.claimAmount;
+    ticket.premiumAmount = event.params.premiumAmount;
+    ticket.authorizedAmount = event.params.authorizedAmount;
+    ticket.marginRatio = event.params.marginRatio;
+    ticket.ticketName = event.params.ticketName;
     ticket.ticketStatus = event.params.ticketStatus;
     // other params that need to be saved
     ticket.save();

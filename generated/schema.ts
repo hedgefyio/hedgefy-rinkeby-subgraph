@@ -242,6 +242,23 @@ export class Ticket extends Entity {
       this.set("selectedBidding", Value.fromString(<string>value));
     }
   }
+
+  get nft(): string | null {
+    let value = this.get("nft");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set nft(value: string | null) {
+    if (!value) {
+      this.unset("nft");
+    } else {
+      this.set("nft", Value.fromString(<string>value));
+    }
+  }
 }
 
 export class TicketDate extends Entity {
@@ -594,6 +611,7 @@ export class Claim extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
+    this.set("ticket", Value.fromString(""));
     this.set("claimId", Value.fromBigInt(BigInt.zero()));
     this.set("round", Value.fromBigInt(BigInt.zero()));
     this.set("condition", Value.fromString(""));
@@ -626,6 +644,15 @@ export class Claim extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get ticket(): string {
+    let value = this.get("ticket");
+    return value!.toString();
+  }
+
+  set ticket(value: string) {
+    this.set("ticket", Value.fromString(value));
   }
 
   get claimId(): BigInt {
