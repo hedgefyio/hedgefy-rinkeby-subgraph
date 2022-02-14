@@ -71,7 +71,7 @@ type Investment @entity {
   earning: BigInt!
   bidProcessType: String!
   ticketName: String!
-  tookPremium: Boolean!
+  tookPremium: Boolean
   reimbursedInvest: Boolean!
   removed: Boolean!
   expiredInvestAmount: BigInt!

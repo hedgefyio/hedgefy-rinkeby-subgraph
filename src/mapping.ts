@@ -77,9 +77,13 @@ export function handleBiddingSelected(event: BiddingSelected): void {
   investment.bidProcessType = event.params.bidProcessType;
   investment.earning = event.params.premiumAmount;
   investment.save();
-  if(!ticket) return;
+  if (!ticket) return;
   ticket.claimAmount = event.params.askingAmount;
-  ticket.authorizedAmount = new BigInt(parseInt(event.params.askingAmount.toString()) * parseInt(ticket.marginRatio.toString()) / 100)
+  let authorizedAmount =
+    (parseInt(event.params.askingAmount.toString()) *
+      parseInt(ticket.marginRatio.toString())) /
+    100;
+  ticket.authorizedAmount = new BigInt(authorizedAmount as i32);
   ticket.ticketStatus = 2; //Status: CLOSED
 
   ticket.save();
@@ -144,7 +148,7 @@ export function handleInvestReimbursed(event: InvestReimbursed): void {}
 export function handleInvestorEarned(event: InvestorEarned): void {
   //MAYBE DONE
   let investor = User.load(event.params.investor.toHex());
-  if(!investor) return;
+  if (!investor) return;
   let investmentId = `${investor.id}-${event.params.ticketId.toString()}`;
   let investment = new Investment(investmentId);
   investment.earning = event.params.earning;
