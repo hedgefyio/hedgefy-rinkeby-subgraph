@@ -55,6 +55,7 @@ export function handleBiddingAdded(event: BiddingAdded): void {
   investment.save();
 }
 export function handleBiddingRemoved(event: BiddingRemoved): void {
+  //IN REVIEW
   let investor = User.load(event.params.investor.toHex());
   if (!investor) return;
   let investmentId = `${investor.id}-${event.params.ticketId.toString()}`;
@@ -64,21 +65,24 @@ export function handleBiddingRemoved(event: BiddingRemoved): void {
   investment.save();
 }
 export function handleBiddingSelected(event: BiddingSelected): void {
+  //IN REVIEW
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
-  let investor = User.load(event.params.investor.toHex());
   let ticket = Ticket.load(ticketId);
-
-  if (!investor || !ticket) return;
+  let investor = User.load(event.params.investor.toHex());
+  if (!investor) return;
   let investmentId = `${investor.id}-${event.params.ticketId.toString()}`;
   let investment = Investment.load(investmentId);
   if (!investment) return;
-
-  ticket.selectedBidding = investment.id;
-  ticket.save();
-
   investment.askingAmount = event.params.askingAmount;
   investment.bidProcessType = event.params.bidProcessType;
+  investment.earning = event.params.premiumAmount;
   investment.save();
+  if(!ticket) return;
+  ticket.claimAmount = event.params.askingAmount;
+  ticket.authorizedAmount = new BigInt(parseInt(event.params.askingAmount.toString()) * parseInt(ticket.marginRatio.toString()) / 100)
+  ticket.ticketStatus = 2; //Status: CLOSED
+
+  ticket.save();
 }
 export function handleBiddingUpdated(event: BiddingUpdated): void {
   let investor = User.load(event.params.investor.toHex());
@@ -137,8 +141,25 @@ export function handleHFClaimUpdated(event: HFClaimUpdated): void {
 export function handleHFCoinBurned(event: HFCoinBurned): void {}
 export function handleHFCoinMinted(event: HFCoinMinted): void {}
 export function handleInvestReimbursed(event: InvestReimbursed): void {}
-export function handleInvestorEarned(event: InvestorEarned): void {}
-export function handleInvestsClaimed(event: InvestsClaimed): void {}
+export function handleInvestorEarned(event: InvestorEarned): void {
+  //MAYBE DONE
+  let investor = User.load(event.params.investor.toHex());
+  if(!investor) return;
+  let investmentId = `${investor.id}-${event.params.ticketId.toString()}`;
+  let investment = new Investment(investmentId);
+  investment.earning = event.params.earning;
+  investment.save();
+}
+export function handleInvestsClaimed(event: InvestsClaimed): void {
+  //DONE
+  let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
+  let ticket = Ticket.load(ticketId);
+  if (!ticket) return;
+
+  ticket.claimAmount = new BigInt(0);
+  ticket.ticketStatus = 6; //Status: Claimed
+  ticket.save();
+}
 export function handleNFTAdded(event: NFTAdded): void {
   let nftId = event.params.tokenId.toString();
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
@@ -183,7 +204,7 @@ export function handlePremiumCreated(event: PremiumCreated): void {
 export function handlePremiumReimbursed(event: PremiumReimbursed): void {
   let buyer = User.load(event.params.buyer.toHex());
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
-  let ticket = User.load(ticketId);
+  let ticket = Ticket.load(ticketId);
   if (!buyer || !ticket) return;
 
   let premium = new Premium(`${ticketId}-${buyer.id}`);
