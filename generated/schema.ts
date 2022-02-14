@@ -259,6 +259,40 @@ export class Ticket extends Entity {
       this.set("nft", Value.fromString(<string>value));
     }
   }
+
+  get claim(): string | null {
+    let value = this.get("claim");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set claim(value: string | null) {
+    if (!value) {
+      this.unset("claim");
+    } else {
+      this.set("claim", Value.fromString(<string>value));
+    }
+  }
+
+  get premium(): string | null {
+    let value = this.get("premium");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set premium(value: string | null) {
+    if (!value) {
+      this.unset("premium");
+    } else {
+      this.set("premium", Value.fromString(<string>value));
+    }
+  }
 }
 
 export class TicketDate extends Entity {

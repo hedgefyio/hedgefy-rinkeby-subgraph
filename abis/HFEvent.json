@@ -251,6 +251,28 @@
           "internalType": "uint256",
           "name": "roundStartDate",
           "type": "uint256"
+        },
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "claimType",
+              "type": "string"
+            },
+            {
+              "internalType": "string[]",
+              "name": "constraints",
+              "type": "string[]"
+            },
+            {
+              "internalType": "string[]",
+              "name": "parameters",
+              "type": "string[]"
+            }
+          ],
+          "internalType": "struct HFEntity.ClaimCondition",
+          "name": "condition",
+          "type": "tuple"
         }
       ],
       "name": "HFClaimCreated",
