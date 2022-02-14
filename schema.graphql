@@ -45,6 +45,7 @@ type Ticket @entity {
   selectedBidding: Investment
   nft: NFT
   claim: Claim
+  premium: Premium
 }
 
 """

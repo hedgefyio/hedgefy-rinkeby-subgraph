@@ -226,6 +226,26 @@ export class HFClaimCreated__Params {
   get roundStartDate(): BigInt {
     return this._event.parameters[10].value.toBigInt();
   }
+
+  get condition(): HFClaimCreatedConditionStruct {
+    return changetype<HFClaimCreatedConditionStruct>(
+      this._event.parameters[11].value.toTuple()
+    );
+  }
+}
+
+export class HFClaimCreatedConditionStruct extends ethereum.Tuple {
+  get claimType(): string {
+    return this[0].toString();
+  }
+
+  get constraints(): Array<string> {
+    return this[1].toStringArray();
+  }
+
+  get parameters(): Array<string> {
+    return this[2].toStringArray();
+  }
 }
 
 export class HFClaimUpdated extends ethereum.Event {
