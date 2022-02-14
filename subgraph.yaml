@@ -11,7 +11,7 @@ dataSources:
     name: HFEvent
     network: rinkeby
     source:
-      address: "0xb16f6241ef83611894633a643f74Cb532ff2Fdba"
+      address: "0xB7273726d16262dC42128AE0178C7E988e5546BF"
       abi: HFEvent
       startBlock: 10056151
     mapping:
@@ -33,7 +33,7 @@ dataSources:
           handler: handleBiddingSelected
         - event: BiddingUpdated(indexed address,indexed uint256,string,int256,string,uint8,uint256)
           handler: handleBiddingUpdated
-        - event: HFClaimCreated(indexed address,indexed uint256,indexed uint256,uint8,uint8,bool,uint256,uint8,uint8,uint256,uint256)
+        - event: HFClaimCreated(indexed address,indexed uint256,indexed uint256,uint8,uint8,bool,uint256,uint8,uint8,uint256,uint256,(string,string[],string[]))
           handler: handleHFClaimCreated
         - event: HFClaimUpdated(indexed address,indexed uint256,indexed uint256,uint8,uint8,bool,uint256,uint8,uint8,uint256,uint256)
           handler: handleHFClaimUpdated

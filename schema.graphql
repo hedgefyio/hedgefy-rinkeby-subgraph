@@ -43,6 +43,9 @@ type Ticket @entity {
   ticketStatus: Int!
   dates: TicketDate
   selectedBidding: Investment
+  nft: NFT
+  claim: Claim
+  premium: Premium
 }
 
 """
@@ -95,6 +98,7 @@ Claim detail information: HFEntity.sol
 """
 type Claim @entity {
   id: ID!
+  ticket: Ticket!
   claimId: BigInt!
   round: BigInt!
   claimStatus: Int!
