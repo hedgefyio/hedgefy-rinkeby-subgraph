@@ -892,7 +892,6 @@ export class NFT extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("tokenId", Value.fromBigInt(BigInt.zero()));
-    this.set("tokenContract", Value.fromString(""));
   }
 
   save(): void {
@@ -930,13 +929,21 @@ export class NFT extends Entity {
     this.set("tokenId", Value.fromBigInt(value));
   }
 
-  get tokenContract(): string {
+  get tokenContract(): string | null {
     let value = this.get("tokenContract");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set tokenContract(value: string) {
-    this.set("tokenContract", Value.fromString(value));
+  set tokenContract(value: string | null) {
+    if (!value) {
+      this.unset("tokenContract");
+    } else {
+      this.set("tokenContract", Value.fromString(<string>value));
+    }
   }
 
   get tokenType(): i32 {

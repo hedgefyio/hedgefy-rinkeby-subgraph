@@ -176,15 +176,23 @@ export function handleNFTAdded(event: NFTAdded): void {
 }
 export function handleNFTBurned(event: NFTBurned): void {}
 export function handleNFTCreated(event: NFTCreated): void {
-  let nft = new NFT(event.params.tokenId.toString());
+  let tokenId = event.params.tokenId;
+  let nft = NFT.load(tokenId.toString());
+  if (!nft) {
+    nft = new NFT(tokenId.toString());
+    nft.tokenId = tokenId;
+  }
   nft.tokenContract = event.params.tokenContract.toHex();
-  nft.tokenId = event.params.tokenId;
   nft.tokenType = event.params.tokenType;
   nft.save();
 }
 export function handleNFTMinted(event: NFTMinted): void {
-  let nft = NFT.load(event.params.tokenId.toString());
-  if (!nft) return;
+  let tokenId = event.params.tokenId;
+  let nft = NFT.load(tokenId.toString());
+  if (!nft) {
+    nft = new NFT(tokenId.toString());
+  }
+  nft.tokenId = tokenId;
   nft.tokenUri = event.params.nftURI;
   nft.save();
 }

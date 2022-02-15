@@ -135,7 +135,7 @@ NFT detail information: HFEntity.sol
 type NFT @entity {
   id: ID!
   tokenId: BigInt!
-  tokenContract: String!
-  tokenType: Int!
+  tokenContract: String
+  tokenType: Int
   tokenUri: String
 }
