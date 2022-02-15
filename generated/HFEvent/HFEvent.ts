@@ -533,7 +533,7 @@ export class NFTCreated__Params {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get tokenTyp(): i32 {
+  get tokenType(): i32 {
     return this._event.parameters[2].value.toI32();
   }
 }

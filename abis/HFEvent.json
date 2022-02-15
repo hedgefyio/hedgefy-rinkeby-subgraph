@@ -580,7 +580,7 @@
         {
           "indexed": false,
           "internalType": "enum HFEnum.NFTType",
-          "name": "tokenTyp",
+          "name": "tokenType",
           "type": "uint8"
         }
       ],

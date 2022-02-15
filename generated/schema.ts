@@ -947,4 +947,21 @@ export class NFT extends Entity {
   set tokenType(value: i32) {
     this.set("tokenType", Value.fromI32(value));
   }
+
+  get tokenUri(): string | null {
+    let value = this.get("tokenUri");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set tokenUri(value: string | null) {
+    if (!value) {
+      this.unset("tokenUri");
+    } else {
+      this.set("tokenUri", Value.fromString(<string>value));
+    }
+  }
 }

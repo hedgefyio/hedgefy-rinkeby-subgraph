@@ -72,8 +72,8 @@ type Investment @entity {
   bidProcessType: String!
   ticketName: String!
   tookPremium: Boolean
-  reimbursedInvest: Boolean!
-  removed: Boolean!
+  reimbursedInvest: Boolean
+  removed: Boolean
   expiredInvestAmount: BigInt!
   askingExpireDate: BigInt!
   investDate: BigInt!
@@ -137,4 +137,5 @@ type NFT @entity {
   tokenId: BigInt!
   tokenContract: String!
   tokenType: Int!
+  tokenUri: String
 }
