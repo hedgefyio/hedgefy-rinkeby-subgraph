@@ -55,7 +55,6 @@ export function handleBiddingAdded(event: BiddingAdded): void {
   investment.save();
 }
 export function handleBiddingRemoved(event: BiddingRemoved): void {
-  //IN REVIEW
   let investor = User.load(event.params.investor.toHex());
   if (!investor) return;
   let investmentId = `${investor.id}-${event.params.ticketId.toString()}`;
@@ -65,7 +64,6 @@ export function handleBiddingRemoved(event: BiddingRemoved): void {
   investment.save();
 }
 export function handleBiddingSelected(event: BiddingSelected): void {
-  //IN REVIEW
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
   let ticket = Ticket.load(ticketId);
   let investor = User.load(event.params.investor.toHex());
@@ -144,9 +142,15 @@ export function handleHFClaimUpdated(event: HFClaimUpdated): void {
 }
 export function handleHFCoinBurned(event: HFCoinBurned): void {}
 export function handleHFCoinMinted(event: HFCoinMinted): void {}
-export function handleInvestReimbursed(event: InvestReimbursed): void {}
+export function handleInvestReimbursed(event: InvestReimbursed): void {
+  let investor = User.load(event.params.investor.toHex());
+  if (!investor) return;
+  let investmentId = `${investor.id}-${event.params.ticketId.toString()}`;
+  let investment = new Investment(investmentId);
+  investment.expiredInvestAmount = event.params.reimburseAmount;
+  investment.save();
+}
 export function handleInvestorEarned(event: InvestorEarned): void {
-  //MAYBE DONE
   let investor = User.load(event.params.investor.toHex());
   if (!investor) return;
   let investmentId = `${investor.id}-${event.params.ticketId.toString()}`;
