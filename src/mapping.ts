@@ -36,7 +36,13 @@ export function handleBiddingAdded(event: BiddingAdded): void {
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
   let investor = User.load(event.params.investor.toHex());
   let ticket = Ticket.load(ticketId);
-  if (!investor || !ticket) return;
+  if (!ticket) return;
+
+  if (!investor) {
+    investor = new User(event.params.investor.toHex());
+    investor.save();
+  }
+
 
   let investmentId = `${investor.id}-${event.params.ticketId.toString()}`;
   let investment = new Investment(investmentId);
