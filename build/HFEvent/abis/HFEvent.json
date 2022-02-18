@@ -189,6 +189,166 @@
       {
         "indexed": true,
         "internalType": "address",
+        "name": "donor",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "amount",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "option",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "refunded",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "DonationCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "donor",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "amount",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "option",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "refunded",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "DonationRefunded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "donor",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "amount",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "option",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "refunded",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "DonationUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "donee",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int256",
+        "name": "sum",
+        "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "DonationsReceived",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "user",
         "type": "address"
       },
@@ -270,6 +430,7 @@
             "type": "string[]"
           }
         ],
+        "indexed": false,
         "internalType": "struct HFEntity.ClaimCondition",
         "name": "condition",
         "type": "tuple"
@@ -361,12 +522,6 @@
         "type": "address"
       },
       {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "ticketId",
-        "type": "uint256"
-      },
-      {
         "indexed": false,
         "internalType": "uint256",
         "name": "amount",
@@ -386,10 +541,29 @@
         "type": "address"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "uint256",
-        "name": "ticketId",
+        "name": "amount",
         "type": "uint256"
+      }
+    ],
+    "name": "HFCoinMinted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
       },
       {
         "indexed": false,
@@ -398,7 +572,7 @@
         "type": "uint256"
       }
     ],
-    "name": "HFCoinMinted",
+    "name": "HFCoinTransferredFrom",
     "type": "event"
   },
   {
@@ -1116,6 +1290,145 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "donor",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "ticketId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "donorAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "int256",
+            "name": "amount",
+            "type": "int256"
+          },
+          {
+            "internalType": "string",
+            "name": "option",
+            "type": "string"
+          },
+          {
+            "internalType": "bool",
+            "name": "refunded",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct HFEntity.Donation",
+        "name": "donate",
+        "type": "tuple"
+      }
+    ],
+    "name": "EmitDonationCreated",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "donor",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "amount",
+        "type": "int256"
+      },
+      {
+        "internalType": "string",
+        "name": "option",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "refunded",
+        "type": "bool"
+      }
+    ],
+    "name": "EmitDonationRefunded",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "donor",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "amount",
+        "type": "int256"
+      },
+      {
+        "internalType": "string",
+        "name": "option",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "refunded",
+        "type": "bool"
+      }
+    ],
+    "name": "EmitDonationUpdated",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "donee",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "int256",
+        "name": "sum",
+        "type": "int256"
+      }
+    ],
+    "name": "EmitDonationsReceived",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "user",
         "type": "address"
       },
@@ -1315,11 +1628,6 @@
       },
       {
         "internalType": "uint256",
-        "name": "ticketId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
       }
@@ -1338,8 +1646,26 @@
       },
       {
         "internalType": "uint256",
-        "name": "ticketId",
+        "name": "amount",
         "type": "uint256"
+      }
+    ],
+    "name": "EmitHFCoinMinted",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
       },
       {
         "internalType": "uint256",
@@ -1347,7 +1673,7 @@
         "type": "uint256"
       }
     ],
-    "name": "EmitHFCoinMinted",
+    "name": "EmitHFCoinTransferredFrom",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1427,6 +1753,11 @@
           {
             "internalType": "int256",
             "name": "authorizedAmount",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "donatedAmount",
             "type": "int256"
           },
           {
@@ -1812,6 +2143,11 @@
             "type": "int256"
           },
           {
+            "internalType": "int256",
+            "name": "donatedAmount",
+            "type": "int256"
+          },
+          {
             "internalType": "int64",
             "name": "marginRatio",
             "type": "int64"
@@ -1968,6 +2304,11 @@
           {
             "internalType": "int256",
             "name": "authorizedAmount",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "donatedAmount",
             "type": "int256"
           },
           {

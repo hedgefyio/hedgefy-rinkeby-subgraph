@@ -11,7 +11,7 @@ dataSources:
     name: HFEvent
     network: rinkeby
     source:
-      address: "0xB7273726d16262dC42128AE0178C7E988e5546BF"
+      address: "0x3cc5d933924DEd4Ed708a3dCcAAD33DDB0f6DE3F"
       abi: HFEvent
       startBlock: 10056151
     mapping:
@@ -40,9 +40,9 @@ dataSources:
         - event: HFClaimUpdated(indexed address,indexed uint256,indexed
             uint256,uint8,uint8,bool,uint256,uint8,uint8,uint256,uint256)
           handler: handleHFClaimUpdated
-        - event: HFCoinBurned(indexed address,indexed uint256,uint256)
+        - event: HFCoinBurned(indexed address,uint256)
           handler: handleHFCoinBurned
-        - event: HFCoinMinted(indexed address,indexed uint256,uint256)
+        - event: HFCoinMinted(indexed address,uint256)
           handler: handleHFCoinMinted
         - event: InvestReimbursed(indexed address,indexed uint256,int256,int256,string,uint256)
           handler: handleInvestReimbursed
@@ -71,4 +71,12 @@ dataSources:
         - event: TicketStatusUpdate(indexed address,indexed
             uint256,string,int256,int256,int256,int64,string,uint8,uint8,(uint256,uint256,uint256),(uint256,address,int256,int256,string,string,bool,bool,bool,int256,uint256,uint256))
           handler: handleTicketStatusUpdate
+        - event: DonationCreated(indexed address,indexed uint256,int256,string,bool,uint256)
+          handler: handleDonationCreated
+        - event: DonationRefunded(indexed address,indexed uint256,int256,string,bool,uint256)
+          handler: handleDonationRefunded
+        - event: DonationUpdated(indexed address,indexed uint256,int256,string,bool,uint256)
+          handler: handleDonationUpdated
+        - event: DonationsReceived(indexed address,indexed uint256,int256,uint256)
+          handler: handleDonationsReceived
       file: HFEvent\HFEvent.wasm

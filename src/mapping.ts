@@ -4,6 +4,10 @@ import {
   BiddingRemoved,
   BiddingSelected,
   BiddingUpdated,
+  DonationCreated,
+  DonationRefunded,
+  DonationsReceived,
+  DonationUpdated,
   HFClaimCreated,
   HFClaimUpdated,
   HFCoinBurned,
@@ -24,6 +28,7 @@ import {
 import {
   Claim,
   ClaimCondition,
+  Donation,
   Investment,
   NFT,
   Premium,
@@ -43,7 +48,6 @@ export function handleBiddingAdded(event: BiddingAdded): void {
     investor.save();
   }
 
-
   let investmentId = `${investor.id}-${event.params.ticketId.toString()}`;
   let investment = new Investment(investmentId);
 
@@ -56,7 +60,6 @@ export function handleBiddingAdded(event: BiddingAdded): void {
   investment.reimbursedInvest = false;
   investment.removed = false;
   investment.ticket = ticket.id;
-  investment.ticketId = ticket.ticketId;
 
   investment.save();
 }
@@ -239,7 +242,6 @@ export function handlePremiumReimbursed(event: PremiumReimbursed): void {
 
   premium.save();
 }
-
 export function handleTicketCreated(event: TicketCreated): void {
   let buyer = User.load(event.params.user.toHex());
   if (buyer == null) {
@@ -269,7 +271,6 @@ export function handleTicketCreated(event: TicketCreated): void {
   ticket.dates = ticketDate.id;
   ticket.save();
 }
-
 export function handleTicketStatusUpdate(event: TicketStatusUpdate): void {
   let ticket = Ticket.load(
     `${event.address.toHex()}-${event.params.ticketId.toString()}`
@@ -295,3 +296,70 @@ export function handleTicketStatusUpdate(event: TicketStatusUpdate): void {
     ticket.save();
   }
 }
+export function handleDonationCreated(event: DonationCreated): void {
+  let donor = User.load(event.params.donor.toHex());
+  if (donor == null) {
+    donor = new User(event.params.donor.toHex());
+    donor.save();
+  }
+  let donationId = `${donor.id}-${event.params.ticketId.toString()}`;
+  let donation = new Donation(donationId);
+  let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
+  let ticket = Ticket.load(ticketId);
+  if (ticket == null) return;
+
+  ticket.donatedAmount = new BigInt(
+    (parseInt(ticket.donatedAmount.toString()) +
+      parseInt(event.params.amount.toString())) as i32
+  );
+  ticket.save();
+
+  donation.amount = event.params.amount;
+  donation.donor = donor.id;
+  donation.option = event.params.option;
+  donation.refunded = event.params.refunded;
+  donation.ticket = ticket.id;
+
+  donation.save();
+}
+
+export function handleDonationRefunded(event: DonationRefunded): void {
+  let donor = User.load(event.params.donor.toHex());
+  if (donor == null) {
+    donor = new User(event.params.donor.toHex());
+    donor.save();
+  }
+  let donationId = `${donor.id}-${event.params.ticketId.toString()}`;
+  let donation = new Donation(donationId);
+  donation.refunded = event.params.refunded;
+
+  donation.save();
+}
+export function handleDonationUpdated(event: DonationUpdated): void {
+  let donor = User.load(event.params.donor.toHex());
+  if (donor == null) {
+    donor = new User(event.params.donor.toHex());
+    donor.save();
+  }
+  let donationId = `${donor.id}-${event.params.ticketId.toString()}`;
+  let donation = new Donation(donationId);
+  let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
+  let ticket = Ticket.load(ticketId);
+  if (ticket == null) return;
+
+  ticket.donatedAmount = new BigInt(
+    (parseInt(ticket.donatedAmount.toString()) +
+      parseInt(event.params.amount.toString())) as i32
+  );
+
+  ticket.save();
+
+  donation.amount = event.params.amount;
+  donation.donor = donor.id;
+  donation.option = event.params.option;
+  donation.refunded = event.params.refunded;
+  donation.ticket = ticket.id;
+
+  donation.save();
+}
+export function handleDonationsReceived(event: DonationsReceived): void {}

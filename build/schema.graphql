@@ -38,6 +38,7 @@ type Ticket @entity {
   claimAmount: BigInt!
   premiumAmount: BigInt!
   authorizedAmount: BigInt!
+  donatedAmount: BigInt!
   marginRatio: BigInt!
   ticketName: String!
   ticketStatus: Int!
@@ -98,8 +99,8 @@ Claim detail information: HFEntity.sol
 """
 type Claim @entity {
   id: ID!
-  ticket: Ticket!
   claimId: BigInt!
+  ticket: Ticket!
   round: BigInt!
   claimStatus: Int!
   condition: ClaimCondition!
@@ -138,4 +139,16 @@ type NFT @entity {
   tokenContract: String
   tokenType: Int
   tokenUri: String
+}
+
+"""
+Donation detail information: HFEntity.sol
+"""
+type Donation @entity {
+  id: ID!
+  ticket: Ticket!
+  donor: User!
+  amount: BigInt
+  option: String
+  refunded: Boolean
 }

@@ -98,6 +98,7 @@ export class Ticket extends Entity {
     this.set("claimAmount", Value.fromBigInt(BigInt.zero()));
     this.set("premiumAmount", Value.fromBigInt(BigInt.zero()));
     this.set("authorizedAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("donatedAmount", Value.fromBigInt(BigInt.zero()));
     this.set("marginRatio", Value.fromBigInt(BigInt.zero()));
     this.set("ticketName", Value.fromString(""));
   }
@@ -180,6 +181,15 @@ export class Ticket extends Entity {
 
   set authorizedAmount(value: BigInt) {
     this.set("authorizedAmount", Value.fromBigInt(value));
+  }
+
+  get donatedAmount(): BigInt {
+    let value = this.get("donatedAmount");
+    return value!.toBigInt();
+  }
+
+  set donatedAmount(value: BigInt) {
+    this.set("donatedAmount", Value.fromBigInt(value));
   }
 
   get marginRatio(): BigInt {
@@ -645,8 +655,8 @@ export class Claim extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("ticket", Value.fromString(""));
     this.set("claimId", Value.fromBigInt(BigInt.zero()));
+    this.set("ticket", Value.fromString(""));
     this.set("round", Value.fromBigInt(BigInt.zero()));
     this.set("condition", Value.fromString(""));
     this.set("lastDecisionDate", Value.fromBigInt(BigInt.zero()));
@@ -680,15 +690,6 @@ export class Claim extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get ticket(): string {
-    let value = this.get("ticket");
-    return value!.toString();
-  }
-
-  set ticket(value: string) {
-    this.set("ticket", Value.fromString(value));
-  }
-
   get claimId(): BigInt {
     let value = this.get("claimId");
     return value!.toBigInt();
@@ -696,6 +697,15 @@ export class Claim extends Entity {
 
   set claimId(value: BigInt) {
     this.set("claimId", Value.fromBigInt(value));
+  }
+
+  get ticket(): string {
+    let value = this.get("ticket");
+    return value!.toString();
+  }
+
+  set ticket(value: string) {
+    this.set("ticket", Value.fromString(value));
   }
 
   get round(): BigInt {
@@ -970,5 +980,102 @@ export class NFT extends Entity {
     } else {
       this.set("tokenUri", Value.fromString(<string>value));
     }
+  }
+}
+
+export class Donation extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("ticket", Value.fromString(""));
+    this.set("donor", Value.fromString(""));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Donation entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Donation entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Donation", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Donation | null {
+    return changetype<Donation | null>(store.get("Donation", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get ticket(): string {
+    let value = this.get("ticket");
+    return value!.toString();
+  }
+
+  set ticket(value: string) {
+    this.set("ticket", Value.fromString(value));
+  }
+
+  get donor(): string {
+    let value = this.get("donor");
+    return value!.toString();
+  }
+
+  set donor(value: string) {
+    this.set("donor", Value.fromString(value));
+  }
+
+  get amount(): BigInt | null {
+    let value = this.get("amount");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set amount(value: BigInt | null) {
+    if (!value) {
+      this.unset("amount");
+    } else {
+      this.set("amount", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get option(): string | null {
+    let value = this.get("option");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set option(value: string | null) {
+    if (!value) {
+      this.unset("option");
+    } else {
+      this.set("option", Value.fromString(<string>value));
+    }
+  }
+
+  get refunded(): boolean {
+    let value = this.get("refunded");
+    return value!.toBoolean();
+  }
+
+  set refunded(value: boolean) {
+    this.set("refunded", Value.fromBoolean(value));
   }
 }

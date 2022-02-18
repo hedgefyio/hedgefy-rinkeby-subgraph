@@ -170,6 +170,150 @@ export class BiddingUpdated__Params {
   }
 }
 
+export class DonationCreated extends ethereum.Event {
+  get params(): DonationCreated__Params {
+    return new DonationCreated__Params(this);
+  }
+}
+
+export class DonationCreated__Params {
+  _event: DonationCreated;
+
+  constructor(event: DonationCreated) {
+    this._event = event;
+  }
+
+  get donor(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get option(): string {
+    return this._event.parameters[3].value.toString();
+  }
+
+  get refunded(): boolean {
+    return this._event.parameters[4].value.toBoolean();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+}
+
+export class DonationRefunded extends ethereum.Event {
+  get params(): DonationRefunded__Params {
+    return new DonationRefunded__Params(this);
+  }
+}
+
+export class DonationRefunded__Params {
+  _event: DonationRefunded;
+
+  constructor(event: DonationRefunded) {
+    this._event = event;
+  }
+
+  get donor(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get option(): string {
+    return this._event.parameters[3].value.toString();
+  }
+
+  get refunded(): boolean {
+    return this._event.parameters[4].value.toBoolean();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+}
+
+export class DonationUpdated extends ethereum.Event {
+  get params(): DonationUpdated__Params {
+    return new DonationUpdated__Params(this);
+  }
+}
+
+export class DonationUpdated__Params {
+  _event: DonationUpdated;
+
+  constructor(event: DonationUpdated) {
+    this._event = event;
+  }
+
+  get donor(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get option(): string {
+    return this._event.parameters[3].value.toString();
+  }
+
+  get refunded(): boolean {
+    return this._event.parameters[4].value.toBoolean();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+}
+
+export class DonationsReceived extends ethereum.Event {
+  get params(): DonationsReceived__Params {
+    return new DonationsReceived__Params(this);
+  }
+}
+
+export class DonationsReceived__Params {
+  _event: DonationsReceived;
+
+  constructor(event: DonationsReceived) {
+    this._event = event;
+  }
+
+  get donee(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get sum(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+}
+
 export class HFClaimCreated extends ethereum.Event {
   get params(): HFClaimCreated__Params {
     return new HFClaimCreated__Params(this);
@@ -323,12 +467,8 @@ export class HFCoinBurned__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get ticketId(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
   get amount(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+    return this._event.parameters[1].value.toBigInt();
   }
 }
 
@@ -349,8 +489,30 @@ export class HFCoinMinted__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get ticketId(): BigInt {
+  get amount(): BigInt {
     return this._event.parameters[1].value.toBigInt();
+  }
+}
+
+export class HFCoinTransferredFrom extends ethereum.Event {
+  get params(): HFCoinTransferredFrom__Params {
+    return new HFCoinTransferredFrom__Params(this);
+  }
+}
+
+export class HFCoinTransferredFrom__Params {
+  _event: HFCoinTransferredFrom;
+
+  constructor(event: HFCoinTransferredFrom) {
+    this._event = event;
+  }
+
+  get sender(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get receiver(): Address {
+    return this._event.parameters[1].value.toAddress();
   }
 
   get amount(): BigInt {
@@ -1068,6 +1230,198 @@ export class EmitBiddingUpdatedCall__Outputs {
   }
 }
 
+export class EmitDonationCreatedCall extends ethereum.Call {
+  get inputs(): EmitDonationCreatedCall__Inputs {
+    return new EmitDonationCreatedCall__Inputs(this);
+  }
+
+  get outputs(): EmitDonationCreatedCall__Outputs {
+    return new EmitDonationCreatedCall__Outputs(this);
+  }
+}
+
+export class EmitDonationCreatedCall__Inputs {
+  _call: EmitDonationCreatedCall;
+
+  constructor(call: EmitDonationCreatedCall) {
+    this._call = call;
+  }
+
+  get donor(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get donate(): EmitDonationCreatedCallDonateStruct {
+    return changetype<EmitDonationCreatedCallDonateStruct>(
+      this._call.inputValues[2].value.toTuple()
+    );
+  }
+}
+
+export class EmitDonationCreatedCall__Outputs {
+  _call: EmitDonationCreatedCall;
+
+  constructor(call: EmitDonationCreatedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitDonationCreatedCallDonateStruct extends ethereum.Tuple {
+  get ticketId(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get donorAddress(): Address {
+    return this[1].toAddress();
+  }
+
+  get amount(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get option(): string {
+    return this[3].toString();
+  }
+
+  get refunded(): boolean {
+    return this[4].toBoolean();
+  }
+}
+
+export class EmitDonationRefundedCall extends ethereum.Call {
+  get inputs(): EmitDonationRefundedCall__Inputs {
+    return new EmitDonationRefundedCall__Inputs(this);
+  }
+
+  get outputs(): EmitDonationRefundedCall__Outputs {
+    return new EmitDonationRefundedCall__Outputs(this);
+  }
+}
+
+export class EmitDonationRefundedCall__Inputs {
+  _call: EmitDonationRefundedCall;
+
+  constructor(call: EmitDonationRefundedCall) {
+    this._call = call;
+  }
+
+  get donor(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get option(): string {
+    return this._call.inputValues[3].value.toString();
+  }
+
+  get refunded(): boolean {
+    return this._call.inputValues[4].value.toBoolean();
+  }
+}
+
+export class EmitDonationRefundedCall__Outputs {
+  _call: EmitDonationRefundedCall;
+
+  constructor(call: EmitDonationRefundedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitDonationUpdatedCall extends ethereum.Call {
+  get inputs(): EmitDonationUpdatedCall__Inputs {
+    return new EmitDonationUpdatedCall__Inputs(this);
+  }
+
+  get outputs(): EmitDonationUpdatedCall__Outputs {
+    return new EmitDonationUpdatedCall__Outputs(this);
+  }
+}
+
+export class EmitDonationUpdatedCall__Inputs {
+  _call: EmitDonationUpdatedCall;
+
+  constructor(call: EmitDonationUpdatedCall) {
+    this._call = call;
+  }
+
+  get donor(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get option(): string {
+    return this._call.inputValues[3].value.toString();
+  }
+
+  get refunded(): boolean {
+    return this._call.inputValues[4].value.toBoolean();
+  }
+}
+
+export class EmitDonationUpdatedCall__Outputs {
+  _call: EmitDonationUpdatedCall;
+
+  constructor(call: EmitDonationUpdatedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitDonationsReceivedCall extends ethereum.Call {
+  get inputs(): EmitDonationsReceivedCall__Inputs {
+    return new EmitDonationsReceivedCall__Inputs(this);
+  }
+
+  get outputs(): EmitDonationsReceivedCall__Outputs {
+    return new EmitDonationsReceivedCall__Outputs(this);
+  }
+}
+
+export class EmitDonationsReceivedCall__Inputs {
+  _call: EmitDonationsReceivedCall;
+
+  constructor(call: EmitDonationsReceivedCall) {
+    this._call = call;
+  }
+
+  get donee(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get ticketId(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get sum(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+}
+
+export class EmitDonationsReceivedCall__Outputs {
+  _call: EmitDonationsReceivedCall;
+
+  constructor(call: EmitDonationsReceivedCall) {
+    this._call = call;
+  }
+}
+
 export class EmitHFClaimCreatedCall extends ethereum.Call {
   get inputs(): EmitHFClaimCreatedCall__Inputs {
     return new EmitHFClaimCreatedCall__Inputs(this);
@@ -1293,12 +1647,8 @@ export class EmitHFCoinBurnedCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get ticketId(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
   get amount(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
+    return this._call.inputValues[1].value.toBigInt();
   }
 }
 
@@ -1331,12 +1681,8 @@ export class EmitHFCoinMintedCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get ticketId(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
   get amount(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
+    return this._call.inputValues[1].value.toBigInt();
   }
 }
 
@@ -1344,6 +1690,44 @@ export class EmitHFCoinMintedCall__Outputs {
   _call: EmitHFCoinMintedCall;
 
   constructor(call: EmitHFCoinMintedCall) {
+    this._call = call;
+  }
+}
+
+export class EmitHFCoinTransferredFromCall extends ethereum.Call {
+  get inputs(): EmitHFCoinTransferredFromCall__Inputs {
+    return new EmitHFCoinTransferredFromCall__Inputs(this);
+  }
+
+  get outputs(): EmitHFCoinTransferredFromCall__Outputs {
+    return new EmitHFCoinTransferredFromCall__Outputs(this);
+  }
+}
+
+export class EmitHFCoinTransferredFromCall__Inputs {
+  _call: EmitHFCoinTransferredFromCall;
+
+  constructor(call: EmitHFCoinTransferredFromCall) {
+    this._call = call;
+  }
+
+  get sender(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get receiver(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+}
+
+export class EmitHFCoinTransferredFromCall__Outputs {
+  _call: EmitHFCoinTransferredFromCall;
+
+  constructor(call: EmitHFCoinTransferredFromCall) {
     this._call = call;
   }
 }
@@ -1459,27 +1843,31 @@ export class EmitInvestorEarnedCallTicketStruct extends ethereum.Tuple {
     return this[4].toBigInt();
   }
 
-  get marginRatio(): BigInt {
+  get donatedAmount(): BigInt {
     return this[5].toBigInt();
   }
 
+  get marginRatio(): BigInt {
+    return this[6].toBigInt();
+  }
+
   get ticketName(): string {
-    return this[6].toString();
+    return this[7].toString();
   }
 
   get ticketStatus(): i32 {
-    return this[7].toI32();
+    return this[8].toI32();
   }
 
   get dates(): EmitInvestorEarnedCallTicketDatesStruct {
     return changetype<EmitInvestorEarnedCallTicketDatesStruct>(
-      this[8].toTuple()
+      this[9].toTuple()
     );
   }
 
   get selectedBidding(): EmitInvestorEarnedCallTicketSelectedBiddingStruct {
     return changetype<EmitInvestorEarnedCallTicketSelectedBiddingStruct>(
-      this[9].toTuple()
+      this[10].toTuple()
     );
   }
 }
@@ -1953,27 +2341,31 @@ export class EmitTicketCreatedCallTicketStruct extends ethereum.Tuple {
     return this[4].toBigInt();
   }
 
-  get marginRatio(): BigInt {
+  get donatedAmount(): BigInt {
     return this[5].toBigInt();
   }
 
+  get marginRatio(): BigInt {
+    return this[6].toBigInt();
+  }
+
   get ticketName(): string {
-    return this[6].toString();
+    return this[7].toString();
   }
 
   get ticketStatus(): i32 {
-    return this[7].toI32();
+    return this[8].toI32();
   }
 
   get dates(): EmitTicketCreatedCallTicketDatesStruct {
     return changetype<EmitTicketCreatedCallTicketDatesStruct>(
-      this[8].toTuple()
+      this[9].toTuple()
     );
   }
 
   get selectedBidding(): EmitTicketCreatedCallTicketSelectedBiddingStruct {
     return changetype<EmitTicketCreatedCallTicketSelectedBiddingStruct>(
-      this[9].toTuple()
+      this[10].toTuple()
     );
   }
 }
@@ -2107,27 +2499,31 @@ export class EmitTicketStatusUpdateCallTicketStruct extends ethereum.Tuple {
     return this[4].toBigInt();
   }
 
-  get marginRatio(): BigInt {
+  get donatedAmount(): BigInt {
     return this[5].toBigInt();
   }
 
+  get marginRatio(): BigInt {
+    return this[6].toBigInt();
+  }
+
   get ticketName(): string {
-    return this[6].toString();
+    return this[7].toString();
   }
 
   get ticketStatus(): i32 {
-    return this[7].toI32();
+    return this[8].toI32();
   }
 
   get dates(): EmitTicketStatusUpdateCallTicketDatesStruct {
     return changetype<EmitTicketStatusUpdateCallTicketDatesStruct>(
-      this[8].toTuple()
+      this[9].toTuple()
     );
   }
 
   get selectedBidding(): EmitTicketStatusUpdateCallTicketSelectedBiddingStruct {
     return changetype<EmitTicketStatusUpdateCallTicketSelectedBiddingStruct>(
-      this[9].toTuple()
+      this[10].toTuple()
     );
   }
 }
