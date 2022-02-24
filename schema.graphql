@@ -25,6 +25,7 @@ type User @entity {
   investments: [Investment!]! @derivedFrom(field: "investor")
   premiums: [Premium!] @derivedFrom(field: "buyer")
   tickets: [Ticket!] @derivedFrom(field: "buyer")
+  donations: [Donation!] @derivedFrom(field: "donor")
 }
 
 """
@@ -148,7 +149,7 @@ type Donation @entity {
   id: ID!
   ticket: Ticket!
   donor: User!
-  amount: BigInt
-  option: String
+  amount: BigInt!
+  option: String!
   refunded: Boolean
 }

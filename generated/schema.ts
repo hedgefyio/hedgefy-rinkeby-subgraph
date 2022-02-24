@@ -85,6 +85,23 @@ export class User extends Entity {
       this.set("tickets", Value.fromStringArray(<Array<string>>value));
     }
   }
+
+  get donations(): Array<string> | null {
+    let value = this.get("donations");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set donations(value: Array<string> | null) {
+    if (!value) {
+      this.unset("donations");
+    } else {
+      this.set("donations", Value.fromStringArray(<Array<string>>value));
+    }
+  }
 }
 
 export class Ticket extends Entity {
@@ -990,6 +1007,8 @@ export class Donation extends Entity {
 
     this.set("ticket", Value.fromString(""));
     this.set("donor", Value.fromString(""));
+    this.set("amount", Value.fromBigInt(BigInt.zero()));
+    this.set("option", Value.fromString(""));
   }
 
   save(): void {
@@ -1036,38 +1055,22 @@ export class Donation extends Entity {
     this.set("donor", Value.fromString(value));
   }
 
-  get amount(): BigInt | null {
+  get amount(): BigInt {
     let value = this.get("amount");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set amount(value: BigInt | null) {
-    if (!value) {
-      this.unset("amount");
-    } else {
-      this.set("amount", Value.fromBigInt(<BigInt>value));
-    }
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
   }
 
-  get option(): string | null {
+  get option(): string {
     let value = this.get("option");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
-  set option(value: string | null) {
-    if (!value) {
-      this.unset("option");
-    } else {
-      this.set("option", Value.fromString(<string>value));
-    }
+  set option(value: string) {
+    this.set("option", Value.fromString(value));
   }
 
   get refunded(): boolean {

@@ -1,4 +1,4 @@
-import { BigInt, JSONValue, json, ipfs } from "@graphprotocol/graph-ts";
+import { BigInt, JSONValue, json, ipfs, bigInt } from "@graphprotocol/graph-ts";
 import {
   BiddingAdded,
   BiddingRemoved,
@@ -86,11 +86,7 @@ export function handleBiddingSelected(event: BiddingSelected): void {
   investment.save();
   if (!ticket) return;
   ticket.claimAmount = event.params.askingAmount;
-  let authorizedAmount =
-    (parseInt(event.params.askingAmount.toString()) *
-      parseInt(ticket.marginRatio.toString())) /
-    100;
-  ticket.authorizedAmount = new BigInt(authorizedAmount as i32);
+  ticket.authorizedAmount = event.params.askingAmount.times(ticket.marginRatio);
   ticket.ticketStatus = 2; //Status: CLOSED
 
   ticket.save();
@@ -308,10 +304,7 @@ export function handleDonationCreated(event: DonationCreated): void {
   let ticket = Ticket.load(ticketId);
   if (ticket == null) return;
 
-  ticket.donatedAmount = new BigInt(
-    (parseInt(ticket.donatedAmount.toString()) +
-      parseInt(event.params.amount.toString())) as i32
-  );
+  ticket.donatedAmount = ticket.donatedAmount.plus(event.params.amount);
   ticket.save();
 
   donation.amount = event.params.amount;
@@ -330,7 +323,8 @@ export function handleDonationRefunded(event: DonationRefunded): void {
     donor.save();
   }
   let donationId = `${donor.id}-${event.params.ticketId.toString()}`;
-  let donation = new Donation(donationId);
+  let donation = Donation.load(donationId);
+  if (!donation) return;
   donation.refunded = event.params.refunded;
 
   donation.save();
@@ -341,20 +335,21 @@ export function handleDonationUpdated(event: DonationUpdated): void {
     donor = new User(event.params.donor.toHex());
     donor.save();
   }
-  let donationId = `${donor.id}-${event.params.ticketId.toString()}`;
-  let donation = new Donation(donationId);
+
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
   let ticket = Ticket.load(ticketId);
   if (ticket == null) return;
 
-  ticket.donatedAmount = new BigInt(
-    (parseInt(ticket.donatedAmount.toString()) +
-      parseInt(event.params.amount.toString())) as i32
-  );
-
+  ticket.donatedAmount = ticket.donatedAmount.plus(event.params.amount);
   ticket.save();
 
-  donation.amount = event.params.amount;
+  let donationId = `${donor.id}-${event.params.ticketId.toString()}`;
+  let donation = Donation.load(donationId);
+
+  if (!donation) return;
+
+  donation.amount = donation.amount.plus(event.params.amount);
+
   donation.donor = donor.id;
   donation.option = event.params.option;
   donation.refunded = event.params.refunded;
