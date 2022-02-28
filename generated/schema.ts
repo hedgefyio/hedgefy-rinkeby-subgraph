@@ -102,6 +102,23 @@ export class User extends Entity {
       this.set("donations", Value.fromStringArray(<Array<string>>value));
     }
   }
+
+  get transactions(): Array<string> | null {
+    let value = this.get("transactions");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set transactions(value: Array<string> | null) {
+    if (!value) {
+      this.unset("transactions");
+    } else {
+      this.set("transactions", Value.fromStringArray(<Array<string>>value));
+    }
+  }
 }
 
 export class Ticket extends Entity {
@@ -1080,5 +1097,105 @@ export class Donation extends Entity {
 
   set refunded(value: boolean) {
     this.set("refunded", Value.fromBoolean(value));
+  }
+}
+
+export class Transaction extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("user", Value.fromString(""));
+    this.set("amount", Value.fromBigInt(BigInt.zero()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("type", Value.fromString(""));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Transaction entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Transaction entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Transaction", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Transaction | null {
+    return changetype<Transaction | null>(store.get("Transaction", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get user(): string {
+    let value = this.get("user");
+    return value!.toString();
+  }
+
+  set user(value: string) {
+    this.set("user", Value.fromString(value));
+  }
+
+  get amount(): BigInt {
+    let value = this.get("amount");
+    return value!.toBigInt();
+  }
+
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
+  }
+
+  get currency(): string | null {
+    let value = this.get("currency");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set currency(value: string | null) {
+    if (!value) {
+      this.unset("currency");
+    } else {
+      this.set("currency", Value.fromString(<string>value));
+    }
+  }
+
+  get status(): i32 {
+    let value = this.get("status");
+    return value!.toI32();
+  }
+
+  set status(value: i32) {
+    this.set("status", Value.fromI32(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get type(): string {
+    let value = this.get("type");
+    return value!.toString();
+  }
+
+  set type(value: string) {
+    this.set("type", Value.fromString(value));
   }
 }

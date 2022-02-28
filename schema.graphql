@@ -26,6 +26,7 @@ type User @entity {
   premiums: [Premium!] @derivedFrom(field: "buyer")
   tickets: [Ticket!] @derivedFrom(field: "buyer")
   donations: [Donation!] @derivedFrom(field: "donor")
+  transactions: [Transaction!] @derivedFrom(field: "user")
 }
 
 """
@@ -152,4 +153,14 @@ type Donation @entity {
   amount: BigInt!
   option: String!
   refunded: Boolean
+}
+
+type Transaction @entity {
+  id: ID!
+  user: User!
+  amount: BigInt!
+  currency: String
+  status: Int
+  timestamp: BigInt!
+  type: String!
 }

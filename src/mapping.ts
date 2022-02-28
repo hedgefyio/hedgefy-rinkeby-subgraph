@@ -1,4 +1,11 @@
-import { BigInt, JSONValue, json, ipfs, bigInt } from "@graphprotocol/graph-ts";
+import {
+  BigInt,
+  JSONValue,
+  json,
+  ipfs,
+  bigInt,
+  ethereum,
+} from "@graphprotocol/graph-ts";
 import {
   BiddingAdded,
   BiddingRemoved,
@@ -34,6 +41,7 @@ import {
   Premium,
   Ticket,
   TicketDate,
+  Transaction,
   User,
 } from "../generated/schema";
 
@@ -145,8 +153,42 @@ export function handleHFClaimUpdated(event: HFClaimUpdated): void {
 
   claim.save();
 }
-export function handleHFCoinBurned(event: HFCoinBurned): void {}
-export function handleHFCoinMinted(event: HFCoinMinted): void {}
+export function handleHFCoinBurned(event: HFCoinBurned): void {
+  let user = User.load(event.params.user.toHex());
+
+  if (!user) {
+    user = new User(event.params.user.toHex());
+    user.save();
+  }
+
+  let transactionId = event.transaction.hash.toHex();
+  let transaction = new Transaction(transactionId);
+
+  transaction.timestamp = event.block.timestamp;
+  transaction.amount = event.params.amount;
+  transaction.user = user.id;
+  transaction.type = "BURNED";
+
+  transaction.save();
+}
+export function handleHFCoinMinted(event: HFCoinMinted): void {
+  let user = User.load(event.params.user.toHex());
+
+  if (!user) {
+    user = new User(event.params.user.toHex());
+    user.save();
+  }
+
+  let transactionId = event.transaction.hash.toHex();
+  let transaction = new Transaction(transactionId);
+
+  transaction.timestamp = event.block.timestamp;
+  transaction.amount = event.params.amount;
+  transaction.user = user.id;
+  transaction.type = "MINTED";
+
+  transaction.save();
+}
 export function handleInvestReimbursed(event: InvestReimbursed): void {
   let investor = User.load(event.params.investor.toHex());
   if (!investor) return;
