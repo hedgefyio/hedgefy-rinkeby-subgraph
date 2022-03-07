@@ -1109,6 +1109,7 @@ export class Transaction extends Entity {
     this.set("amount", Value.fromBigInt(BigInt.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("type", Value.fromString(""));
+    this.set("ticket", Value.fromString(""));
   }
 
   save(): void {
@@ -1172,15 +1173,6 @@ export class Transaction extends Entity {
     }
   }
 
-  get status(): i32 {
-    let value = this.get("status");
-    return value!.toI32();
-  }
-
-  set status(value: i32) {
-    this.set("status", Value.fromI32(value));
-  }
-
   get timestamp(): BigInt {
     let value = this.get("timestamp");
     return value!.toBigInt();
@@ -1197,5 +1189,14 @@ export class Transaction extends Entity {
 
   set type(value: string) {
     this.set("type", Value.fromString(value));
+  }
+
+  get ticket(): string {
+    let value = this.get("ticket");
+    return value!.toString();
+  }
+
+  set ticket(value: string) {
+    this.set("ticket", Value.fromString(value));
   }
 }

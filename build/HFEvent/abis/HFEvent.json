@@ -28,6 +28,12 @@
       },
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "askingExpireDate",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "string",
         "name": "ticketName",
         "type": "string"
@@ -68,6 +74,12 @@
         "internalType": "string",
         "name": "bidProcessType",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
       }
     ],
     "name": "BiddingRemoved",
@@ -160,6 +172,12 @@
         "internalType": "int256",
         "name": "askingAmount",
         "type": "int256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "askingExpireDate",
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -434,6 +452,12 @@
         "internalType": "struct HFEntity.ClaimCondition",
         "name": "condition",
         "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
       }
     ],
     "name": "HFClaimCreated",
@@ -507,6 +531,12 @@
         "internalType": "uint256",
         "name": "roundStartDate",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
       }
     ],
     "name": "HFClaimUpdated",
@@ -522,9 +552,39 @@
         "type": "address"
       },
       {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "currency",
+        "type": "string"
+      },
+      {
         "indexed": false,
         "internalType": "uint256",
         "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum HFEnum.TicketStatus",
+        "name": "ticketStatus",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
         "type": "uint256"
       }
     ],
@@ -541,9 +601,39 @@
         "type": "address"
       },
       {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "currency",
+        "type": "string"
+      },
+      {
         "indexed": false,
         "internalType": "uint256",
         "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum HFEnum.TicketStatus",
+        "name": "ticketStatus",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
         "type": "uint256"
       }
     ],
@@ -566,9 +656,39 @@
         "type": "address"
       },
       {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "currency",
+        "type": "string"
+      },
+      {
         "indexed": false,
         "internalType": "uint256",
         "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum HFEnum.TicketStatus",
+        "name": "ticketStatus",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
         "type": "uint256"
       }
     ],
@@ -668,6 +788,12 @@
         "internalType": "enum HFEnum.TicketStatus",
         "name": "ticketStatus",
         "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
       }
     ],
     "name": "InvestorEarned",
@@ -699,6 +825,12 @@
         "internalType": "string",
         "name": "ticketName",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
       }
     ],
     "name": "InvestsClaimed",
@@ -718,6 +850,12 @@
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
       }
     ],
     "name": "NFTAdded",
@@ -730,6 +868,12 @@
         "indexed": true,
         "internalType": "uint256",
         "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
         "type": "uint256"
       }
     ],
@@ -756,6 +900,12 @@
         "internalType": "enum HFEnum.NFTType",
         "name": "tokenType",
         "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
       }
     ],
     "name": "NFTCreated",
@@ -781,6 +931,12 @@
         "internalType": "string",
         "name": "nftURI",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
       }
     ],
     "name": "NFTMinted",
@@ -805,6 +961,12 @@
         "indexed": true,
         "internalType": "uint256",
         "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
         "type": "uint256"
       }
     ],
@@ -855,6 +1017,12 @@
         "internalType": "bool",
         "name": "reimbursedPremium",
         "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
       }
     ],
     "name": "PremiumCreated",
@@ -892,6 +1060,12 @@
         "internalType": "string",
         "name": "ticketName",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
       }
     ],
     "name": "PremiumReimbursed",
@@ -976,6 +1150,12 @@
         "internalType": "struct HFEntity.TicketDate",
         "name": "dates",
         "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
       }
     ],
     "name": "TicketCreated",
@@ -1134,6 +1314,12 @@
         "internalType": "struct HFEntity.Investment",
         "name": "selectedBidding",
         "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eventTimestamp",
+        "type": "uint256"
       }
     ],
     "name": "TicketStatusUpdate",
@@ -1160,6 +1346,11 @@
         "internalType": "int256",
         "name": "askingAmount",
         "type": "int256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "askingExpireDate",
+        "type": "uint256"
       },
       {
         "internalType": "string",
@@ -1269,6 +1460,11 @@
         "internalType": "int256",
         "name": "askingAmount",
         "type": "int256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "askingExpireDate",
+        "type": "uint256"
       },
       {
         "internalType": "string",
@@ -1628,8 +1824,28 @@
       },
       {
         "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "currency",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
+      },
+      {
+        "internalType": "enum HFEnum.TicketStatus",
+        "name": "ticketStatus",
+        "type": "uint8"
       }
     ],
     "name": "EmitHFCoinBurned",
@@ -1646,8 +1862,28 @@
       },
       {
         "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "currency",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
+      },
+      {
+        "internalType": "enum HFEnum.TicketStatus",
+        "name": "ticketStatus",
+        "type": "uint8"
       }
     ],
     "name": "EmitHFCoinMinted",
@@ -1664,13 +1900,33 @@
       },
       {
         "internalType": "address",
-        "name": "receiver",
+        "name": "recipient",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ticketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "ticketName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "currency",
+        "type": "string"
       },
       {
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
+      },
+      {
+        "internalType": "enum HFEnum.TicketStatus",
+        "name": "ticketStatus",
+        "type": "uint8"
       }
     ],
     "name": "EmitHFCoinTransferredFrom",

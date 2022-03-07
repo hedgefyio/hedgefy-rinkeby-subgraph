@@ -160,7 +160,7 @@ type Transaction @entity {
   user: User!
   amount: BigInt!
   currency: String
-  status: Int
   timestamp: BigInt!
   type: String!
+  ticket: Ticket!
 }

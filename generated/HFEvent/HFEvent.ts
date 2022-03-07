@@ -39,16 +39,20 @@ export class BiddingAdded__Params {
     return this._event.parameters[3].value.toBigInt();
   }
 
+  get askingExpireDate(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
   get ticketName(): string {
-    return this._event.parameters[4].value.toString();
+    return this._event.parameters[5].value.toString();
   }
 
   get ticketStatus(): i32 {
-    return this._event.parameters[5].value.toI32();
+    return this._event.parameters[6].value.toI32();
   }
 
   get eventTimestamp(): BigInt {
-    return this._event.parameters[6].value.toBigInt();
+    return this._event.parameters[7].value.toBigInt();
   }
 }
 
@@ -75,6 +79,10 @@ export class BiddingRemoved__Params {
 
   get bidProcessType(): string {
     return this._event.parameters[2].value.toString();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
   }
 }
 
@@ -157,16 +165,20 @@ export class BiddingUpdated__Params {
     return this._event.parameters[3].value.toBigInt();
   }
 
+  get askingExpireDate(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
   get ticketName(): string {
-    return this._event.parameters[4].value.toString();
+    return this._event.parameters[5].value.toString();
   }
 
   get ticketStatus(): i32 {
-    return this._event.parameters[5].value.toI32();
+    return this._event.parameters[6].value.toI32();
   }
 
   get eventTimestamp(): BigInt {
-    return this._event.parameters[6].value.toBigInt();
+    return this._event.parameters[7].value.toBigInt();
   }
 }
 
@@ -376,6 +388,10 @@ export class HFClaimCreated__Params {
       this._event.parameters[11].value.toTuple()
     );
   }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[12].value.toBigInt();
+  }
 }
 
 export class HFClaimCreatedConditionStruct extends ethereum.Tuple {
@@ -448,6 +464,10 @@ export class HFClaimUpdated__Params {
   get roundStartDate(): BigInt {
     return this._event.parameters[10].value.toBigInt();
   }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[11].value.toBigInt();
+  }
 }
 
 export class HFCoinBurned extends ethereum.Event {
@@ -467,8 +487,28 @@ export class HFCoinBurned__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get ticketId(): BigInt {
     return this._event.parameters[1].value.toBigInt();
+  }
+
+  get ticketName(): string {
+    return this._event.parameters[2].value.toString();
+  }
+
+  get currency(): string {
+    return this._event.parameters[3].value.toString();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get ticketStatus(): i32 {
+    return this._event.parameters[5].value.toI32();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
   }
 }
 
@@ -489,8 +529,28 @@ export class HFCoinMinted__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get ticketId(): BigInt {
     return this._event.parameters[1].value.toBigInt();
+  }
+
+  get ticketName(): string {
+    return this._event.parameters[2].value.toString();
+  }
+
+  get currency(): string {
+    return this._event.parameters[3].value.toString();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get ticketStatus(): i32 {
+    return this._event.parameters[5].value.toI32();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
   }
 }
 
@@ -515,8 +575,28 @@ export class HFCoinTransferredFrom__Params {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get ticketId(): BigInt {
     return this._event.parameters[2].value.toBigInt();
+  }
+
+  get ticketName(): string {
+    return this._event.parameters[3].value.toString();
+  }
+
+  get currency(): string {
+    return this._event.parameters[4].value.toString();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+
+  get ticketStatus(): i32 {
+    return this._event.parameters[6].value.toI32();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[7].value.toBigInt();
   }
 }
 
@@ -602,6 +682,10 @@ export class InvestorEarned__Params {
   get ticketStatus(): i32 {
     return this._event.parameters[7].value.toI32();
   }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[8].value.toBigInt();
+  }
 }
 
 export class InvestsClaimed extends ethereum.Event {
@@ -632,6 +716,10 @@ export class InvestsClaimed__Params {
   get ticketName(): string {
     return this._event.parameters[3].value.toString();
   }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
 }
 
 export class NFTAdded extends ethereum.Event {
@@ -654,6 +742,10 @@ export class NFTAdded__Params {
   get tokenId(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
 }
 
 export class NFTBurned extends ethereum.Event {
@@ -671,6 +763,10 @@ export class NFTBurned__Params {
 
   get tokenId(): BigInt {
     return this._event.parameters[0].value.toBigInt();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
   }
 }
 
@@ -698,6 +794,10 @@ export class NFTCreated__Params {
   get tokenType(): i32 {
     return this._event.parameters[2].value.toI32();
   }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
 }
 
 export class NFTMinted extends ethereum.Event {
@@ -724,6 +824,10 @@ export class NFTMinted__Params {
   get nftURI(): string {
     return this._event.parameters[2].value.toString();
   }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
 }
 
 export class NFTTransferred extends ethereum.Event {
@@ -749,6 +853,10 @@ export class NFTTransferred__Params {
 
   get tokenId(): BigInt {
     return this._event.parameters[2].value.toBigInt();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
   }
 }
 
@@ -792,6 +900,10 @@ export class PremiumCreated__Params {
   get reimbursedPremium(): boolean {
     return this._event.parameters[6].value.toBoolean();
   }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[7].value.toBigInt();
+  }
 }
 
 export class PremiumReimbursed extends ethereum.Event {
@@ -825,6 +937,10 @@ export class PremiumReimbursed__Params {
 
   get ticketName(): string {
     return this._event.parameters[4].value.toString();
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
   }
 }
 
@@ -881,6 +997,10 @@ export class TicketCreated__Params {
     return changetype<TicketCreatedDatesStruct>(
       this._event.parameters[9].value.toTuple()
     );
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[10].value.toBigInt();
   }
 }
 
@@ -961,6 +1081,10 @@ export class TicketStatusUpdate__Params {
     return changetype<TicketStatusUpdateSelectedBiddingStruct>(
       this._event.parameters[11].value.toTuple()
     );
+  }
+
+  get eventTimestamp(): BigInt {
+    return this._event.parameters[12].value.toBigInt();
   }
 }
 
@@ -1067,12 +1191,16 @@ export class EmitBiddingAddedCall__Inputs {
     return this._call.inputValues[3].value.toBigInt();
   }
 
+  get askingExpireDate(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
+  }
+
   get ticketName(): string {
-    return this._call.inputValues[4].value.toString();
+    return this._call.inputValues[5].value.toString();
   }
 
   get ticketStatus(): i32 {
-    return this._call.inputValues[5].value.toI32();
+    return this._call.inputValues[6].value.toI32();
   }
 }
 
@@ -1213,12 +1341,16 @@ export class EmitBiddingUpdatedCall__Inputs {
     return this._call.inputValues[3].value.toBigInt();
   }
 
+  get askingExpireDate(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
+  }
+
   get ticketName(): string {
-    return this._call.inputValues[4].value.toString();
+    return this._call.inputValues[5].value.toString();
   }
 
   get ticketStatus(): i32 {
-    return this._call.inputValues[5].value.toI32();
+    return this._call.inputValues[6].value.toI32();
   }
 }
 
@@ -1647,8 +1779,24 @@ export class EmitHFCoinBurnedCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get ticketId(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get ticketName(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+
+  get currency(): string {
+    return this._call.inputValues[3].value.toString();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
+  }
+
+  get ticketStatus(): i32 {
+    return this._call.inputValues[5].value.toI32();
   }
 }
 
@@ -1681,8 +1829,24 @@ export class EmitHFCoinMintedCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get ticketId(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get ticketName(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+
+  get currency(): string {
+    return this._call.inputValues[3].value.toString();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
+  }
+
+  get ticketStatus(): i32 {
+    return this._call.inputValues[5].value.toI32();
   }
 }
 
@@ -1715,12 +1879,28 @@ export class EmitHFCoinTransferredFromCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get receiver(): Address {
+  get recipient(): Address {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get ticketId(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get ticketName(): string {
+    return this._call.inputValues[3].value.toString();
+  }
+
+  get currency(): string {
+    return this._call.inputValues[4].value.toString();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[5].value.toBigInt();
+  }
+
+  get ticketStatus(): i32 {
+    return this._call.inputValues[6].value.toI32();
   }
 }
 

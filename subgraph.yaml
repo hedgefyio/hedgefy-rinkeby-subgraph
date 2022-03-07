@@ -11,7 +11,7 @@ dataSources:
     name: HFEvent
     network: rinkeby
     source:
-      address: "0x3cc5d933924DEd4Ed708a3dCcAAD33DDB0f6DE3F"
+      address: "0xf38f3A2Dc59181e76c031A8BeC34f11a55f9A861"
       abi: HFEvent
       startBlock: 10056151
     mapping:
@@ -25,46 +25,14 @@ dataSources:
         - name: HFEvent
           file: ./abis/HFEvent.json
       eventHandlers:
-        - event: BiddingAdded(indexed address,indexed uint256,string,int256,string,uint8,uint256)
+        - event: BiddingAdded(indexed address,indexed uint256,string,int256,uint256,string,uint8,uint256)
           handler: handleBiddingAdded
-        - event: BiddingRemoved(indexed address,indexed uint256,string)
+        - event: BiddingRemoved(indexed address,indexed uint256,string,uint256)
           handler: handleBiddingRemoved
         - event: BiddingSelected(indexed address,indexed uint256,string,int256,int256,int256,string,uint8,uint256)
           handler: handleBiddingSelected
-        - event: BiddingUpdated(indexed address,indexed uint256,string,int256,string,uint8,uint256)
+        - event: BiddingUpdated(indexed address,indexed uint256,string,int256,uint256,string,uint8,uint256)
           handler: handleBiddingUpdated
-        - event: HFClaimCreated(indexed address,indexed uint256,indexed uint256,uint8,uint8,bool,uint256,uint8,uint8,uint256,uint256,(string,string[],string[]))
-          handler: handleHFClaimCreated
-        - event: HFClaimUpdated(indexed address,indexed uint256,indexed uint256,uint8,uint8,bool,uint256,uint8,uint8,uint256,uint256)
-          handler: handleHFClaimUpdated
-        - event: HFCoinBurned(indexed address,uint256)
-          handler: handleHFCoinBurned
-        - event: HFCoinMinted(indexed address,uint256)
-          handler: handleHFCoinMinted
-        - event: InvestReimbursed(indexed address,indexed uint256,int256,int256,string,uint256)
-          handler: handleInvestReimbursed
-        - event: InvestorEarned(indexed address,indexed uint256,int256,int256,int256,int256,string,uint8)
-          handler: handleInvestorEarned
-        - event: InvestsClaimed(indexed address,indexed uint256,int256,string)
-          handler: handleInvestsClaimed
-        - event: NFTAdded(indexed uint256,indexed uint256)
-          handler: handleNFTAdded
-        - event: NFTBurned(indexed uint256)
-          handler: handleNFTBurned
-        - event: NFTCreated(indexed uint256,indexed address,uint8)
-          handler: handleNFTCreated
-        - event: NFTMinted(address,uint256,string)
-          handler: handleNFTMinted
-        - event: NFTTransferred(indexed address,indexed address,indexed uint256)
-          handler: handleNFTTransferred
-        - event: PremiumCreated(indexed address,indexed uint256,int256,int256,string,string,bool)
-          handler: handlePremiumCreated
-        - event: PremiumReimbursed(indexed address,indexed uint256,int256,int256,string)
-          handler: handlePremiumReimbursed
-        - event: TicketCreated(indexed address,indexed uint256,string,int256,int256,int256,int64,string,uint8,(uint256,uint256,uint256))
-          handler: handleTicketCreated
-        - event: TicketStatusUpdate(indexed address,indexed uint256,string,int256,int256,int256,int64,string,uint8,uint8,(uint256,uint256,uint256),(uint256,address,int256,int256,string,string,bool,bool,bool,int256,uint256,uint256))
-          handler: handleTicketStatusUpdate
         - event: DonationCreated(indexed address,indexed uint256,int256,string,bool,uint256)
           handler: handleDonationCreated
         - event: DonationRefunded(indexed address,indexed uint256,int256,string,bool,uint256)
@@ -73,4 +41,39 @@ dataSources:
           handler: handleDonationUpdated
         - event: DonationsReceived(indexed address,indexed uint256,int256,uint256)
           handler: handleDonationsReceived
+        - event: HFClaimCreated(indexed address,indexed uint256,indexed uint256,uint8,uint8,bool,uint256,uint8,uint8,uint256,uint256,(string,string[],string[]),uint256)
+          handler: handleHFClaimCreated
+        - event: HFClaimUpdated(indexed address,indexed uint256,indexed uint256,uint8,uint8,bool,uint256,uint8,uint8,uint256,uint256,uint256)
+          handler: handleHFClaimUpdated
+        - event: HFCoinBurned(indexed address,indexed uint256,string,string,uint256,uint8,uint256)
+          handler: handleHFCoinBurned
+        - event: HFCoinMinted(indexed address,indexed uint256,string,string,uint256,uint8,uint256)
+          handler: handleHFCoinMinted
+        - event: HFCoinTransferredFrom(indexed address,indexed address,indexed uint256,string,string,uint256,uint8,uint256)
+          handler: handleHFCoinTransferredFrom
+        - event: InvestReimbursed(indexed address,indexed uint256,int256,int256,string,uint256)
+          handler: handleInvestReimbursed
+        - event: InvestorEarned(indexed address,indexed uint256,int256,int256,int256,int256,string,uint8,uint256)
+          handler: handleInvestorEarned
+        - event: InvestsClaimed(indexed address,indexed uint256,int256,string,uint256)
+          handler: handleInvestsClaimed
+        - event: NFTAdded(indexed uint256,indexed uint256,uint256)
+          handler: handleNFTAdded
+        - event: NFTBurned(indexed uint256,uint256)
+          handler: handleNFTBurned
+        - event: NFTCreated(indexed uint256,indexed address,uint8,uint256)
+          handler: handleNFTCreated
+        - event: NFTMinted(address,uint256,string,uint256)
+          handler: handleNFTMinted
+        - event: NFTTransferred(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleNFTTransferred
+        - event: PremiumCreated(indexed address,indexed uint256,int256,int256,string,string,bool,uint256)
+          handler: handlePremiumCreated
+        - event: PremiumReimbursed(indexed address,indexed uint256,int256,int256,string,uint256)
+          handler: handlePremiumReimbursed
+        - event: TicketCreated(indexed address,indexed uint256,string,int256,int256,int256,int64,string,uint8,(uint256,uint256,uint256),uint256)
+          handler: handleTicketCreated
+        - event: TicketStatusUpdate(indexed address,indexed uint256,string,int256,int256,int256,int64,string,uint8,uint8,(uint256,uint256,uint256),(uint256,address,int256,int256,string,string,bool,bool,bool,int256,uint256,uint256),uint256)
+          handler: handleTicketStatusUpdate
+
       file: ./src/mapping.ts
