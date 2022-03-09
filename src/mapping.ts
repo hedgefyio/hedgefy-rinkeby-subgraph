@@ -177,6 +177,7 @@ export function handleHFCoinBurned(event: HFCoinBurned): void {
   transaction.type = "BURNED";
   transaction.currency = event.params.currency;
   transaction.ticket = ticket.id;
+  transaction.status = event.params.ticketStatus
 
   transaction.save();
 }
@@ -201,6 +202,7 @@ export function handleHFCoinMinted(event: HFCoinMinted): void {
   transaction.type = "MINTED";
   transaction.currency = event.params.currency;
   transaction.ticket = ticket.id;
+  transaction.status = event.params.ticketStatus
 
   transaction.save();
 }

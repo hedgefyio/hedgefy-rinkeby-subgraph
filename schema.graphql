@@ -163,4 +163,5 @@ type Transaction @entity {
   timestamp: BigInt!
   type: String!
   ticket: Ticket!
+  status: Int!
 }

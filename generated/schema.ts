@@ -1199,4 +1199,13 @@ export class Transaction extends Entity {
   set ticket(value: string) {
     this.set("ticket", Value.fromString(value));
   }
+
+  get status(): i32 {
+    let value = this.get("status");
+    return value!.toI32();
+  }
+
+  set status(value: i32) {
+    this.set("status", Value.fromI32(value));
+  }
 }
