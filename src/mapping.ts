@@ -97,6 +97,7 @@ export function handleBiddingSelected(event: BiddingSelected): void {
   ticket.claimAmount = event.params.askingAmount;
   ticket.authorizedAmount = event.params.askingAmount.times(ticket.marginRatio);
   ticket.ticketStatus = 2; //Status: CLOSED
+  ticket.selectedBidding = investment.id
 
   ticket.save();
 }
