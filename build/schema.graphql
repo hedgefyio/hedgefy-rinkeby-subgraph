@@ -155,6 +155,12 @@ type Donation @entity {
   refunded: Boolean
 }
 
+type TransactionList @entity {
+  id: ID!
+  transactions: [Transaction!]!
+  transactionIndex: Int!
+}
+
 type Transaction @entity {
   id: ID!
   user: User!

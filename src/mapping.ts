@@ -42,6 +42,7 @@ import {
   Ticket,
   TicketDate,
   Transaction,
+  TransactionList,
   User,
 } from "../generated/schema";
 
@@ -94,10 +95,12 @@ export function handleBiddingSelected(event: BiddingSelected): void {
   investment.earning = event.params.premiumAmount;
   investment.save();
   if (!ticket) return;
-  ticket.claimAmount = event.params.askingAmount;
+
+  ticket.claimAmount = event.params.claimAmount;
+  ticket.premiumAmount = event.params.premiumAmount;
   ticket.authorizedAmount = event.params.askingAmount.times(ticket.marginRatio);
   ticket.ticketStatus = 2; //Status: CLOSED
-  ticket.selectedBidding = investment.id
+  ticket.selectedBidding = investment.id;
 
   ticket.save();
 }
@@ -168,18 +171,35 @@ export function handleHFCoinBurned(event: HFCoinBurned): void {
     user.save();
   }
 
-  let transactionId = event.transaction.hash.toHex();
-  let transaction = new Transaction(transactionId);
+  let transactionId = `${event.transaction.hash.toHex()}`;
 
+  let transactions = TransactionList.load(transactionId);
+
+  if (!transactions) {
+    transactions = new TransactionList(transactionId);
+    transactions.transactionIndex = -1;
+    transactions.save();
+  }
+
+  transactions.transactionIndex += 1;
+
+  let tranId = `${transactionId}-${transactions.transactionIndex}`;
+  let transaction = new Transaction(tranId);
   transaction.timestamp = event.params.eventTimestamp;
   transaction.amount = event.params.amount;
   transaction.user = user.id;
   transaction.type = "BURNED";
   transaction.currency = event.params.currency;
   transaction.ticket = ticket.id;
-  transaction.status = event.params.ticketStatus
+  transaction.status = event.params.ticketStatus;
+
+  let trans = transactions.transactions;
+  trans.push(transaction.id);
+
+  transactions.transactions = trans;
 
   transaction.save();
+  transactions.save();
 }
 export function handleHFCoinMinted(event: HFCoinMinted): void {
   let user = User.load(event.params.user.toHex());
@@ -193,8 +213,20 @@ export function handleHFCoinMinted(event: HFCoinMinted): void {
     user.save();
   }
 
-  let transactionId = event.transaction.hash.toHex();
-  let transaction = new Transaction(transactionId);
+  let transactionId = `${event.transaction.hash.toHex()}`;
+
+  let transactions = TransactionList.load(transactionId);
+
+  if (!transactions) {
+    transactions = new TransactionList(transactionId);
+    transactions.transactionIndex = -1;
+    transactions.save();
+  }
+
+  transactions.transactionIndex += 1;
+
+  let tranId = `${transactionId}-${transactions.transactionIndex}`;
+  let transaction = new Transaction(tranId);
 
   transaction.timestamp = event.params.eventTimestamp;
   transaction.amount = event.params.amount;
@@ -202,9 +234,15 @@ export function handleHFCoinMinted(event: HFCoinMinted): void {
   transaction.type = "MINTED";
   transaction.currency = event.params.currency;
   transaction.ticket = ticket.id;
-  transaction.status = event.params.ticketStatus
+  transaction.status = event.params.ticketStatus;
+
+  let trans = transactions.transactions;
+  trans.push(transaction.id);
+
+  transactions.transactions = trans;
 
   transaction.save();
+  transactions.save();
 }
 export function handleInvestReimbursed(event: InvestReimbursed): void {
   let investor = User.load(event.params.investor.toHex());
