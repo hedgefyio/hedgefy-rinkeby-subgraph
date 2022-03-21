@@ -185,6 +185,8 @@ export function handleHFCoinBurned(event: HFCoinBurned): void {
 
   let tranId = `${transactionId}-${transactions.transactionIndex}`;
   let transaction = new Transaction(tranId);
+
+  transaction.hash = event.transaction.hash.toHex();
   transaction.timestamp = event.params.eventTimestamp;
   transaction.amount = event.params.amount;
   transaction.user = user.id;
@@ -228,6 +230,7 @@ export function handleHFCoinMinted(event: HFCoinMinted): void {
   let tranId = `${transactionId}-${transactions.transactionIndex}`;
   let transaction = new Transaction(tranId);
 
+  transaction.hash = event.transaction.hash.toHex();
   transaction.timestamp = event.params.eventTimestamp;
   transaction.amount = event.params.amount;
   transaction.user = user.id;

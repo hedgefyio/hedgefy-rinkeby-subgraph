@@ -163,6 +163,7 @@ type TransactionList @entity {
 
 type Transaction @entity {
   id: ID!
+  hash: String!
   user: User!
   amount: BigInt!
   currency: String

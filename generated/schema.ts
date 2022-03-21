@@ -1158,6 +1158,7 @@ export class Transaction extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
+    this.set("hash", Value.fromString(""));
     this.set("user", Value.fromString(""));
     this.set("amount", Value.fromBigInt(BigInt.zero()));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
@@ -1189,6 +1190,15 @@ export class Transaction extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get hash(): string {
+    let value = this.get("hash");
+    return value!.toString();
+  }
+
+  set hash(value: string) {
+    this.set("hash", Value.fromString(value));
   }
 
   get user(): string {
