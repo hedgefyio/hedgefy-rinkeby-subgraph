@@ -116,7 +116,7 @@ export function handleBiddingUpdated(event: BiddingUpdated): void {
   investment.save();
 }
 export function handleHFClaimCreated(event: HFClaimCreated): void {
-  let claimId = event.logIndex.toString();
+  let claimId = event.params.claimId.toString();
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
   let claim = new Claim(claimId);
   let ticket = Ticket.load(ticketId);
@@ -146,7 +146,7 @@ export function handleHFClaimCreated(event: HFClaimCreated): void {
   claim.save();
 }
 export function handleHFClaimUpdated(event: HFClaimUpdated): void {
-  let claim = Claim.load(event.params.claimId.toHex());
+  let claim = Claim.load(event.params.claimId.toString());
 
   if (!claim) return;
   claim.roundStartDate = event.params.roundStartDate;
