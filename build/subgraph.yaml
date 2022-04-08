@@ -11,7 +11,7 @@ dataSources:
     name: HFEvent
     network: rinkeby
     source:
-      address: "0xf38f3A2Dc59181e76c031A8BeC34f11a55f9A861"
+      address: "0x45B20B3A2227612f5a513580099ce4DC695c3EE0"
       abi: HFEvent
       startBlock: 10056151
     mapping:
@@ -23,7 +23,7 @@ dataSources:
         - Buyer
       abis:
         - name: HFEvent
-          file: HFEvent\abis\HFEvent.json
+          file: HFEvent/abis/HFEvent.json
       eventHandlers:
         - event: BiddingAdded(indexed address,indexed
             uint256,string,int256,uint256,string,uint8,uint256)
@@ -85,4 +85,4 @@ dataSources:
         - event: TicketStatusUpdate(indexed address,indexed
             uint256,string,int256,int256,int256,int64,string,uint8,uint8,(uint256,uint256,uint256),(uint256,address,int256,int256,string,string,bool,bool,bool,int256,uint256,uint256),uint256)
           handler: handleTicketStatusUpdate
-      file: HFEvent\HFEvent.wasm
+      file: HFEvent/HFEvent.wasm
