@@ -44,22 +44,13 @@ type Ticket @entity {
   marginRatio: BigInt!
   ticketName: String!
   ticketStatus: Int!
-  dates: TicketDate
+  closingDate: BigInt!
+  startDate: BigInt!
+  endDate: BigInt!
   selectedBidding: Investment
   nft: NFT
   claim: Claim
   premium: Premium
-}
-
-"""
-TicketDate detail information: HFEntity.sol
-"""
-type TicketDate @entity {
-  id: ID!
-  closingDate: BigInt!
-  startDate: BigInt!
-  endDate: BigInt!
-  ticket: Ticket
 }
 
 """
@@ -153,12 +144,6 @@ type Donation @entity {
   amount: BigInt!
   option: String!
   refunded: Boolean
-}
-
-type TransactionList @entity {
-  id: ID!
-  transactions: [Transaction!]!
-  transactionIndex: Int!
 }
 
 type Transaction @entity {

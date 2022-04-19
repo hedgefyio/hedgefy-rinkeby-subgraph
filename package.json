@@ -6,6 +6,7 @@
     "build": "graph build",
     "deploy:staging": "graph deploy --product hosted-service sicktastic/hedgefy-rinkeby",
     "deploy:alpha": "graph deploy --product hosted-service sicktastic/hedgefy-rinkeby-alpha",
+    "deploy:test": "graph deploy --product hosted-service vnthanh1501/hedgefy-rinkeby",
     "create-local": "graph create --node http://localhost:8020/ hedgefyio/hedgefy-rinkeby-subgraph",
     "remove-local": "graph remove --node http://localhost:8020/ hedgefyio/hedgefy-rinkeby-subgraph",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 hedgefyio/hedgefy-rinkeby-subgraph"

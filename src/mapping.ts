@@ -40,9 +40,7 @@ import {
   NFT,
   Premium,
   Ticket,
-  TicketDate,
   Transaction,
-  TransactionList,
   User,
 } from "../generated/schema";
 
@@ -70,6 +68,7 @@ export function handleBiddingAdded(event: BiddingAdded): void {
   investment.removed = false;
   investment.askingExpireDate = event.params.askingExpireDate;
   investment.ticket = ticket.id;
+  investment.ticketId = ticket.ticketId;
 
   investment.save();
 }
@@ -171,20 +170,8 @@ export function handleHFCoinBurned(event: HFCoinBurned): void {
     user.save();
   }
 
-  let transactionId = `${event.transaction.hash.toHex()}`;
-
-  let transactions = TransactionList.load(transactionId);
-
-  if (!transactions) {
-    transactions = new TransactionList(transactionId);
-    transactions.transactionIndex = -1;
-    transactions.save();
-  }
-
-  transactions.transactionIndex += 1;
-
-  let tranId = `${transactionId}-${transactions.transactionIndex}`;
-  let transaction = new Transaction(tranId);
+  let transactionId = `${event.transaction.hash.toHex()}-${event.logIndex}`;
+  let transaction = new Transaction(transactionId);
 
   transaction.hash = event.transaction.hash.toHex();
   transaction.timestamp = event.params.eventTimestamp;
@@ -195,13 +182,7 @@ export function handleHFCoinBurned(event: HFCoinBurned): void {
   transaction.ticket = ticket.id;
   transaction.status = event.params.ticketStatus;
 
-  let trans = transactions.transactions;
-  trans.push(transaction.id);
-
-  transactions.transactions = trans;
-
   transaction.save();
-  transactions.save();
 }
 export function handleHFCoinMinted(event: HFCoinMinted): void {
   let user = User.load(event.params.user.toHex());
@@ -215,20 +196,9 @@ export function handleHFCoinMinted(event: HFCoinMinted): void {
     user.save();
   }
 
-  let transactionId = `${event.transaction.hash.toHex()}`;
+  let transactionId = `${event.transaction.hash.toHex()}-${event.logIndex}`;
 
-  let transactions = TransactionList.load(transactionId);
-
-  if (!transactions) {
-    transactions = new TransactionList(transactionId);
-    transactions.transactionIndex = -1;
-    transactions.save();
-  }
-
-  transactions.transactionIndex += 1;
-
-  let tranId = `${transactionId}-${transactions.transactionIndex}`;
-  let transaction = new Transaction(tranId);
+  let transaction = new Transaction(transactionId);
 
   transaction.hash = event.transaction.hash.toHex();
   transaction.timestamp = event.params.eventTimestamp;
@@ -239,13 +209,7 @@ export function handleHFCoinMinted(event: HFCoinMinted): void {
   transaction.ticket = ticket.id;
   transaction.status = event.params.ticketStatus;
 
-  let trans = transactions.transactions;
-  trans.push(transaction.id);
-
-  transactions.transactions = trans;
-
   transaction.save();
-  transactions.save();
 }
 export function handleInvestReimbursed(event: InvestReimbursed): void {
   let investor = User.load(event.params.investor.toHex());
@@ -350,13 +314,6 @@ export function handleTicketCreated(event: TicketCreated): void {
 
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
 
-  let ticketDate = new TicketDate(ticketId);
-  ticketDate.closingDate = event.params.dates.closingDate;
-  ticketDate.startDate = event.params.dates.startDate;
-  ticketDate.endDate = event.params.dates.endDate;
-  ticketDate.ticket = ticketId;
-  ticketDate.save();
-
   let ticket = new Ticket(ticketId);
   ticket.buyer = buyer.id;
   ticket.ticketId = event.params.ticketId;
@@ -367,21 +324,15 @@ export function handleTicketCreated(event: TicketCreated): void {
   ticket.marginRatio = event.params.marginRatio;
   ticket.ticketName = event.params.ticketName;
   ticket.ticketStatus = event.params.ticketStatus;
-  ticket.dates = ticketDate.id;
+  ticket.closingDate = event.params.dates.closingDate;
+  ticket.startDate = event.params.dates.startDate;
+  ticket.endDate = event.params.dates.endDate;
   ticket.save();
 }
 export function handleTicketStatusUpdate(event: TicketStatusUpdate): void {
   let ticket = Ticket.load(
     `${event.address.toHex()}-${event.params.ticketId.toString()}`
   );
-  let ticketDate = TicketDate.load(event.params.ticketId.toString());
-
-  if (ticketDate != null) {
-    ticketDate.closingDate = event.params.dates.closingDate;
-    ticketDate.startDate = event.params.dates.startDate;
-    ticketDate.endDate = event.params.dates.endDate;
-    ticketDate.save();
-  }
 
   if (ticket != null) {
     ticket.bidProcessType = event.params.bidProcessType;
@@ -391,6 +342,9 @@ export function handleTicketStatusUpdate(event: TicketStatusUpdate): void {
     ticket.marginRatio = event.params.marginRatio;
     ticket.ticketName = event.params.ticketName;
     ticket.ticketStatus = event.params.ticketStatus;
+    ticket.closingDate = event.params.dates.closingDate;
+    ticket.startDate = event.params.dates.startDate;
+    ticket.endDate = event.params.dates.endDate;
     // other params that need to be saved
     ticket.save();
   }

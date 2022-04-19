@@ -135,6 +135,9 @@ export class Ticket extends Entity {
     this.set("donatedAmount", Value.fromBigInt(BigInt.zero()));
     this.set("marginRatio", Value.fromBigInt(BigInt.zero()));
     this.set("ticketName", Value.fromString(""));
+    this.set("closingDate", Value.fromBigInt(BigInt.zero()));
+    this.set("startDate", Value.fromBigInt(BigInt.zero()));
+    this.set("endDate", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -253,21 +256,31 @@ export class Ticket extends Entity {
     this.set("ticketStatus", Value.fromI32(value));
   }
 
-  get dates(): string | null {
-    let value = this.get("dates");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+  get closingDate(): BigInt {
+    let value = this.get("closingDate");
+    return value!.toBigInt();
   }
 
-  set dates(value: string | null) {
-    if (!value) {
-      this.unset("dates");
-    } else {
-      this.set("dates", Value.fromString(<string>value));
-    }
+  set closingDate(value: BigInt) {
+    this.set("closingDate", Value.fromBigInt(value));
+  }
+
+  get startDate(): BigInt {
+    let value = this.get("startDate");
+    return value!.toBigInt();
+  }
+
+  set startDate(value: BigInt) {
+    this.set("startDate", Value.fromBigInt(value));
+  }
+
+  get endDate(): BigInt {
+    let value = this.get("endDate");
+    return value!.toBigInt();
+  }
+
+  set endDate(value: BigInt) {
+    this.set("endDate", Value.fromBigInt(value));
   }
 
   get selectedBidding(): string | null {
@@ -335,87 +348,6 @@ export class Ticket extends Entity {
       this.unset("premium");
     } else {
       this.set("premium", Value.fromString(<string>value));
-    }
-  }
-}
-
-export class TicketDate extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("closingDate", Value.fromBigInt(BigInt.zero()));
-    this.set("startDate", Value.fromBigInt(BigInt.zero()));
-    this.set("endDate", Value.fromBigInt(BigInt.zero()));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save TicketDate entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save TicketDate entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("TicketDate", id.toString(), this);
-    }
-  }
-
-  static load(id: string): TicketDate | null {
-    return changetype<TicketDate | null>(store.get("TicketDate", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get closingDate(): BigInt {
-    let value = this.get("closingDate");
-    return value!.toBigInt();
-  }
-
-  set closingDate(value: BigInt) {
-    this.set("closingDate", Value.fromBigInt(value));
-  }
-
-  get startDate(): BigInt {
-    let value = this.get("startDate");
-    return value!.toBigInt();
-  }
-
-  set startDate(value: BigInt) {
-    this.set("startDate", Value.fromBigInt(value));
-  }
-
-  get endDate(): BigInt {
-    let value = this.get("endDate");
-    return value!.toBigInt();
-  }
-
-  set endDate(value: BigInt) {
-    this.set("endDate", Value.fromBigInt(value));
-  }
-
-  get ticket(): string | null {
-    let value = this.get("ticket");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
-  }
-
-  set ticket(value: string | null) {
-    if (!value) {
-      this.unset("ticket");
-    } else {
-      this.set("ticket", Value.fromString(<string>value));
     }
   }
 }
@@ -1097,59 +1029,6 @@ export class Donation extends Entity {
 
   set refunded(value: boolean) {
     this.set("refunded", Value.fromBoolean(value));
-  }
-}
-
-export class TransactionList extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-
-    this.set("transactions", Value.fromStringArray(new Array(0)));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save TransactionList entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save TransactionList entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("TransactionList", id.toString(), this);
-    }
-  }
-
-  static load(id: string): TransactionList | null {
-    return changetype<TransactionList | null>(store.get("TransactionList", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get transactions(): Array<string> {
-    let value = this.get("transactions");
-    return value!.toStringArray();
-  }
-
-  set transactions(value: Array<string>) {
-    this.set("transactions", Value.fromStringArray(value));
-  }
-
-  get transactionIndex(): i32 {
-    let value = this.get("transactionIndex");
-    return value!.toI32();
-  }
-
-  set transactionIndex(value: i32) {
-    this.set("transactionIndex", Value.fromI32(value));
   }
 }
 
