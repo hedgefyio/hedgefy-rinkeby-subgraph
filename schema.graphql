@@ -38,6 +38,7 @@ type Ticket @entity {
   ticketId: BigInt!
   bidProcessType: String!
   claimAmount: BigInt!
+  premiumDonation: BigInt!
   premiumAmount: BigInt!
   authorizedAmount: BigInt!
   donatedAmount: BigInt!

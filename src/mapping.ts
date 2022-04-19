@@ -171,6 +171,7 @@ export function handleHFCoinBurned(event: HFCoinBurned): void {
   }
 
   let transactionId = `${event.transaction.hash.toHex()}-${event.logIndex}`;
+
   let transaction = new Transaction(transactionId);
 
   transaction.hash = event.transaction.hash.toHex();
@@ -319,6 +320,7 @@ export function handleTicketCreated(event: TicketCreated): void {
   ticket.ticketId = event.params.ticketId;
   ticket.bidProcessType = event.params.bidProcessType;
   ticket.claimAmount = event.params.claimAmount;
+  ticket.premiumDonation = event.params.premiumAmount;
   ticket.premiumAmount = event.params.premiumAmount;
   ticket.authorizedAmount = event.params.authorizedAmount;
   ticket.marginRatio = event.params.marginRatio;
@@ -360,8 +362,11 @@ export function handleDonationCreated(event: DonationCreated): void {
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
   let ticket = Ticket.load(ticketId);
   if (ticket == null) return;
-
+  let premium = Premium.load(`${ticketId}-${ticket.buyer.toString()}`);
+  if (!premium) return;
   ticket.donatedAmount = ticket.donatedAmount.plus(event.params.amount);
+  if (ticket.bidProcessType == "FixedPremium") ticket.premiumDonation = ticket.premiumAmount.plus(ticket.donatedAmount)
+  else ticket.premiumDonation = premium.askingPremiumAmount.plus(ticket.donatedAmount)
   ticket.save();
 
   donation.amount = event.params.amount;
@@ -396,8 +401,11 @@ export function handleDonationUpdated(event: DonationUpdated): void {
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
   let ticket = Ticket.load(ticketId);
   if (ticket == null) return;
-
+  let premium = Premium.load(`${ticketId}-${ticket.buyer.toString()}`);
+  if (!premium) return;
   ticket.donatedAmount = ticket.donatedAmount.plus(event.params.amount);
+  if (ticket.bidProcessType == "FixedPremium") ticket.premiumDonation = ticket.premiumAmount.plus(ticket.donatedAmount)
+  else ticket.premiumDonation = premium.askingPremiumAmount.plus(ticket.donatedAmount)
   ticket.save();
 
   let donationId = `${donor.id}-${event.params.ticketId.toString()}`;

@@ -130,6 +130,7 @@ export class Ticket extends Entity {
     this.set("ticketId", Value.fromBigInt(BigInt.zero()));
     this.set("bidProcessType", Value.fromString(""));
     this.set("claimAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("premiumDonation", Value.fromBigInt(BigInt.zero()));
     this.set("premiumAmount", Value.fromBigInt(BigInt.zero()));
     this.set("authorizedAmount", Value.fromBigInt(BigInt.zero()));
     this.set("donatedAmount", Value.fromBigInt(BigInt.zero()));
@@ -200,6 +201,15 @@ export class Ticket extends Entity {
 
   set claimAmount(value: BigInt) {
     this.set("claimAmount", Value.fromBigInt(value));
+  }
+
+  get premiumDonation(): BigInt {
+    let value = this.get("premiumDonation");
+    return value!.toBigInt();
+  }
+
+  set premiumDonation(value: BigInt) {
+    this.set("premiumDonation", Value.fromBigInt(value));
   }
 
   get premiumAmount(): BigInt {
