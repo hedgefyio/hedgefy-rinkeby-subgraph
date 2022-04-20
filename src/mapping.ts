@@ -66,10 +66,18 @@ export function handleBiddingAdded(event: BiddingAdded): void {
   investment.askingExpireDate = event.params.askingExpireDate;
   investment.ticket = ticket.id;
   investment.ticketId = ticket.ticketId;
-
   investment.save();
+
+  const ticketInvestments = ticket.investments;
+  ticketInvestments.push(investment.id);
+  ticket.investments = ticketInvestments;
+  ticket.save();
 }
 export function handleBiddingRemoved(event: BiddingRemoved): void {
+  let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
+  let ticket = Ticket.load(ticketId);
+  if (!ticket) return;
+
   let investor = User.load(event.params.investor.toHex());
   if (!investor) return;
   let investmentId = `${investor.id}-${event.params.ticketId.toString()}`;
@@ -77,6 +85,7 @@ export function handleBiddingRemoved(event: BiddingRemoved): void {
   if (!investment) return;
   investment.removed = true;
   investment.save();
+  ticket.save();
 }
 export function handleBiddingSelected(event: BiddingSelected): void {
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
@@ -310,6 +319,7 @@ export function handleTicketCreated(event: TicketCreated): void {
   ticket.closingDate = event.params.dates.closingDate;
   ticket.startDate = event.params.dates.startDate;
   ticket.endDate = event.params.dates.endDate;
+  ticket.investments = [];
   ticket.save();
 }
 export function handleTicketStatusUpdate(event: TicketStatusUpdate): void {
@@ -339,7 +349,6 @@ export function handleDonationCreated(event: DonationCreated): void {
   let donationId = `${donor.id}-${event.params.ticketId.toString()}`;
   let donation = new Donation(donationId);
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
-
   const success = calcPremiumDonation(ticketId, event.params.amount);
   if (!success) return;
 

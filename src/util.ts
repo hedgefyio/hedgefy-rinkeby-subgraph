@@ -1,8 +1,19 @@
-import { BigInt, Entity, log, store } from "@graphprotocol/graph-ts";
-import { Premium, Ticket } from "../generated/schema";
+import { BigDecimal, BigInt, Entity, store } from "@graphprotocol/graph-ts";
+import { Investment, Premium, Ticket } from "../generated/schema";
+
+export const BIGINT_ZERO = new BigInt(0);
+
+export function bMax(value1: BigInt, value2: BigInt): BigInt {
+  if (value1.gt(value2)) return value1;
+  return value2;
+}
+
+export function bMin(value1: BigInt, value2: BigInt): BigInt {
+  if (value2.gt(value1)) return value1;
+  return value2;
+}
 
 export function load<T extends Entity>(id: string): T | null {
-  log.debug("Name of object = {}", [nameof<T>()]);
   return changetype<T | null>(store.get(nameof<T>(), id));
 }
 

@@ -11,7 +11,7 @@ dataSources:
     name: HFEvent
     network: rinkeby
     source:
-      address: "0xE482092B8984a40304bCDC4cbf29de1E1a621bde"
+      address: "0x811fB40dC2BFc1aF30621564F82Cdc2CfE1f346D"
       abi: HFEvent
       startBlock: 10056151
     mapping:

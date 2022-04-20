@@ -52,6 +52,7 @@ type Ticket @entity {
   nft: NFT
   claim: Claim
   premium: Premium
+  investments: [Investment!]!
 }
 
 """

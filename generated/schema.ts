@@ -139,6 +139,7 @@ export class Ticket extends Entity {
     this.set("closingDate", Value.fromBigInt(BigInt.zero()));
     this.set("startDate", Value.fromBigInt(BigInt.zero()));
     this.set("endDate", Value.fromBigInt(BigInt.zero()));
+    this.set("investments", Value.fromStringArray(new Array(0)));
   }
 
   save(): void {
@@ -359,6 +360,15 @@ export class Ticket extends Entity {
     } else {
       this.set("premium", Value.fromString(<string>value));
     }
+  }
+
+  get investments(): Array<string> {
+    let value = this.get("investments");
+    return value!.toStringArray();
+  }
+
+  set investments(value: Array<string>) {
+    this.set("investments", Value.fromStringArray(value));
   }
 }
 
