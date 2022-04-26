@@ -118,6 +118,7 @@ export function handleBiddingUpdated(event: BiddingUpdated): void {
   investment.askingAmount = event.params.askingAmount;
   investment.bidProcessType = event.params.bidProcessType;
   investment.askingExpireDate = event.params.askingExpireDate;
+  investment.removed = false
   investment.save();
 }
 export function handleHFClaimCreated(event: HFClaimCreated): void {
