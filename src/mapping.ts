@@ -53,7 +53,7 @@ export function handleBiddingAdded(event: BiddingAdded): void {
   let investor = loadOrCreate<User>(event.params.investor.toHex());
   investor.save();
   let investmentId = `${investor.id}-${event.params.ticketId.toString()}`;
-  let investment = new Investment(investmentId);
+  let investment = loadOrCreate<Investment>(investmentId);
 
   investment.investor = investor.id;
   investment.ticketName = event.params.ticketName;
@@ -90,11 +90,12 @@ export function handleBiddingRemoved(event: BiddingRemoved): void {
 export function handleBiddingSelected(event: BiddingSelected): void {
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
   let ticket = Ticket.load(ticketId);
-  let investor = User.load(event.params.investor.toHex());
-  if (!investor) return;
+  let investor = loadOrCreate<User>(event.params.investor.toHex());
+  investor.save();
+
   let investmentId = `${investor.id}-${event.params.ticketId.toString()}`;
-  let investment = Investment.load(investmentId);
-  if (!investment) return;
+  let investment = loadOrCreate<Investment>(investmentId);
+
   investment.askingAmount = event.params.askingAmount;
   investment.bidProcessType = event.params.bidProcessType;
   investment.earning = event.params.premiumAmount;
@@ -118,7 +119,7 @@ export function handleBiddingUpdated(event: BiddingUpdated): void {
   investment.askingAmount = event.params.askingAmount;
   investment.bidProcessType = event.params.bidProcessType;
   investment.askingExpireDate = event.params.askingExpireDate;
-  investment.removed = false
+  investment.removed = false;
   investment.save();
 }
 export function handleHFClaimCreated(event: HFClaimCreated): void {
