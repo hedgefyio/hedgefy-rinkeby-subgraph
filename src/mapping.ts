@@ -139,6 +139,7 @@ export function handleHFClaimCreated(event: HFClaimCreated): void {
   claimCondition.save();
 
   claim.ticket = ticket.id;
+  claim.claimId = event.params.claimId;
   claim.round = new BigInt(event.params.round);
   claim.isApproved = event.params.isApproved;
   claim.claimStatus = event.params.claimStatus;
