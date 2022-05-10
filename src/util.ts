@@ -25,18 +25,24 @@ export function loadOrCreate<T extends Entity>(id: string): T {
   return obj;
 }
 
-export function calcPremiumDonation(ticketId: string, amount: BigInt): bool {
+export function getInitialStakedPremium(ticket: Ticket, premium: Premium): BigInt {
+  if (ticket.bidProcessType === "FixedPremium") {
+    return ticket.premiumAmount;
+  }
+  return premium.askingPremiumAmount;
+}
+
+export function calcPremiumDonation(ticketId: string, amount: BigInt): void {
   let ticket = Ticket.load(ticketId);
-  if (!ticket) return false;
+  if (!ticket) return;
   let premium = Premium.load(`${ticketId}-${ticket.buyer.toString()}`);
-  if (!premium) return false;
+  if (!premium) return;
   ticket.donatedAmount = ticket.donatedAmount.plus(amount);
-  if (ticket.bidProcessType == "FixedPremium")
+  if (ticket.bidProcessType === "FixedPremium")
     ticket.premiumDonation = ticket.premiumAmount.plus(ticket.donatedAmount);
   else
     ticket.premiumDonation = premium.askingPremiumAmount.plus(
       ticket.donatedAmount
     );
   ticket.save();
-  return true;
 }

@@ -43,7 +43,7 @@ import {
   Transaction,
   User,
 } from "../generated/schema";
-import { calcPremiumDonation, loadOrCreate } from "./util";
+import { calcPremiumDonation, getInitialStakedPremium, loadOrCreate } from "./util";
 
 export function handleBiddingAdded(event: BiddingAdded): void {
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
@@ -278,9 +278,6 @@ export function handlePremiumCreated(event: PremiumCreated): void {
 
   let premium = new Premium(`${ticketId}-${buyer.id}`);
 
-  ticket.premium = premium.id;
-  ticket.save();
-
   premium.buyer = buyer.id;
   premium.ticket = ticket.id;
   premium.ticketName = event.params.ticketName;
@@ -290,6 +287,10 @@ export function handlePremiumCreated(event: PremiumCreated): void {
   premium.askingPremiumAmount = event.params.askingPremiumAmount;
 
   premium.save();
+
+  ticket.premium = premium.id;
+  ticket.premiumDonation = getInitialStakedPremium(ticket, premium)
+  ticket.save();
 }
 export function handlePremiumReimbursed(event: PremiumReimbursed): void {
   let buyer = User.load(event.params.buyer.toHex());
@@ -313,7 +314,6 @@ export function handleTicketCreated(event: TicketCreated): void {
   ticket.ticketId = event.params.ticketId;
   ticket.bidProcessType = event.params.bidProcessType;
   ticket.claimAmount = event.params.claimAmount;
-  ticket.premiumDonation = event.params.premiumAmount;
   ticket.premiumAmount = event.params.premiumAmount;
   ticket.authorizedAmount = event.params.authorizedAmount;
   ticket.marginRatio = event.params.marginRatio;
@@ -352,8 +352,6 @@ export function handleDonationCreated(event: DonationCreated): void {
   let donationId = `${donor.id}-${event.params.ticketId.toString()}`;
   let donation = new Donation(donationId);
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
-  const success = calcPremiumDonation(ticketId, event.params.amount);
-  if (!success) return;
 
   donation.amount = event.params.amount;
   donation.donor = donor.id;
@@ -362,6 +360,8 @@ export function handleDonationCreated(event: DonationCreated): void {
   donation.ticket = ticketId;
 
   donation.save();
+
+  calcPremiumDonation(ticketId, event.params.amount);
 }
 
 export function handleDonationRefunded(event: DonationRefunded): void {
@@ -380,9 +380,6 @@ export function handleDonationUpdated(event: DonationUpdated): void {
 
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
 
-  const success = calcPremiumDonation(ticketId, event.params.amount);
-  if (!success) return;
-
   let donationId = `${donor.id}-${event.params.ticketId.toString()}`;
   let donation = Donation.load(donationId);
 
@@ -396,5 +393,8 @@ export function handleDonationUpdated(event: DonationUpdated): void {
   donation.ticket = ticketId;
 
   donation.save();
+
+  calcPremiumDonation(ticketId, event.params.amount);
+
 }
 export function handleDonationsReceived(event: DonationsReceived): void {}
