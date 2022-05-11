@@ -43,7 +43,11 @@ import {
   Transaction,
   User,
 } from "../generated/schema";
-import { calcPremiumDonation, getInitialStakedPremium, loadOrCreate } from "./util";
+import {
+  calcPremiumDonation,
+  getInitialStakedPremium,
+  loadOrCreate,
+} from "./util";
 
 export function handleBiddingAdded(event: BiddingAdded): void {
   let ticketId = `${event.address.toHex()}-${event.params.ticketId.toString()}`;
@@ -66,6 +70,9 @@ export function handleBiddingAdded(event: BiddingAdded): void {
   investment.askingExpireDate = event.params.askingExpireDate;
   investment.ticket = ticket.id;
   investment.ticketId = ticket.ticketId;
+  investment.selected = investment.createdAt.gt(new BigInt(0))
+  investment.createdAt = event.params.eventTimestamp
+  
   investment.save();
 
   const ticketInvestments = ticket.investments;
@@ -99,6 +106,8 @@ export function handleBiddingSelected(event: BiddingSelected): void {
   investment.askingAmount = event.params.askingAmount;
   investment.bidProcessType = event.params.bidProcessType;
   investment.earning = event.params.premiumAmount;
+  investment.selected = true;
+  investment.createdAt = event.params.eventTimestamp
   investment.save();
   if (!ticket) return;
 
@@ -289,7 +298,7 @@ export function handlePremiumCreated(event: PremiumCreated): void {
   premium.save();
 
   ticket.premium = premium.id;
-  ticket.premiumDonation = getInitialStakedPremium(ticket, premium)
+  ticket.premiumDonation = getInitialStakedPremium(ticket, premium);
   ticket.save();
 }
 export function handlePremiumReimbursed(event: PremiumReimbursed): void {
@@ -395,6 +404,5 @@ export function handleDonationUpdated(event: DonationUpdated): void {
   donation.save();
 
   calcPremiumDonation(ticketId, event.params.amount);
-
 }
 export function handleDonationsReceived(event: DonationsReceived): void {}

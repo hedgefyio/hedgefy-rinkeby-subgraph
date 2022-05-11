@@ -387,6 +387,7 @@ export class Investment extends Entity {
     this.set("expiredInvestAmount", Value.fromBigInt(BigInt.zero()));
     this.set("askingExpireDate", Value.fromBigInt(BigInt.zero()));
     this.set("investDate", Value.fromBigInt(BigInt.zero()));
+    this.set("createdAt", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -530,6 +531,24 @@ export class Investment extends Entity {
 
   set investDate(value: BigInt) {
     this.set("investDate", Value.fromBigInt(value));
+  }
+
+  get selected(): boolean {
+    let value = this.get("selected");
+    return value!.toBoolean();
+  }
+
+  set selected(value: boolean) {
+    this.set("selected", Value.fromBoolean(value));
+  }
+
+  get createdAt(): BigInt {
+    let value = this.get("createdAt");
+    return value!.toBigInt();
+  }
+
+  set createdAt(value: BigInt) {
+    this.set("createdAt", Value.fromBigInt(value));
   }
 }
 

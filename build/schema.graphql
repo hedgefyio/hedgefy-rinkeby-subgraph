@@ -73,6 +73,8 @@ type Investment @entity {
   expiredInvestAmount: BigInt!
   askingExpireDate: BigInt!
   investDate: BigInt!
+  selected: Boolean!
+  createdAt: BigInt!
 }
 
 """
