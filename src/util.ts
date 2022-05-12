@@ -25,7 +25,10 @@ export function loadOrCreate<T extends Entity>(id: string): T {
   return obj;
 }
 
-export function getInitialStakedPremium(ticket: Ticket, premium: Premium): BigInt {
+export function getInitialStakedPremium(
+  ticket: Ticket,
+  premium: Premium
+): BigInt {
   if (ticket.bidProcessType === "FixedPremium") {
     return ticket.premiumAmount;
   }
@@ -46,3 +49,4 @@ export function calcPremiumDonation(ticketId: string, amount: BigInt): void {
     );
   ticket.save();
 }
+

@@ -43,7 +43,7 @@ type Ticket @entity {
   authorizedAmount: BigInt!
   donatedAmount: BigInt!
   marginRatio: BigInt!
-  ticketName: String!
+  ticketName: String! @search(by: [fullText])
   ticketStatus: Int!
   closingDate: BigInt!
   startDate: BigInt!
